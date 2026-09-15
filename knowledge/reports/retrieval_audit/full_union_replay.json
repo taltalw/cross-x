@@ -1,0 +1,2102 @@
+[
+  {
+    "group": "results_5.5",
+    "file": "3_2_1_medical_domain_count_4.jsonl",
+    "line": 17,
+    "domain": "chemistry",
+    "queries": [
+      "fibroadenoma histopathology immunohistochemical staining",
+      "benign breast lesion Ki-67 p53 HER2 markers",
+      "core needle biopsy fibroadenoma stromal epithelial features"
+    ],
+    "idea": "Ask which integrated diagnostic pathway should be selected for a 25-year-old with a mobile, smooth breast lump suggestive of fibroadenoma, requiring: medical triage (age/clinical features favor benign), chemistry-based confirmation (benign histology stains and lack of malignant molecular markers if biopsy is indicated), computer_science pipeline design (appropriate imaging AI triage with rules for when to trigger lab workflows and how to integrate outputs), and legal compliance (CLIA/IVD validation, consent, and data governance). Essential conditions: no red-flag features (skin tethering, nipple discharge), imaging available, and any biopsy/testing performed must be clinically justified and compliant.",
+    "full_union_size": 29,
+    "replay_top20_matches": true,
+    "changes": {
+      "1": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "5": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "10": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "20": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "30": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      }
+    },
+    "top3": [
+      {
+        "candidate_id": "chemistry:e9cdbe8d88dcb4c136df10e12a0b4c29ae877962c7fef678833dbb3af5e56ddc",
+        "source_line": 866,
+        "sample": {
+          "prompt": "question:\nWhich of the following methods can be used to distinguish tumor tissue from healthy tissue?\noptions:\nA.ESI-triple quadrupole-mass spectrometry\nB.MALDI-TOF mass spectrometry\nC.inductively coupled plasma-mass spectrometry\nD.liquid chromatography-orbitrap mass spectrometry\nSelect all best-scoring options.\nanswer:\n",
+          "completion": "B.MALDI-TOF mass spectrometry"
+        },
+        "hits": [
+          {
+            "query_index": 1,
+            "method": "embedding",
+            "rank": 3,
+            "score": 0.17576263844966888
+          },
+          {
+            "query_index": 2,
+            "method": "embedding",
+            "rank": 1,
+            "score": 0.18191318213939667
+          },
+          {
+            "query_index": 3,
+            "method": "embedding",
+            "rank": 1,
+            "score": 0.1620347648859024
+          }
+        ]
+      },
+      {
+        "candidate_id": "chemistry:15417f0eedeae3c9595d8bc18e1af2fa212ea389f3de3788623868abe0bbfaf0",
+        "source_line": 1946,
+        "sample": {
+          "prompt": "question:\nWhat is an appropriate method of quantification for a complex sample preparation workflow to enrich a specific population of proteins from cultured cells?\noptions:\nA.DiGE\nB.Label-free methods\nC.SILAC\nD.Selected Reaction Monitoring\nSelect all best-scoring options.\nanswer:\n",
+          "completion": "C.SILAC"
+        },
+        "hits": [
+          {
+            "query_index": 1,
+            "method": "embedding",
+            "rank": 1,
+            "score": 0.17669010162353516
+          },
+          {
+            "query_index": 2,
+            "method": "embedding",
+            "rank": 2,
+            "score": 0.17992852628231049
+          }
+        ]
+      },
+      {
+        "candidate_id": "chemistry:4a713c14a8195bd44d5f52a25b50231a5c6b355582bd9af49ab4360c02d53121",
+        "source_line": 809,
+        "sample": {
+          "prompt": "question:\nWhich of the following receptors is a receptor with tyrosine kinase activity (=receptor-tyrosine kinase)?\noptions:\nA.EGF receptor (=receptor for epidermal growth factor)\nB.H$_2$-histamine receptor\nC.Interleukin-2 receptor\nD.M$_1$-muscarinic acetylcholine receptor\nE.Receptor for growth hormone\nSelect all best-scoring options.\nanswer:\n",
+          "completion": "A.EGF receptor (=receptor for epidermal growth factor)"
+        },
+        "hits": [
+          {
+            "query_index": 1,
+            "method": "embedding",
+            "rank": 2,
+            "score": 0.17597955465316772
+          },
+          {
+            "query_index": 2,
+            "method": "embedding",
+            "rank": 8,
+            "score": 0.15555672347545624
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "group": "results_5.5",
+    "file": "3_2_1_computer_science_domain_count_3.jsonl",
+    "line": 22,
+    "domain": "chemistry",
+    "queries": [
+      "exothermic reactor runaway reaction time constants",
+      "chemical reactor safety interlock trip time",
+      "reaction kinetics thermal runaway response window"
+    ],
+    "idea": "Ask which single scheduling policy and privilege configuration will guarantee closed-loop stability and safety for a chemical reactor control system where sensor/actuator I/O must run in kernel mode. Preserve that device I/O is privileged (kernel mode) from computer_science, require mathematics to compute the maximum allowable I/O latency/jitter from control stability and stochastic disturbance bounds, and require chemistry to determine reaction time constants, exothermicity, and interlock trip windows; ensure all options specify both privilege level and scheduling/timing so only one meets the combined constraints.",
+    "full_union_size": 46,
+    "replay_top20_matches": true,
+    "changes": {
+      "1": {
+        "top1_changed": true,
+        "top20_overlap": 1.0
+      },
+      "5": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "10": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "20": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "30": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      }
+    },
+    "top3": [
+      {
+        "candidate_id": "chemistry:1006a6f60d35cce747ed6d9e3eaed96f9fd7f5ad9e71f1dd91482b470563d6f4",
+        "source_line": 2044,
+        "sample": {
+          "prompt": "question:\nWhat is a recommended method for determining the best arrangement of reactor units, regardless of the kinetics and reactor system?\noptions:\nA.Analyzing the temperature profile of the reaction\nB.Examining the 1/(-r) vs. C (concentration) curve (where r is the rate of reaction)\nC.Examining the 1/(-r) vs. X (conversion) curve (where r is the rate of reaction)\nD.Using trial and error to find the optimal arrangement\nSelect all best-scoring options.\nanswer:\n",
+          "completion": "B.Examining the 1/(-r) vs. C (concentration) curve (where r is the rate of reaction)"
+        },
+        "hits": [
+          {
+            "query_index": 1,
+            "method": "bm25",
+            "rank": 9,
+            "score": 11.818452101943485
+          },
+          {
+            "query_index": 3,
+            "method": "bm25",
+            "rank": 4,
+            "score": 11.010687655902288
+          },
+          {
+            "query_index": 3,
+            "method": "embedding",
+            "rank": 1,
+            "score": 0.2632836401462555
+          }
+        ]
+      },
+      {
+        "candidate_id": "chemistry:115b25bb9e46dac216d71e9af73181f4b7f298f5f00beab3b78a47c9bdebe082",
+        "source_line": 1102,
+        "sample": {
+          "prompt": "question:\nDuring a Grignard reaction, a researcher notices the reaction isn't initiating. They decide to add a crystal of iodine. Why might this be dangerous?\noptions:\nA.Iodine can form explosive compounds with magnesium\nB.Iodine can generate toxic \\ce{HI} gas in the presence of moisture\nC.The color change might mask important visual cues about the reaction\nD.The iodine might catalyze a runaway exothermic reaction\nSelect all best-scoring options.\nanswer:\n",
+          "completion": "D.The iodine might catalyze a runaway exothermic reaction"
+        },
+        "hits": [
+          {
+            "query_index": 1,
+            "method": "bm25",
+            "rank": 1,
+            "score": 23.93772060333366
+          },
+          {
+            "query_index": 3,
+            "method": "bm25",
+            "rank": 2,
+            "score": 15.44013352839241
+          }
+        ]
+      },
+      {
+        "candidate_id": "chemistry:95d02d8f9a8e0befda0b82d2752a9cfa3aa38564a533d9e2c47c9d89886db81d",
+        "source_line": 801,
+        "sample": {
+          "prompt": "question:\nHow does the retention time change with an increase in boiling temperature of the analyzed molecule in gas chromatography?\noptions:\nA.Retention time decreases\nB.Retention time does not change\nC.Retention time increases\nSelect all best-scoring options.\nanswer:\n",
+          "completion": "A.Retention time decreases"
+        },
+        "hits": [
+          {
+            "query_index": 2,
+            "method": "bm25",
+            "rank": 4,
+            "score": 10.027094313764351
+          },
+          {
+            "query_index": 2,
+            "method": "embedding",
+            "rank": 1,
+            "score": 0.21545495092868805
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "group": "results_5.5",
+    "file": "3_2_1_chemistry_domain_count_4.jsonl",
+    "line": 27,
+    "domain": "computer_science",
+    "queries": [
+      "QSAR models ADMET prediction small molecules",
+      "molecular docking scoring off-target hERG liability",
+      "machine learning prediction metabolic hotspots CYP inhibition"
+    ],
+    "idea": "Ask which of two small-molecule leads should advance for an orally available drug in a global launch scenario, preserving the chemistry sample’s lead-selection focus (drug-likeness, liabilities) while requiring medical ADME/T reasoning (absorption, metabolism, toxicity), computer_science use of in silico models/docking to quantify those properties, and geography to impose climate-zone stability and region-specific environmental/regulatory constraints on formulation and excipients. Essential conditions: both candidates have plausible oral exposure; in silico outputs (e.g., logP, pKa, TPSA, metabolic hotspots, hERG/docking flags) and stability profiles under ICH climatic zones are consistently provided; regulatory constraints differ by regions but do not ban both; one candidate uniquely satisfies efficacy, safety, stability, and compliance.",
+    "full_union_size": 52,
+    "replay_top20_matches": true,
+    "changes": {
+      "1": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "5": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "10": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "20": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "30": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      }
+    },
+    "top3": [
+      {
+        "candidate_id": "computer_science:8870fcdac4edfc85de590e0eec3fd907604d37a72b1b2135d110cabf295e0610",
+        "source_line": 777,
+        "sample": {
+          "prompt": "question:\nIn computers used for scientific computing, the most useful parameter for indicating system performance is ( ).\noptions:\nA.Master Clock Frequency\nB.Main memory capacity\nC.MFLOPS\nD.MIPS\nanswer:\n",
+          "completion": "C.MFLOPS"
+        },
+        "hits": [
+          {
+            "query_index": 2,
+            "method": "embedding",
+            "rank": 2,
+            "score": 0.1625283658504486
+          },
+          {
+            "query_index": 3,
+            "method": "embedding",
+            "rank": 2,
+            "score": 0.15302909910678864
+          }
+        ]
+      },
+      {
+        "candidate_id": "computer_science:9b285e9d23e1bd6c6b955decdf268c3d780576651374249e241023910dc6847f",
+        "source_line": 1023,
+        "sample": {
+          "prompt": "question:\nGiven that the machine code of the variable x stored in the 32-bit register R1 is 8000 0004H, what is the true value of x when x is of the unsigned int type? What is the true value of x/2? What is the machine code for x/2 stored in R1? What is the true value of 2x? What is the machine code for 2x stored in R1?\nanswer:\n",
+          "completion": "For unsigned integers, all binary bits are value bits. The true value of x is 2^31 + 2^2. Multiplying by 2 and dividing by 2 are equivalent to the left shift and right shift operations of an unsigned number, respectively. The true value of x/2 is 2^30 + 2, and the machine code stored in R1 is 4000 0002H. The true value of 2x is 2^32 + 2^3, which causes an overflow, and the machine code stored in R1 is 0000 0008H."
+        },
+        "hits": [
+          {
+            "query_index": 2,
+            "method": "embedding",
+            "rank": 4,
+            "score": 0.14175757765769958
+          },
+          {
+            "query_index": 3,
+            "method": "bm25",
+            "rank": 10,
+            "score": 5.2335113447229995
+          }
+        ]
+      },
+      {
+        "candidate_id": "computer_science:4b57589d6f519722aa94c4fd26e03f97882657d70f1af577fac9390bf8276059",
+        "source_line": 162,
+        "sample": {
+          "prompt": "question:\nIf the conditions of both the Nyquist theorem and Shannon's theorem are met, the smaller value should be chosen to set the limit.\nRespond with True or False.\nanswer:\n",
+          "completion": "True"
+        },
+        "hits": [
+          {
+            "query_index": 1,
+            "method": "embedding",
+            "rank": 1,
+            "score": 0.18865886330604553
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "group": "results_5.5",
+    "file": "3_2_1_legal_domain_count_3.jsonl",
+    "line": 5,
+    "domain": "computer_science",
+    "queries": [
+      "rules engine eligibility decision logic",
+      "hard fail rule precedence validation",
+      "applicant investment records data schema"
+    ],
+    "idea": "Ask which system decision an automated eligibility engine should output for an applicant seeking Iranian citizenship via investment as of Jan 1, 2020, preserving the legal core that Iran has no citizenship-by-investment pathway. Legal defines the eligibility rule set (no CBI route; only ordinary naturalization grounds), computer_science specifies the rules-engine/data-schema logic that maps application attributes and investment records to a decision, and financial validates the investment’s nature, valuation, and AML/source-of-funds; require that the system only approves if a legally recognized CBI route exists and the investment meets verified financial and AML checks.",
+    "full_union_size": 56,
+    "replay_top20_matches": true,
+    "changes": {
+      "1": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "5": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "10": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "20": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "30": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      }
+    },
+    "top3": [
+      {
+        "candidate_id": "computer_science:944e3d4c422e5b90b2df89475a63c9763a1fa985c532b6aedb84551a96326fcb",
+        "source_line": 1354,
+        "sample": {
+          "prompt": "question:\nWhat is the usual control method of RISC architecture?()\noptions:\nA.Microprogram Control\nB.Hardware Control\nC.Software Control\nD.Combinational Logic Control\nanswer:\n",
+          "completion": "D.Combinational Logic Control"
+        },
+        "hits": [
+          {
+            "query_index": 1,
+            "method": "bm25",
+            "rank": 3,
+            "score": 7.276297494299729
+          },
+          {
+            "query_index": 1,
+            "method": "embedding",
+            "rank": 3,
+            "score": 0.24921336770057678
+          }
+        ]
+      },
+      {
+        "candidate_id": "computer_science:9ec78618c9406ce47151c95470f631edfdd81534dd9e56dd9983721f26e672ca",
+        "source_line": 1337,
+        "sample": {
+          "prompt": "question:\nWhat is the primary instruction control method in RISC architecture?()\noptions:\nA.Microprogram Control\nB.Combinational Logic Control\nC.Hardware Control\nD.Software Control\nanswer:\n",
+          "completion": "B.Combinational Logic Control"
+        },
+        "hits": [
+          {
+            "query_index": 1,
+            "method": "bm25",
+            "rank": 4,
+            "score": 7.201673546857205
+          },
+          {
+            "query_index": 1,
+            "method": "embedding",
+            "rank": 4,
+            "score": 0.24127013981342316
+          }
+        ]
+      },
+      {
+        "candidate_id": "computer_science:3c153fa12296fb38cebdaed47fe1a490d54c0d4298b1f1c9ac8405c16982c557",
+        "source_line": 1452,
+        "sample": {
+          "prompt": "question:\nThe file system creates a table for each file that indicates the correspondence between logical records and physical blocks, which is known as ().\nanswer:\n",
+          "completion": "Index Table"
+        },
+        "hits": [
+          {
+            "query_index": 3,
+            "method": "bm25",
+            "rank": 7,
+            "score": 6.464549627796621
+          },
+          {
+            "query_index": 3,
+            "method": "embedding",
+            "rank": 2,
+            "score": 0.21173514425754547
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "group": "results_5.5",
+    "file": "3_2_1_legal_domain_count_3.jsonl",
+    "line": 27,
+    "domain": "financial",
+    "queries": [
+      "Washington crime victim compensation domestic violence",
+      "domestic violence emergency shelter relocation assistance",
+      "sliding scale legal aid fee waivers domestic violence"
+    ],
+    "idea": "Pose a single-answer MCQ asking which integrated action plan a survivor in Washington state should choose to maximize immediate safety and legal protection when experiencing escalating domestic abuse, ensuring it also secures medical documentation and sustainable financing for care and legal counsel. Preserve the legal core (protective orders, enforcement, reporting, and resource linkage), require medical steps (injury/psych assessment, documentation, mandated-reporting triggers where applicable, referral to trauma-informed care), and require financial measures (victim compensation eligibility, emergency shelter funding, sliding-scale/legal aid, and budgeting for relocation). Essential conditions: imminent risk assessed, jurisdiction WA, survivor has limited funds, needs both court-recognizable evidence and enforceable orders before school term and custody hearings.",
+    "full_union_size": 43,
+    "replay_top20_matches": true,
+    "changes": {
+      "1": {
+        "top1_changed": true,
+        "top20_overlap": 1.0
+      },
+      "5": {
+        "top1_changed": true,
+        "top20_overlap": 1.0
+      },
+      "10": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "20": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "30": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      }
+    },
+    "top3": [
+      {
+        "candidate_id": "financial:4f57ba24e20430056081ff0cb2181974f5cab6ea77eced5a4ee76944ded27eb1",
+        "source_line": 606,
+        "sample": {
+          "prompt": "question:\nWhich of the following is not a possible negative effect that the internationalization of the financial industry may have on a country's domestic finance: _____.\noptions:\nA.Intensified competition in the domestic financial industry, which may lead to the contraction of domestic financial institutions\nB.Promoting the stability of financial markets\nC.Bringing greater financial risks to the financial industry\nD.Bringing greater difficulties to domestic financial regulation\nanswer:\n",
+          "completion": "B.Promoting the stability of financial markets"
+        },
+        "hits": [
+          {
+            "query_index": 1,
+            "method": "bm25",
+            "rank": 5,
+            "score": 7.190278010922866
+          },
+          {
+            "query_index": 2,
+            "method": "bm25",
+            "rank": 4,
+            "score": 7.190278010922866
+          },
+          {
+            "query_index": 2,
+            "method": "embedding",
+            "rank": 10,
+            "score": 0.1331145316362381
+          },
+          {
+            "query_index": 3,
+            "method": "bm25",
+            "rank": 8,
+            "score": 7.190278010922866
+          }
+        ]
+      },
+      {
+        "candidate_id": "financial:3f15b18010b58c7b5a84ba83884f5858bd38464cd123f5abf8de3808b01a4889",
+        "source_line": 508,
+        "sample": {
+          "prompt": "question:\nWhen a country is experiencing inflation and a balance-of-payments deficit, the policy combination that the country should adopt is _____.\noptions:\nA.Contract domestic expenditure, and appreciate the domestic currency\nB.Expand domestic expenditure, and appreciate the domestic currency\nC.Contract domestic expenditure, and depreciate the domestic currency\nD.Expand domestic expenditure, and depreciate the domestic currency\nanswer:\n",
+          "completion": "C.Contract domestic expenditure, and depreciate the domestic currency\nexplanation:\n1. When a country is in an economic situation of inflation and a balance-of-payments deficit, it needs to contract domestic expenditure to curb inflation and import demand, and depreciation of the domestic currency can curb imports and expand exports. 2. Therefore, the policy combination of contracting domestic expenditure and depreciating the domestic currency can simultaneously achieve internal and external balance of payments."
+        },
+        "hits": [
+          {
+            "query_index": 1,
+            "method": "bm25",
+            "rank": 3,
+            "score": 8.241833973527926
+          },
+          {
+            "query_index": 2,
+            "method": "bm25",
+            "rank": 2,
+            "score": 8.241833973527926
+          },
+          {
+            "query_index": 3,
+            "method": "bm25",
+            "rank": 3,
+            "score": 8.241833973527926
+          }
+        ]
+      },
+      {
+        "candidate_id": "financial:30a521bca73701bfb5a49794c78fbd7c8af360129f2cb705a76b4228f12a128e",
+        "source_line": 596,
+        "sample": {
+          "prompt": "question:\nIn the process of consuming banking services, banking consumers have the right to request compensation from a bank when they suffer personal or property damage not caused by their own intent or negligence, except for losses caused by purchasing products already offered by the bank with risk warnings. What right of banking consumers does the phenomenon described above reflect? ____\noptions:\nA.Right to safety\nB.Right to seek compensation according to law\nC.Right to financial privacy\nD.Right to be respected\nanswer:\n",
+          "completion": "B.Right to seek compensation according to law"
+        },
+        "hits": [
+          {
+            "query_index": 1,
+            "method": "bm25",
+            "rank": 8,
+            "score": 6.81617431126437
+          },
+          {
+            "query_index": 1,
+            "method": "embedding",
+            "rank": 1,
+            "score": 0.19952824711799622
+          },
+          {
+            "query_index": 3,
+            "method": "embedding",
+            "rank": 1,
+            "score": 0.1807558834552765
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "group": "results_5.5",
+    "file": "3_2_1_medical_domain_count_4.jsonl",
+    "line": 16,
+    "domain": "financial",
+    "queries": [
+      "direct cost accounting diagnostic imaging core needle biopsy",
+      "expected downstream costs missed breast cancer diagnosis",
+      "cost minimization analysis diagnostic pathways per patient"
+    ],
+    "idea": "Ask which diagnostic strategy minimizes expected total cost per patient while maintaining a target false-negative rate for suspected fibroadenoma (mobile, smooth mass) in young women. Medical defines pretest probability and the benign clinical phenotype; chemistry governs assay performance (e.g., IHC panel stability and sensitivity/specificity under a given fixation protocol for core needle biopsy versus imaging-only); mathematics combines test characteristics with Bayes’ theorem and decision analysis to compute expected costs under a constraint on false negatives; financial tallies per-patient direct costs and downstream costs from missed cancers. Assume specified prevalence, test sensitivity/specificity, per-pathway costs, and a hard cap on FN rate to ensure one strategy uniquely optimal.",
+    "full_union_size": 42,
+    "replay_top20_matches": true,
+    "changes": {
+      "1": {
+        "top1_changed": true,
+        "top20_overlap": 0.95
+      },
+      "5": {
+        "top1_changed": true,
+        "top20_overlap": 1.0
+      },
+      "10": {
+        "top1_changed": true,
+        "top20_overlap": 1.0
+      },
+      "20": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "30": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      }
+    },
+    "top3": [
+      {
+        "candidate_id": "financial:4bedadd556b3ae2f4b497d5357af20000e4dcf1f544d4617c8c4584551505b2f",
+        "source_line": 447,
+        "sample": {
+          "prompt": "question:\nThe direct allocation method is one method for allocating auxiliary production costs. Its characteristic is that auxiliary production costs are _____.\noptions:\nA.directly recorded in the \"Auxiliary Production Cost\" account\nB.directly included in the cost of services provided by auxiliary production\nC.directly allocated to all workshops and departments that benefit\nD.directly allocated to beneficiary units other than auxiliary production\nanswer:\n",
+          "completion": "D.directly allocated to beneficiary units other than auxiliary production"
+        },
+        "hits": [
+          {
+            "query_index": 1,
+            "method": "bm25",
+            "rank": 8,
+            "score": 7.417122030247169
+          },
+          {
+            "query_index": 1,
+            "method": "embedding",
+            "rank": 1,
+            "score": 0.32232439517974854
+          },
+          {
+            "query_index": 2,
+            "method": "embedding",
+            "rank": 8,
+            "score": 0.19772839546203613
+          },
+          {
+            "query_index": 3,
+            "method": "embedding",
+            "rank": 10,
+            "score": 0.213118776679039
+          }
+        ]
+      },
+      {
+        "candidate_id": "financial:a478e8400ea1f2ba3a978b8e89f622b19ccd633a947b23dde397af23b27dbb6a",
+        "source_line": 926,
+        "sample": {
+          "prompt": "question:\nThe core of product unit cost analysis is ____.\noptions:\nA.Analysis of the direct labor item\nB.Analysis of the manufacturing overhead item\nC.Analysis of the direct materials cost item\nD.Analysis of the administrative expenses item\nanswer:\n",
+          "completion": "C.Analysis of the direct materials cost item"
+        },
+        "hits": [
+          {
+            "query_index": 1,
+            "method": "bm25",
+            "rank": 1,
+            "score": 17.13034432277444
+          },
+          {
+            "query_index": 1,
+            "method": "embedding",
+            "rank": 2,
+            "score": 0.3108949363231659
+          },
+          {
+            "query_index": 3,
+            "method": "bm25",
+            "rank": 1,
+            "score": 12.831348426923348
+          }
+        ]
+      },
+      {
+        "candidate_id": "financial:e5926b77cdd198e608d3d009737d12a8a386a01223d8b942634f853169a963f5",
+        "source_line": 971,
+        "sample": {
+          "prompt": "question:\nA company plans to achieve sales revenue of 200000 yuan next year. The sales tax rate is 10$\\%$, and the target profit for next year is 30000 yuan. The enterprise's target cost is ____.\noptions:\nA.170000 yuan\nB.167600 yuan\nC.154000 yuan\nD.150000 yuan\nanswer:\n",
+          "completion": "D.150000 yuan"
+        },
+        "hits": [
+          {
+            "query_index": 1,
+            "method": "embedding",
+            "rank": 9,
+            "score": 0.25648072361946106
+          },
+          {
+            "query_index": 2,
+            "method": "embedding",
+            "rank": 4,
+            "score": 0.21306127309799194
+          },
+          {
+            "query_index": 3,
+            "method": "embedding",
+            "rank": 8,
+            "score": 0.21481330692768097
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "group": "results_5.5",
+    "file": "3_2_1_medical_domain_count_4.jsonl",
+    "line": 32,
+    "domain": "geography",
+    "queries": [
+      "regional Bacteroides fragilis colonization prevalence",
+      "spatial variation anaerobic antibiotic resistance",
+      "regional hospital access postoperative infection risk"
+    ],
+    "idea": "Ask which regional prophylaxis plan minimizes expected net hospital cost for postoperative endogenous anaerobic infections, preserving the medical core that Bacteroides fragilis drives endogenous anaerobic SSIs post-abdominal surgery. Geography provides region-specific colonization/resistance profiles and care access; mathematics models incidence with confidence bounds and expected cases under each plan; financial computes expected costs (treatment plus prophylaxis) and ROI. Essential conditions: same surgery volume and baseline risk per region, identical time horizon, mutually exclusive prophylaxis choices with specified efficacy and drug costs, and consistent resistance assumptions so options yield distinct expected net costs.",
+    "full_union_size": 52,
+    "replay_top20_matches": true,
+    "changes": {
+      "1": {
+        "top1_changed": false,
+        "top20_overlap": 0.95
+      },
+      "5": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "10": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "20": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "30": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      }
+    },
+    "top3": [
+      {
+        "candidate_id": "geography:2589cf90ab03567c9d42c21180188688af7e11973fb7a47a9094391369bc81fd",
+        "source_line": 1471,
+        "sample": {
+          "prompt": "question:\nThis diagram best models\noptions:\nA.the cost-to-distance relationship in agricultural land use\nB.elastic distance proximity\nC.supply chain management\nD.a cycle of dependency based on capital accumulation\nE.the spatial margin of profitability\nanswer:\n",
+          "completion": "E.the spatial margin of profitability"
+        },
+        "hits": [
+          {
+            "query_index": 2,
+            "method": "bm25",
+            "rank": 10,
+            "score": 6.72233871401866
+          },
+          {
+            "query_index": 2,
+            "method": "embedding",
+            "rank": 2,
+            "score": 0.24044211208820343
+          },
+          {
+            "query_index": 3,
+            "method": "embedding",
+            "rank": 6,
+            "score": 0.17777030169963837
+          }
+        ]
+      },
+      {
+        "candidate_id": "geography:dfe39996197253e7c335f1b1bd7f8adb265e555140462ab24ef620cb12bc2731",
+        "source_line": 503,
+        "sample": {
+          "prompt": "question:\nThe study of the movement of disease across space is known as\noptions:\nA.epidemiology\nB.technological diffusion\nC.contagious diffusion\nD.redlining\nE.geomorphology\nanswer:\n",
+          "completion": "A.epidemiology"
+        },
+        "hits": [
+          {
+            "query_index": 1,
+            "method": "embedding",
+            "rank": 5,
+            "score": 0.18322066962718964
+          },
+          {
+            "query_index": 2,
+            "method": "embedding",
+            "rank": 6,
+            "score": 0.2185194343328476
+          },
+          {
+            "query_index": 3,
+            "method": "embedding",
+            "rank": 7,
+            "score": 0.1750776618719101
+          }
+        ]
+      },
+      {
+        "candidate_id": "geography:0079d4a6ad5e95f0f4968d1d199a0b73226b97b3abd6c5cadd1374f6c50d96ce",
+        "source_line": 424,
+        "sample": {
+          "prompt": "question:\nPrinciples and Calculation Methods of Interdependence Between Regions\nanswer:\n",
+          "completion": "As an ancient discipline, geography is characterized by the diversity between regions. Regional differentiation leads to interactions between different regions, so regional interdependence and function has become one of the main contents of geography research. Mr. Ritter, the originator of modern geography, maintained this proposition in theory and practice: geography should firstly study all interrelated phenomena existing in all regions of the world [1]. Hartshorne, a famous American scholar, also pointed out that geography and history are combined sciences that study the world. Geography seeks to obtain a comprehensive knowledge of the regional differences of the world, and thus only in terms of their geographical importance—that is, their relationship to the sum of regional differences [2]. British scholar Haggett focused on the regional differences in human activities and the resulting spatial interactions in his research. In the general analysis procedure of the location structure he established, regional interactions at different levels ranked first in the analysis order [3]. Entrusted by the Behavioral and Social Science Research Council of the National Academy of Sciences, the geography group headed by Taaffe proposed six guiding topics in geography that would have the greatest impact on the future theoretical geography system, including flow (vehicle flow, cargo flow, flow of people) and traffic network and space diffusion theory [4]. In his works, Mr. Wu Chuanjun regards the relationship between regions as one of the major research tasks of geography [5]. Regional interdependence in today's world is often manifested in regional division of labor, regional competition, regional cooperation, and various material flows, information flows, and capital flows due to regional interactions. At the same time, regions at different levels exhibit different patterns of dependence. Regional dependence at the macro level is often manifested as competition and cooperation at the national level. As the degree of globalization continues to deepen, capital begins to flow globally, and the production process is broken down into many links and reconfigured around the world through the media of multinational companies. The service industry is more dependent and the mutual influence between regions is stronger. The most intuitive manifestation of regional dependence at the macro level is that the financial crisis in the United States has dealt a blow to global economic development. Regional interdependence at the mesoscopic level is reflected in the interdependence between cities and cities, and between cities and their surrounding hinterlands. Cities are characterized by isomorphic industrial structures, competing for common markets and resources, and the dependence between cities and their hinterlands is often manifested in the exchange of resources, industries, population, ecological environment and other factors. Regarding the principle of regional interdependence, Adam Smith's \"absolute cost theory\", Ricardo's \"comparative advantage theory\" and Heckscher Ohlin's factor ratio theory partially explain this relationship from an economic point of view, Lu Dao The \"point-axis\" development model provided theoretical support for regional interdependence and development sequence from the perspective of geography [6]. However, the academic community has not yet reached a consensus on the calculation method of regional interdependence. Carroll introduced distance into the regional interaction formula, and mentioned the famous distance decay law, that is, the farther the region is, the smaller the interaction is [7]. Taaffe measures regional interactions from the perspective of economic connection strength, and introduces the population size and the distance between regions into the dependence measurement formula [8]. Muller's choice growth model emphasizes the use of transportation network, logistics and human flow to measure the interconnection between regions [9]. Berry and Black respectively use vector factors to analyze the commodity flow between regions, so as to measure the interrelationship between regions[10,11] . Yang Wuyang used the graph theory shortest path method to divide the scope of regional interaction [12]. Experts and scholars at home and abroad have successively proposed theories and methods such as the basic gravitational model, comprehensive scale, and diffusion potential, and studied the interaction between regions from different perspectives[13,14]. Due to the differences in the manifestations of regional interdependence at different spatial scales, different elements and structural combinations in different regions, and the same region has different development goals at different stages, so far, the academic research on regional interdependence There is still no consensus on the principles, laws and calculation methods. Traditional regional dependence measurement methods generally introduce distance factors as an inverse function of regional interactions. However, with the development of new technologies, especially information technology, and the deepening of globalization, the distance attenuation model is challenged. For example, Brown and Kevin point out that the acceptance of innovations drives cities to grow at a certain rate, thus changing the network of connections delimited by the gravity model [15]. Therefore, the principles, laws and calculation methods of regional interdependence are still an unresolved geographical problem."
+        },
+        "hits": [
+          {
+            "query_index": 1,
+            "method": "bm25",
+            "rank": 5,
+            "score": 6.9295532164537335
+          },
+          {
+            "query_index": 3,
+            "method": "embedding",
+            "rank": 3,
+            "score": 0.18569204211235046
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "group": "results_5.5",
+    "file": "3_2_1_legal_domain_count_3.jsonl",
+    "line": 3,
+    "domain": "geography",
+    "queries": [
+      "Montana Washington Wisconsin state boundaries",
+      "domicile physical presence location facts",
+      "residence geocoding state citizenship"
+    ],
+    "idea": "Ask whether a federal court has diversity jurisdiction over a joint copyright action when two plaintiffs with complex domicile facts sue one defendant and the claimed damages include statutory damages and recoverable attorney’s fees. Preserve the legal rule: complete diversity and AiC > $75k; require geography to resolve each party’s state citizenship via domicile (physical presence plus intent) from given location facts, and financial analysis to value AiC by aggregating statutory damages per work and permissible fee shifting for each plaintiff’s claim. Essential conditions: claims are properly aggregated per plaintiff when permitted, no party shares citizenship with an opposing party, and only legally recoverable components count toward AiC.",
+    "full_union_size": 46,
+    "replay_top20_matches": true,
+    "changes": {
+      "1": {
+        "top1_changed": false,
+        "top20_overlap": 0.9
+      },
+      "5": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "10": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "20": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "30": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      }
+    },
+    "top3": [
+      {
+        "candidate_id": "geography:b1e0ed974e519939d941664ae574d2c6c3f6ce3e39cac9eb070797e3ccff9773",
+        "source_line": 1458,
+        "sample": {
+          "prompt": "question:\nA geographer who supports the theory of environmental determinism would most likely agree with which of the following statements?\noptions:\nA.Humans are not entirely a product of their environment, and they possess the skills to adapt their environment to fit their needs.\nB.A society’s physical and intellectual attributes are shaped by the location and climate in which they develop.\nC.Human activity has resulted in global climate change and increasingly severe weather patterns.\nD.Most societies can control their environment to their benefit, resulting in higher levels of economic development.\nE.Societies are not influenced by their environments, instead developing independently of environmental factors.\nanswer:\n",
+          "completion": "B.A society’s physical and intellectual attributes are shaped by the location and climate in which they develop."
+        },
+        "hits": [
+          {
+            "query_index": 2,
+            "method": "bm25",
+            "rank": 2,
+            "score": 10.100447585219165
+          },
+          {
+            "query_index": 2,
+            "method": "embedding",
+            "rank": 1,
+            "score": 0.2909567356109619
+          },
+          {
+            "query_index": 3,
+            "method": "embedding",
+            "rank": 5,
+            "score": 0.25821006298065186
+          }
+        ]
+      },
+      {
+        "candidate_id": "geography:759be57042ded5db48b9152f6e05c4eb2698bfd6633f901725ee7db809722a53",
+        "source_line": 1457,
+        "sample": {
+          "prompt": "question:\nThe average amount of time an element, like carbon or calcium, spends in a geological reservoir is known as\noptions:\nA.pool time\nB.cosmic time\nC.dissolution time\nD.standard time\nE.residence time\nanswer:\n",
+          "completion": "E.residence time"
+        },
+        "hits": [
+          {
+            "query_index": 2,
+            "method": "embedding",
+            "rank": 8,
+            "score": 0.20900234580039978
+          },
+          {
+            "query_index": 3,
+            "method": "bm25",
+            "rank": 2,
+            "score": 10.186647506101053
+          },
+          {
+            "query_index": 3,
+            "method": "embedding",
+            "rank": 7,
+            "score": 0.23898127675056458
+          }
+        ]
+      },
+      {
+        "candidate_id": "geography:81e4219c39aa167437c893a896d1c5d2d68981695360da6c17d25b68ec81df19",
+        "source_line": 440,
+        "sample": {
+          "prompt": "Define the following geoscience term:\nattitude of stratum\nanswer:\n",
+          "completion": "The spatial distribution and occurrence status of geological bodies (rock strata, rock masses, ore bodies, etc.) in the crust."
+        },
+        "hits": [
+          {
+            "query_index": 2,
+            "method": "embedding",
+            "rank": 2,
+            "score": 0.2491176575422287
+          },
+          {
+            "query_index": 3,
+            "method": "embedding",
+            "rank": 2,
+            "score": 0.2655082643032074
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "group": "results_5.5",
+    "file": "3_2_1_medical_domain_count_2.jsonl",
+    "line": 4,
+    "domain": "legal",
+    "queries": [
+      "emergency surgery informed consent exception",
+      "anesthesia airway risk documentation standard of care",
+      "duty of care preoperative risk disclosure"
+    ],
+    "idea": "Ask which pre-anesthesia action best meets both safe airway management for a submandibular abscess and legal duty of care. Preserve the medical core: comprehensive difficult-airway assessment (history, head/neck exam, TMJ mobility limits, risks of oral intubation with abscess) and add legal requirements: informed consent scope in emergencies, documentation of airway plan/risks, and standard-of-care decision-making. Essential conditions: emergent but not immediately life-threatening status permitting brief assessment/consent, availability of alternative airway strategies, and institutional policies on documentation.",
+    "full_union_size": 57,
+    "replay_top20_matches": true,
+    "changes": {
+      "1": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "5": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "10": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "20": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "30": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      }
+    },
+    "top3": [
+      {
+        "candidate_id": "legal:022936c76520e03797e2e980b12b3a6a0dfbbf0fe0bec57ad9b32bba444c2dbe",
+        "source_line": 3452,
+        "sample": {
+          "prompt": "Does the sentence contain language overruling a previous case?\n\n\n\n\n\nSentence: likewise, we have relied on the framework of that section in recognizing the principle that even when an actor's conduct does not create a risk of physical harm, the actor may still owe an affirmative duty of care based on a special relationship. Reply with either: Yes, No\nLabel:",
+          "completion": "No"
+        },
+        "hits": [
+          {
+            "query_index": 2,
+            "method": "bm25",
+            "rank": 4,
+            "score": 10.934192347106592
+          },
+          {
+            "query_index": 3,
+            "method": "bm25",
+            "rank": 1,
+            "score": 18.511239999705964
+          }
+        ]
+      },
+      {
+        "candidate_id": "legal:6368ca73c1c6e2ddc184c64792426ea5d2d1d2d78459820a53fb8959c28f655f",
+        "source_line": 28812,
+        "sample": {
+          "prompt": "Does the clause describe if and how users will be informed about changes to the privacy policy?\n\n\n\n\n\n\n\nClause: Law Enforcement. Kaleida Health may disclose your health information to law enforcement officials for the following reasons: To comply with court orders or laws that Kaleida Health is required to follow; To assist law enforcement officers with identifying or locating a suspect, fugitive, witness, or missing person; If you have been the victim of a crime and Kaleida Health determines that: (1) we have been unable to obtain your general written consent because of an emergency or your incapacity; (2) law enforcement officials need this information immediately to carry out their law enforcement duties; and (3) in our professional judgment disclosure to these officers is in your best interests; If Kaleida Health suspects that your death resulted from criminal conduct; If necessary to report a crime that occurred on our property; or If necessary to report a crime discovered during an offsite medical emergency (for example, by emergency medical technicians at the scene of a crime). Reply with either: Yes, No\nLabel:",
+          "completion": "No"
+        },
+        "hits": [
+          {
+            "query_index": 1,
+            "method": "bm25",
+            "rank": 2,
+            "score": 15.616123474464912
+          },
+          {
+            "query_index": 1,
+            "method": "embedding",
+            "rank": 4,
+            "score": 0.19971132278442383
+          }
+        ]
+      },
+      {
+        "candidate_id": "legal:122734817722f27809ecc506e32242384581d186e0c0db0330c5640dd6ea956d",
+        "source_line": 10538,
+        "sample": {
+          "prompt": "Classify each clause by type.\nOptions: Arbitration, Unilateral change, Content removal, Jurisdiction, Choice of law, Limitation of liability, Unilateral termination, Contract by using, Other\n\n\n\n\n\n\n\n\nClause: we are not liable or responsible for any consequences of your having read or been told about such advice or other materials as you assume full responsibility for your decisions and actions .  Reply with either: Arbitration, Unilateral change, Content removal, Jurisdiction, Choice of law, Limitation of Liability, Unilateral termination, Contract by using, Other\nLabel:",
+          "completion": "Limitation of liability"
+        },
+        "hits": [
+          {
+            "query_index": 1,
+            "method": "embedding",
+            "rank": 7,
+            "score": 0.1961902678012848
+          },
+          {
+            "query_index": 3,
+            "method": "embedding",
+            "rank": 3,
+            "score": 0.21237799525260925
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "group": "results_5.5",
+    "file": "3_2_1_financial_domain_count_4.jsonl",
+    "line": 34,
+    "domain": "legal",
+    "queries": [
+      "residential lease indoor mold landlord remediation duty",
+      "habitability mold health hazard statutory repair deadline",
+      "landlord mold remediation noncompliance penalties"
+    ],
+    "idea": "Ask for the landlord’s adjusted annual property tax given: baseline tax on owner-occupied and rental property per financial rules; a mid-year rental to a tenant; discovery of significant indoor mold causing the tenant’s medically substantiated respiratory illness; a legal settlement requiring the landlord to perform mandated remediation within a statutory deadline to avoid a health-and-safety penalty but allowing a tax deduction/abatement for qualified remediation costs tied to proven health impact; and precise dates and statutory rates. Finance supplies tax bases and allowable abatements/penalties, law determines when remediation costs are deductible and when penalties apply, medicine establishes causation and qualifying severity for abatement, and mathematics handles prorations (rental months, exposure window), thresholds, and rate application. Ensure provided conditions include dates of rental start, inspection, diagnosis, remediation completion, statutory deduction cap tied to documented medical harm, and a penalty that triggers only if remediation exceeds the deadline.",
+    "full_union_size": 40,
+    "replay_top20_matches": true,
+    "changes": {
+      "1": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "5": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "10": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "20": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "30": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      }
+    },
+    "top3": [
+      {
+        "candidate_id": "legal:298d3a11971bf29bbc641b8c77be51aaff2e5a8831e2f6f963a89b46c14c8583",
+        "source_line": 44449,
+        "sample": {
+          "prompt": "Does the post discuss issues with paying your rent or mortgage, landlord-tenant issues, housing subsidies and public housing, eviction, and other problems with your apartment, mobile home, or house?\n\n\n\n\n\nPost: I'm renting a home in Washington state. When we moved in, we noticed mold in the shower and sinks and complained to the management company. They sent a cleaning company who took care of the visible mold. 11 months into our lease, I noticed a musky smell coming from our kitchen sink. When we first moved in, I noticed the wood floor near the sink had water damage, indicating the mold was caused by previous tenants.   A week ago, I attempted to clean up the visible black mold in the sink drain. A few hours later, I felt itchy, nauseous and very tired. For the last week my family have had headaches. I have ongoing brain fog and memory loss. Don’t attempt to clean mold on your own; it releases mycotoxin spores into the air when disturbed that are very bad for you and can be neurotoxic. We sent a sample of the mold into the lab and it came back positive for three types of mold, two of which are toxic. Our lease ends next month and the home is unsafe to live in. We sent the positive mold test results to the property management company and they want to send in a different mold testing company, who won’t be able to come for a week and won’t have results for two weeks. They’re moving slowly on this.  We are staying at a hotel to avoid further exposure to the mold. What are our tenant rights in this situation? I’ve had to pay for medical bills, hotels, mold tests, etc.   Since the management company knew of the mold when we moved in (we reported it), what liability is on them? Could our expenses be covered? Reply with either: Yes, No\nLabel:",
+          "completion": "Yes"
+        },
+        "hits": [
+          {
+            "query_index": 1,
+            "method": "bm25",
+            "rank": 1,
+            "score": 19.15870408208747
+          },
+          {
+            "query_index": 1,
+            "method": "embedding",
+            "rank": 1,
+            "score": 0.2971273958683014
+          },
+          {
+            "query_index": 2,
+            "method": "embedding",
+            "rank": 1,
+            "score": 0.25805380940437317
+          },
+          {
+            "query_index": 3,
+            "method": "bm25",
+            "rank": 3,
+            "score": 15.27068001043885
+          },
+          {
+            "query_index": 3,
+            "method": "embedding",
+            "rank": 1,
+            "score": 0.27846989035606384
+          }
+        ]
+      },
+      {
+        "candidate_id": "legal:e6d95166b227f1de6d67cdd528af59b7d4626f57e4715a2cf96b24b0e181d6c5",
+        "source_line": 48149,
+        "sample": {
+          "prompt": "Does the post discuss issues with paying your rent or mortgage, landlord-tenant issues, housing subsidies and public housing, eviction, and other problems with your apartment, mobile home, or house?\n\n\n\n\n\nPost: I live in an apartment complex with my SO and roommate. We called just about 3 weeks ago due to some small water damage on our ceiling following a rain storm; we are on the 4th (top) floor. The first call was just to report it and there was just a small amount of discoloration. The next day it rained again, however this time it was a different spot and the drywall had become very soft and discolored. A second call was made to report this new damage. The following morning/afternoon mold had formed on the 2nd wet spot, a third call was placed for someone to come out and check the damages to repair whatever was causing the leak.    Fast forward a week and no one has come out with a couple more calls and messages left for maintanence to come out. It rains again and 2 more wet spots show up, making 4 total, another call was made reporting new damage and we demanded someone come out immediately to check all the leaks and for the mold issue. Someone comes out to check it all and tells us that it is caused by condensation forming on the AC ducts. Cool no problem someone should be out to insulate the ducts to stop that from happening anymore. \"Okay well what about the mold issue?\" \"oh well yea I guess we can have someone come out and check on that aswell.\" A couple days later we found a much larger spot of mold in our pantry opposite where the AC unit is stored.    So now we are around 3-3.5 weeks out from the initial incident and thry are aware of the amount of mold in the apartment. What are our options legally? We would like to leave without cancellation fees since this is not our first issue with maintenance. Its a standard month to month contract for 12months ending in November.    Thank you everyone if you need any information or pictures let me know and I can try and upload them, I am currently on mobile at work. Reply with either: Yes, No\nLabel:",
+          "completion": "Yes"
+        },
+        "hits": [
+          {
+            "query_index": 1,
+            "method": "embedding",
+            "rank": 9,
+            "score": 0.2538270354270935
+          },
+          {
+            "query_index": 2,
+            "method": "bm25",
+            "rank": 8,
+            "score": 13.462744594371808
+          },
+          {
+            "query_index": 2,
+            "method": "embedding",
+            "rank": 6,
+            "score": 0.23091642558574677
+          },
+          {
+            "query_index": 3,
+            "method": "embedding",
+            "rank": 5,
+            "score": 0.24239662289619446
+          }
+        ]
+      },
+      {
+        "candidate_id": "legal:3879c491a0fec575a9487e64f0aae613046e45d1bc6236924d21472afe439298",
+        "source_line": 56361,
+        "sample": {
+          "prompt": "Does the post discuss issues with paying your rent or mortgage, landlord-tenant issues, housing subsidies and public housing, eviction, and other problems with your apartment, mobile home, or house?\n\n\n\n\n\nPost: I've just spent the last month in and out of the hospital due to black mold being in the house. I've told the landlord about it several times over the past year, and he refuses to do anything. He finally came in after medics found me unresponsive and sprayed the baseboards, but we won't check to see how far into the wall it's gone. So I'm currently out of the house, and will not be back until I'm positive it's the mold making me sick. I told the landlord I put a stop payment on the rent check until he decides to properly look at the wall and deal with the mold issue, and he gave me an official 3 days eviction notice. With the house not being habitable, can he do this? Is there anything I can do to not be evicted? Reply with either: Yes, No\nLabel:",
+          "completion": "Yes"
+        },
+        "hits": [
+          {
+            "query_index": 2,
+            "method": "embedding",
+            "rank": 2,
+            "score": 0.2399754673242569
+          },
+          {
+            "query_index": 3,
+            "method": "bm25",
+            "rank": 4,
+            "score": 15.186774163765799
+          },
+          {
+            "query_index": 3,
+            "method": "embedding",
+            "rank": 10,
+            "score": 0.23684929311275482
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "group": "results_5.5",
+    "file": "3_2_1_medical_domain_count_4.jsonl",
+    "line": 27,
+    "domain": "mathematics",
+    "queries": [
+      "ROC-optimized risk score threshold selection",
+      "calibrated clinical prediction model risk score",
+      "sensitivity specificity threshold urgent triage"
+    ],
+    "idea": "Ask which triage action a hospital decision-support system should output for a 14-week pregnant minor presenting with lower abdominal pain and vaginal bleeding. Preserve medical criteria pointing to threatened abortion; require computer_science to design a rule-based workflow that ingests symptoms, gestational age, vitals, and ultrasound/lab flags; use mathematics to compute a calibrated risk score with a predefined ROC-optimized threshold for urgent OB evaluation; and apply legal rules for minor consent/guardian notification and audit logging. Essential conditions: stable vitals, intrauterine pregnancy confirmed or not-yet-ruled-out ectopic requires separate hard-stop rule, jurisdiction requires guardian notification for non-emancipated minors in non-emergency care, and thresholds are pre-specified and unique.",
+    "full_union_size": 29,
+    "replay_top20_matches": true,
+    "changes": {
+      "1": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "5": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "10": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "20": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "30": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      }
+    },
+    "top3": [
+      {
+        "candidate_id": "mathematics:f4124dd1e17a34881407f78a973d34b3a27ca3fb0cd6c198f6b91978722626bd",
+        "source_line": 488,
+        "sample": {
+          "prompt": "question:\nLaila took five math tests, each worth a maximum of 100 points. Laila's score on each test was an integer between 0 and 100, inclusive. Laila received the same score on the first four tests, and she received a higher score on the last test. Her average score on the five tests was 82. How many values are possible for Laila's score on the last test?\noptions:\nA.10\nB.4\nC.18\nD.5\nanswer:\n",
+          "completion": "B.4"
+        },
+        "hits": [
+          {
+            "query_index": 1,
+            "method": "bm25",
+            "rank": 1,
+            "score": 9.93176521521523
+          },
+          {
+            "query_index": 1,
+            "method": "embedding",
+            "rank": 2,
+            "score": 0.19036470353603363
+          },
+          {
+            "query_index": 2,
+            "method": "bm25",
+            "rank": 3,
+            "score": 9.93176521521523
+          },
+          {
+            "query_index": 2,
+            "method": "embedding",
+            "rank": 2,
+            "score": 0.18775704503059387
+          },
+          {
+            "query_index": 3,
+            "method": "embedding",
+            "rank": 5,
+            "score": 0.16121546924114227
+          }
+        ]
+      },
+      {
+        "candidate_id": "mathematics:86fe6e1b025eaee5438a0394bf73d22b646dec1774e1a3041bf821e4d177749c",
+        "source_line": 445,
+        "sample": {
+          "prompt": "question:\nFour students take an exam. Three of their scores are  $70, 80,$ and  $90$ . If the average of their four scores is  $70$ , then what is the remaining score?\noptions:\nA.70\nB.50\nC.60\nD.40\nanswer:\n",
+          "completion": "D.40"
+        },
+        "hits": [
+          {
+            "query_index": 1,
+            "method": "bm25",
+            "rank": 3,
+            "score": 6.452917090682184
+          },
+          {
+            "query_index": 2,
+            "method": "bm25",
+            "rank": 5,
+            "score": 6.452917090682184
+          },
+          {
+            "query_index": 2,
+            "method": "embedding",
+            "rank": 5,
+            "score": 0.1759580373764038
+          }
+        ]
+      },
+      {
+        "candidate_id": "mathematics:d5fded43ac2409ee12b1fa7d52e82d6a344b894c8c0f989ba275ed98400d8752",
+        "source_line": 537,
+        "sample": {
+          "prompt": "question:\nFractions must have the same () before they can be added or subtracted.\noptions:\nA.cut-off score\nB.All the other options are wrong\nC.denominator\nD.numerator\nanswer:\n",
+          "completion": "C.denominator"
+        },
+        "hits": [
+          {
+            "query_index": 1,
+            "method": "bm25",
+            "rank": 2,
+            "score": 7.063867622040365
+          },
+          {
+            "query_index": 2,
+            "method": "bm25",
+            "rank": 4,
+            "score": 7.063867622040365
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "group": "results_5.5",
+    "file": "3_2_1_computer_science_domain_count_2.jsonl",
+    "line": 13,
+    "domain": "mathematics",
+    "queries": [
+      "linear capacity inequality page key pointer sizes",
+      "logarithmic tree height ceiling fanout records",
+      "expected occupancy B-tree random insertions fill factor"
+    ],
+    "idea": "Ask for the minimal possible expected root-to-leaf disk I/Os for a successful search in a B-tree index built over 20,000,000 fixed-length records under the given 4000B page and 5B pointer/key constraints, assuming keys are independently and uniformly distributed across leaves and node occupancies follow the standard B-tree steady-state range. Computer_science contributes the node layout constraint to derive feasible order m, leaf capacity, and B-tree height bounds; mathematics contributes solving the capacity inequality, computing logarithmic height estimates, and using expected occupancy (e.g., mean ~0.75 of max) to minimize expected I/Os subject to the constraints. Essential conditions: distinguish B-tree (keys and record pointers in internal/leaf nodes), use uniform key distribution, and assume large n with steady-state occupancy within [ceil(m/2)-1, m-1].",
+    "full_union_size": 51,
+    "replay_top20_matches": true,
+    "changes": {
+      "1": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "5": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "10": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "20": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "30": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      }
+    },
+    "top3": [
+      {
+        "candidate_id": "mathematics:10fbc110b82687d7d587eb102e13a308f6dd1f8964cd180b9b4bd58b5b188de3",
+        "source_line": 805,
+        "sample": {
+          "prompt": "question:\nA scientist walking through a forest recorded as integers the heights of  $5$ trees standing in a row. She observed that each tree was either twice as tall or half as tall as the one to its right. Unfortunately some of her data was lost when rain fell on her notebook. Her notes are shown below, with blanks indicating the missing numbers. Based on her observations, the scientist was able to reconstruct the lost data. What was the average height of the trees, in meters?\n\n $\\begingroup \\setlength{\\tabcolsep}{10pt} \\renewcommand{\\arraystretch}{1.5} \\begin{array}{|c|c|} \\hline Tree 1 & \\rule{0.4cm}{0.15mm} meters \\\\ Tree 2 & 11 meters \\\\ Tree 3 & \\rule{0.5cm}{0.15mm} meters \\\\ Tree 4 & \\rule{0.5cm}{0.15mm} meters \\\\ Tree 5 & \\rule{0.5cm}{0.15mm} meters \\\\ \\hline Average height & \\rule{0.5cm}{0.15mm}\\text{ .}2 meters \\\\ \\hline \\end{array} \\endgroup$\noptions:\nA.22.2\nB.24.2\nC.37.2\nD.35.2\nanswer:\n",
+          "completion": "B.24.2"
+        },
+        "hits": [
+          {
+            "query_index": 2,
+            "method": "bm25",
+            "rank": 2,
+            "score": 12.939854961020398
+          },
+          {
+            "query_index": 2,
+            "method": "embedding",
+            "rank": 2,
+            "score": 0.19826355576515198
+          },
+          {
+            "query_index": 3,
+            "method": "bm25",
+            "rank": 2,
+            "score": 8.757107264980363
+          }
+        ]
+      },
+      {
+        "candidate_id": "mathematics:6a1af0d3b609e1d3c837e4bc564c657f845c40dbcd5676926d1ec2eb72dca1a6",
+        "source_line": 463,
+        "sample": {
+          "prompt": "question:\nGiven a function \\(f(x)\\) with domain \\(D\\), and a set of numbers \\(X \\subseteq D\\). If there exists a positive number \\(M\\) such that \\(|f(x)| \\leqslant M\\) holds for every \\(x \\in X\\), the function \\(f(x)\\) is said to be what on \\(X\\)?\noptions:\nA.Bounded\nB.Unbounded\nC.Monotonic\nD.Periodic\nanswer:\n",
+          "completion": "A.Bounded"
+        },
+        "hits": [
+          {
+            "query_index": 1,
+            "method": "embedding",
+            "rank": 8,
+            "score": 0.24760568141937256
+          },
+          {
+            "query_index": 2,
+            "method": "embedding",
+            "rank": 4,
+            "score": 0.18330588936805725
+          },
+          {
+            "query_index": 3,
+            "method": "embedding",
+            "rank": 10,
+            "score": 0.18206892907619476
+          }
+        ]
+      },
+      {
+        "candidate_id": "mathematics:7c9896c6bc5cf38b6cbbc9fdfc8deadf9d42d2d7f1f4476856233e1dc19a9f48",
+        "source_line": 14,
+        "sample": {
+          "prompt": "question:\nGenerally, several single-variable linear inequalities about the same unknown combined together form what?\noptions:\nA.Single-variable linear equation\nB.System of single-variable linear inequalities\nC.System of single-variable linear equations\nD.Single-variable linear inequality\nanswer:\n",
+          "completion": "B.System of single-variable linear inequalities"
+        },
+        "hits": [
+          {
+            "query_index": 1,
+            "method": "bm25",
+            "rank": 2,
+            "score": 11.290786882214778
+          },
+          {
+            "query_index": 1,
+            "method": "embedding",
+            "rank": 1,
+            "score": 0.2875838279724121
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "group": "results_5.5",
+    "file": "3_2_1_geography_domain_count_4.jsonl",
+    "line": 29,
+    "domain": "medical",
+    "queries": [
+      "early tetrapod limb functional anatomy",
+      "weight-bearing limb bones vertebrate transition",
+      "respiratory adaptations Devonian tetrapods"
+    ],
+    "idea": "Ask: Based on a dated stratigraphic core labeled “D” corresponding to the Devonian, which integrative inference about the timing and rate of early limb-function emergence in vertebrates is most consistent with the layer’s position, its geochemical/isotopic signatures, and fossil anatomical evidence, when analyzed with a simple Bayesian rate model? Geography anchors “D” to Devonian stratigraphy and depositional setting; chemistry provides isotopic markers (e.g., marine Sr isotopes, redox-sensitive trace metals, kerogen maturity) for layer correlation and taphonomy; medical links fossil limb and respiratory anatomy to functional milestones; mathematics fits a Poisson/Bayesian occurrence model using dated horizons to infer emergence timing and rate. Essential conditions: correctly correlated Devonian sub-stage age bounds, consistent redox and diagenesis assumptions, and a model assuming constant rate within sub-stages and independent discoveries.",
+    "full_union_size": 52,
+    "replay_top20_matches": true,
+    "changes": {
+      "1": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "5": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "10": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "20": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "30": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      }
+    },
+    "top3": [
+      {
+        "candidate_id": "medical:6bfa11cc5726d9774d0cd57f4a446631cb3495720b0a1eb2d0ee97e441518318",
+        "source_line": 2822,
+        "sample": {
+          "prompt": "question:\nWhich of the following is not a post-polio syndrome (postpolio syndrome) is the most common clinical symptoms early?\noptions:\nA.Muscle weakness\nB.fatigue\nC.Joint pain\nD.Limb deformity\nanswer:\n",
+          "completion": "D.Limb deformity"
+        },
+        "hits": [
+          {
+            "query_index": 1,
+            "method": "bm25",
+            "rank": 2,
+            "score": 12.048588661404267
+          },
+          {
+            "query_index": 1,
+            "method": "embedding",
+            "rank": 2,
+            "score": 0.23432093858718872
+          },
+          {
+            "query_index": 2,
+            "method": "embedding",
+            "rank": 5,
+            "score": 0.20292769372463226
+          }
+        ]
+      },
+      {
+        "candidate_id": "medical:2d1023ef84923acc54f475f02de575eb5e6ea609477a6e3b452fec20e7c7cbbc",
+        "source_line": 10436,
+        "sample": {
+          "prompt": "question:\nThe following related degenerative arthritis (osteoarthritis) of the narrative, whichever is the most correct?\noptions:\nA.Often occurs in weight-bearing joints such as the knee, hip, etc.\nB.The purpose of rehabilitation therapy is to correct the deformation\nC.The preferred treatment is artificial joint replacement surgery\nD.Only jogging, can not swim\nanswer:\n",
+          "completion": "A.Often occurs in weight-bearing joints such as the knee, hip, etc."
+        },
+        "hits": [
+          {
+            "query_index": 2,
+            "method": "bm25",
+            "rank": 2,
+            "score": 12.823567762460176
+          },
+          {
+            "query_index": 2,
+            "method": "embedding",
+            "rank": 1,
+            "score": 0.2517086863517761
+          }
+        ]
+      },
+      {
+        "candidate_id": "medical:8857786dd79974309dd5ae4cd530be32f6d10ed34074bfdb7e982440f1c18bb8",
+        "source_line": 8514,
+        "sample": {
+          "prompt": "question:\nWhich of the following human walking aids (ambulation aids) provides maximum load-bearing body (weight bearing)?\noptions:\nA.Cane (cane)\nB.Axillary crutches (axillary crutch)\nC.Upper arm crutch (forearm crutch)\nD.Walkers (Walker)\nanswer:\n",
+          "completion": "B.Axillary crutches (axillary crutch)"
+        },
+        "hits": [
+          {
+            "query_index": 2,
+            "method": "bm25",
+            "rank": 4,
+            "score": 12.23848184264239
+          },
+          {
+            "query_index": 2,
+            "method": "embedding",
+            "rank": 4,
+            "score": 0.21243910491466522
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "group": "results_6",
+    "file": "3_2_1_geography_domain_count_4.jsonl",
+    "line": 1,
+    "domain": "medical",
+    "queries": [
+      "Childhood incidental sediment ingestion rates age-specific body weight",
+      "Childhood arsenic exposure lifetime-average daily dose exposure duration adjustment",
+      "Inorganic arsenic oral cancer slope factor excess lifetime cancer risk"
+    ],
+    "idea": "Ask for the one-sided 95% upper credible bound on population-weighted excess lifetime cancer risk from childhood ingestion of arsenic-contaminated floodplain sediment, retaining alluvium as sediment mechanically deposited by rivers. Geography identifies river-deposited exposure zones and appropriate spatial sampling groups; chemistry converts measured arsenic into orally bioavailable inorganic arsenic; medical knowledge determines ingestion dose, lifetime averaging, and cancer risk; mathematics propagates spatially correlated sampling uncertainty. Provide geomorphic evidence, speciation and bioavailability measurements, exposure histories, toxicity reference values, and inputs supporting geostatistical inference; restrict exposure to the stated pathway, justify the uncertainty approximation, and select inputs yielding five distinct bounds without supplying the intermediate domain conclusions.",
+    "full_union_size": 48,
+    "replay_top20_matches": true,
+    "changes": {
+      "1": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "5": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "10": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "20": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "30": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      }
+    },
+    "top3": [
+      {
+        "candidate_id": "medical:ff44176bc54c9c8009e2b89abd1a5cb43186690824722eeb63b58b750d105591",
+        "source_line": 6365,
+        "sample": {
+          "prompt": "question:\nWhich of the following may cause hypotension, acute gastroenteritis, and even shock and metabolic acidosis (metabolic acidosis) and other symptoms of poisoning?\noptions:\nA.Acute poisoning inorganic arsenic (acute inorganic arsenic poisoning)\nB.Acute inorganic mercury poisoning (acute inorganic mercury intoxication)\nC.Thallium salt poisoning (thallium salts intoxication)\nD.Radioactive cesium poisoning (radioactive cesium (137Cs) intoxication)\nanswer:\n",
+          "completion": "A.Acute poisoning inorganic arsenic (acute inorganic arsenic poisoning)"
+        },
+        "hits": [
+          {
+            "query_index": 2,
+            "method": "embedding",
+            "rank": 2,
+            "score": 0.30008697509765625
+          },
+          {
+            "query_index": 3,
+            "method": "bm25",
+            "rank": 1,
+            "score": 26.097296350360384
+          },
+          {
+            "query_index": 3,
+            "method": "embedding",
+            "rank": 2,
+            "score": 0.327526330947876
+          }
+        ]
+      },
+      {
+        "candidate_id": "medical:a7b9bd4c22d83d8e9b4e7a3cb4983488aa7f24d8ca7770ba71fcb45c18ac0f11",
+        "source_line": 3826,
+        "sample": {
+          "prompt": "question:\nOne pair of middle-aged couple had just returned to settle in the past six months the gradual emergence of skin pigmentation, gastrointestinal discomfort, liver and kidney dysfunction, systemic sensory and motor dysfunction, baldness, the taste of garlic breath, before they could be following what toxins Pollution?\noptions:\nA.Hg (mercury)\nB.Pb (lead)\nC.Arsenic (arsenic)\nD.Mn (manganese)\nanswer:\n",
+          "completion": "C.Arsenic (arsenic)"
+        },
+        "hits": [
+          {
+            "query_index": 2,
+            "method": "bm25",
+            "rank": 10,
+            "score": 12.311801688004218
+          },
+          {
+            "query_index": 2,
+            "method": "embedding",
+            "rank": 1,
+            "score": 0.32504165172576904
+          },
+          {
+            "query_index": 3,
+            "method": "embedding",
+            "rank": 1,
+            "score": 0.34085798263549805
+          }
+        ]
+      },
+      {
+        "candidate_id": "medical:815dd060140bba25e6ea6ff04a6792db06fb6f8e9092eecae7d839ae59a2038f",
+        "source_line": 8545,
+        "sample": {
+          "prompt": "question:\nThat the following description does not apply to most of the carcinogen risk assessment?\noptions:\nA.Suppose there exists a threshold dose response\nB.Uncertainty analysis conducted\nC.Consider the status of long-term exposure\nD.Using the slope factor calculated risk of cancer\nanswer:\n",
+          "completion": "A.Suppose there exists a threshold dose response"
+        },
+        "hits": [
+          {
+            "query_index": 2,
+            "method": "bm25",
+            "rank": 8,
+            "score": 13.105616917884667
+          },
+          {
+            "query_index": 3,
+            "method": "bm25",
+            "rank": 3,
+            "score": 22.44848213287609
+          },
+          {
+            "query_index": 3,
+            "method": "embedding",
+            "rank": 5,
+            "score": 0.2661122679710388
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "group": "results_5.5",
+    "file": "3_2_1_chemistry_domain_count_2.jsonl",
+    "line": 1,
+    "domain": "medical",
+    "queries": [
+      "phosphine gas inhalation toxicity",
+      "phosphine poisoning cardiopulmonary mitochondrial effects",
+      "phosphine exposure first aid fresh air oxygen"
+    ],
+    "idea": "Design a scenario where a strong reducing agent is accidentally added to an organophosphate/thiophosphate pesticide in a poorly ventilated storeroom, and ask which single immediate response action best reduces acute clinical risk given the likely gas produced. Chemistry identifies the evolved gas as phosphine from reduced phosphate/thiophosphate esters; medical knowledge links phosphine’s rapid inhalational toxicity (mitochondrial disruption, cardiopulmonary compromise) to appropriate first-aid: immediate evacuation to fresh air and supportive oxygenation while avoiding ignition sources. Conditions: closed space, no fire yet, victims conscious, and responders have no specialized PPE beyond basic first aid.",
+    "full_union_size": 51,
+    "replay_top20_matches": true,
+    "changes": {
+      "1": {
+        "top1_changed": true,
+        "top20_overlap": 1.0
+      },
+      "5": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "10": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "20": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "30": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      }
+    },
+    "top3": [
+      {
+        "candidate_id": "medical:e0df0e628cd804badba9b40be959e4b3471bac7826c97854b3f9b1be830fbb8b",
+        "source_line": 7361,
+        "sample": {
+          "prompt": "question:\n30-year-old Xiao Ming because of a bad mood, drank two paraquat (Paraquat) pesticides, the following statements is wrong?\noptions:\nA.Often unconscious within minutes\nB.Pulmonary fibrosis (pulmonary fibrosis) is usually the main cause of death\nC.Paraquat can be absorbed through the skin, it should remove contaminated clothing\nD.Reusable activated carbon or clay (Fuller's earth), can reduce the absorption of Paraquat\nanswer:\n",
+          "completion": "A.Often unconscious within minutes"
+        },
+        "hits": [
+          {
+            "query_index": 1,
+            "method": "embedding",
+            "rank": 2,
+            "score": 0.2641150951385498
+          },
+          {
+            "query_index": 2,
+            "method": "embedding",
+            "rank": 6,
+            "score": 0.25035324692726135
+          },
+          {
+            "query_index": 3,
+            "method": "embedding",
+            "rank": 9,
+            "score": 0.24279381334781647
+          }
+        ]
+      },
+      {
+        "candidate_id": "medical:09cb7229a313995f63fb4ee7d776448c475183c5f33190fa692c0e92d0b14b82",
+        "source_line": 9279,
+        "sample": {
+          "prompt": "question:\nAbout organophosphate poisoning (organophosphate intoxication), the following statements is wrong?\noptions:\nA.Parasympathetic hyperactivity often show symptoms such as restlessness, salivation and slow heartbeat\nB.Prone to complications of aspiration pneumonia\nC.atropine as an antidote\nD.pralidoxime (PAM) can improve muscle tremor circumstances, to use at least three months\nanswer:\n",
+          "completion": "D.pralidoxime (PAM) can improve muscle tremor circumstances, to use at least three months"
+        },
+        "hits": [
+          {
+            "query_index": 1,
+            "method": "embedding",
+            "rank": 6,
+            "score": 0.2414684146642685
+          },
+          {
+            "query_index": 2,
+            "method": "embedding",
+            "rank": 8,
+            "score": 0.24655325710773468
+          },
+          {
+            "query_index": 3,
+            "method": "embedding",
+            "rank": 3,
+            "score": 0.25903069972991943
+          }
+        ]
+      },
+      {
+        "candidate_id": "medical:e321cba64062dffbdbc56d6370d02de71b2de303f2d5815570796a13017a6e8a",
+        "source_line": 9236,
+        "sample": {
+          "prompt": "question:\nA Puna Teng (acetaminophen) poisoning patients appear yellowing of the skin on the third day, dark brown urine, which is most likely due to toxic effects?\noptions:\nA.Liver toxicity (hepatotoxicity)\nB.Cardiac toxicity (cardiotoxicity)\nC.Nerve toxicity (neurotoxicity)\nD.Kidney toxicity (nephrotoxicity)\nanswer:\n",
+          "completion": "A.Liver toxicity (hepatotoxicity)"
+        },
+        "hits": [
+          {
+            "query_index": 1,
+            "method": "bm25",
+            "rank": 3,
+            "score": 12.23077842715133
+          },
+          {
+            "query_index": 2,
+            "method": "bm25",
+            "rank": 10,
+            "score": 10.109559131712974
+          },
+          {
+            "query_index": 2,
+            "method": "embedding",
+            "rank": 9,
+            "score": 0.2430451363325119
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "group": "results_5.5",
+    "file": "3_2_1_chemistry_domain_count_2.jsonl",
+    "line": 2,
+    "domain": "legal",
+    "queries": [
+      "OSHA emergency action plan hazardous chemical spill evacuation",
+      "HAZWOPER hazardous substance release employer emergency response duties",
+      "phosphine gas release workplace incident reporting requirements"
+    ],
+    "idea": "Ask which single immediate employer duty is triggered when a laboratory spill involving phosphate ester waste and a strong reducing agent starts emitting a colorless, garlic-odor gas identified chemically as phosphine. Chemistry must identify the gas and key properties (highly toxic, flammable, heavier-than-air), while legal must map that identification to the correct regulatory obligation among several plausible ones (e.g., incident reporting vs. evacuation vs. exposure monitoring). Essential conditions: small-scale lab spill, no fire yet, employees potentially exposed, and jurisdiction uses standard hazardous substance incident triggers tied to acutely toxic gas releases.",
+    "full_union_size": 56,
+    "replay_top20_matches": true,
+    "changes": {
+      "1": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "5": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "10": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "20": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "30": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      }
+    },
+    "top3": [
+      {
+        "candidate_id": "legal:08b3e02ee474fd76a951ef9b413595e76ac562aabb35ea7a6ebbbe9061cb814f",
+        "source_line": 20199,
+        "sample": {
+          "prompt": "Does the post discuss issues with paying your rent or mortgage, landlord-tenant issues, housing subsidies and public housing, eviction, and other problems with your apartment, mobile home, or house?\n\n\n\n\n\nPost: I'm an FLSA exempt employees in California.  Last weekend, my employer had a major emergency and needed me to remedy it.  After working my 40 hour week, I was kept in the office until obscene hours and asked to return each day of the weekend.  When the problem was fully solved, I had spent nearly 40 extra hours working between the hours of 6pm friday and midnight Sunday. I slept very little each day. When I asked if I could take Monday off to fix my sleep schedule, I was told no. I have yet to receive any extra compensation and am being asked to work every Saturday for a month, on top of my Monday-Friday work week. By EOD this Saturday, I believe I will have seen a 90+ hour work week with no extra compensation.  Enough of the sob story. I just wanted to give context around the magnitude of the situation.  I've read many posts on FLSA exempt employees and how they can be required to work extra without a compensation change. I consider that a given.  My question is, what's the upper boundary of extra required hours? Surely there are laws to protect these workers from situations that are a danger to their health? Reply with either: Yes, No\nLabel:",
+          "completion": "No"
+        },
+        "hits": [
+          {
+            "query_index": 1,
+            "method": "embedding",
+            "rank": 2,
+            "score": 0.18341957032680511
+          },
+          {
+            "query_index": 2,
+            "method": "embedding",
+            "rank": 3,
+            "score": 0.24272149801254272
+          }
+        ]
+      },
+      {
+        "candidate_id": "legal:8c0cfff41e45e090ae9190218e5d59fdde27142c5a40088ea7cf2b5c5babb53a",
+        "source_line": 38151,
+        "sample": {
+          "prompt": "Given the following question presented in a court case, select the most relevant holding:\nQuestion: Section 806 of the Sarbanes-Oxley Act, 18 U.S.C. § 1514A, forbids a publicly traded company, a mutual fund, or \"any ... contractor [or] subcontractor ... of such company [to] ... discriminate against an employee in the terms and conditions of employment because of\" certain protected activity. (Emphasis added). The First Circuit held that under section 1514A such contractors and subcontractors, if privately-held, may retaliate against their own employees, and are prohibited only from retaliating against employees of the public companies with which they work. The question presented is:\nIs an employee of a privately-held contractor or subcontractor of a public company protected from retaliation by section 1514A?\nChoices:\n0: holding that whether an expression by a public employee is constitutionally protected is a question of ultimate fact for the court and not subject to limited review under the \"clearly erroneous\" standard\n1: holding generally that if employee conduct is protected under federal law, then state law which interferes with the exercise of such federally protected rights is preempted\n2: holding that management company's “managerial responsibilities” that gave it “substantial control of the terms and conditions of the work” of the employees justified considering management company an employer\n3: holding that whistleblower protection under the Sarbanes-Oxley Act, 18 U.S.C. § 1514A, extended to employees of private contractors and subcontractors serving public companies\n4: holding that a subcontractor on a public project could not \"seize or attach money in the hands of the Government as compensation for the losses resulting from the default of the prime contractor\"\nReply with either: 0, 1, 2, 3, 4\nAnswer:",
+          "completion": "3"
+        },
+        "hits": [
+          {
+            "query_index": 1,
+            "method": "embedding",
+            "rank": 4,
+            "score": 0.18196317553520203
+          },
+          {
+            "query_index": 2,
+            "method": "embedding",
+            "rank": 2,
+            "score": 0.24925287067890167
+          }
+        ]
+      },
+      {
+        "candidate_id": "legal:38d1d7cddccb8dc210370220d5e73d1fb3d7222e341ed096875493076e6dd128",
+        "source_line": 31154,
+        "sample": {
+          "prompt": "Does the post discuss issues related to working at a job, including discrimination and harassment, worker's compensation, workers rights, unions, getting paid, pensions, being fired, and more?\n\n\n\n\n\nPost: Hi guys. I have a lot of questions. Thank your for being well versed in insane minutiae. I did a lot of googling about this and found only bits and pieces of answers    **Scenario**   I am a toddler teacher at a daycare with about 70 employees and two locations, NAEYC accredited. Our location is in a very old building. Today we came in to find that the storage facility connected to the designated break area (they share a door) is undergoing asbestos abatement. All proper signage, warnings, and info packets posted. The room was blocked off with a sheet of plastic and some plywood. None of the employees were alerted, nor were the families. We were also not offered alternative locations to eat lunch. This break room stores all of the food for the children, as well as all cleaning supplies, classroom supplies, extra toys, eating utensils, and a fridge where the employees store lunch and some snacks for children are stored. My boss claims the owner of the building told her to \"keep kids out of the break area because work is being done\" but that asbestos was not mentioned.     **Action sequence**   I am on the playground with my children speaking to another toddler teacher. I ask her if my boss is informing the families and she isn't sure. I indicate that I'm going to let them know that they should keep their children out of the designated area, as they are often in there. My boss's sister (this is it's own problem obviously) hears this and immediately texts my boss. Boss storms onto the playground, interrogating me about why I would want to tell parents about these \"chemicals\" and saying I don't know what I'm talking about, etc etc. When I immediately agreed that i would keep it to myself if she so wished, she continued. She said I just like to caused trouble, that I was a gossip, immature, strange thing like that. I mostly ignored her as I was with my kids, and holding one of them. At the end of her ranting she asked me \"Why do you even come here every day?\" I just kind of gave her a blank stare because that question made no sense to me. I reminded her that I'm putting in my two weeks notice on Friday (going to grad school) and She tells me I'm not needed and I should leave that afternoon and not return. So, humiliated and devastated, i did.  *Note: When I say boss, I refer to our assistant director, as our director is out of town. That's why i was waiting to give my notice, as the Director would return friday. The AD indicated that she was in communication with the director the whole time. I have had no luck contacting the director.*   **Questions**    *1* Does a landlord have any obligation to tell the tenants when asbestos removal is being done? Is the presence of children relevant?   *2* Does my boss have an obligation to let employees know that this work is being done? Does she have an obligation to tell the parents?   *3* Does the landlord have the responsibility of having the air tested for asbestos levels after removal?    *3* Is there anything shady about her reasoning for firing me? I understand at will and all that, but does the safety concern change anything?    *4* Will I be able to collect unemployment from them?    *5* Will I find myself in legal trouble if (now that I am no longer an employee there) I let the parents I know/have contact with that there is asbestos work going on?    I know this is a lot so I truly thank you for reading and considering. I am so lost right now and sadly no amount of googling is bringing me solid answers to these questions. Any help or insight would be incredibly appreciated. And if there are legal issues that may arise that I was unaware of, please let me know! This is turned my life right upside down. Help.  **tldr**: Asbestos abatement being done in a daycare, no one was told it was happening. I found out halfway thru the day when my coworker asked what all the cancer signs are about. Boss/acting boss fires me (allegedly with permission from real boss) for indicating that I wanted to tell the parents of the children who attend the daycare. Reply with either: Yes, No\nLabel:",
+          "completion": "No"
+        },
+        "hits": [
+          {
+            "query_index": 2,
+            "method": "embedding",
+            "rank": 5,
+            "score": 0.2333212047815323
+          },
+          {
+            "query_index": 3,
+            "method": "embedding",
+            "rank": 9,
+            "score": 0.20740757882595062
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "group": "results_6",
+    "file": "3_2_1_chemistry_domain_count_2.jsonl",
+    "line": 1,
+    "domain": "medical",
+    "queries": [
+      "Phosphine inhalation toxicity vomiting dyspnea hypotension cardiopulmonary injury",
+      "Organophosphate poisoning acetylcholinesterase inhibition cholinergic toxidrome atropine oxime treatment",
+      "Phosphine poisoning supportive care cardiovascular respiratory monitoring no specific antidote"
+    ],
+    "idea": "Construct a three-option question asking for the most likely toxic exposure and management strategy after inhalation of gas generated when a phosphate or thiophosphate pesticide ester encounters a strong reducing agent. Retain phosphine identification as the chemistry inference, then require medical knowledge to distinguish phosphine toxicity from anticholinesterase poisoning and select treatment. Use an isolated gas exposure with overlapping early symptoms such as vomiting, dyspnea, and hypotension; later verify the reaction context and parent pesticide's anticholinesterase activity, exclude direct pesticide exposure and competing toxicants, and do not disclose the gas identity or toxicity mechanism.",
+    "full_union_size": 48,
+    "replay_top20_matches": true,
+    "changes": {
+      "1": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "5": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "10": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "20": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "30": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      }
+    },
+    "top3": [
+      {
+        "candidate_id": "medical:a6fe788405fe6ef352a0b14f42115992fa2c14b27b7fe32361317b1d009edd35",
+        "source_line": 8941,
+        "sample": {
+          "prompt": "question:\nWhich of the following is not a cause of acute respiratory distress syndrome (acute respiratory distress syndrome) is?\noptions:\nA.Drowning (near-drowning)\nB.Stomach contents suction (aspiration of gastric contents)\nC.Organophosphate poisoning (organophosphate intoxication)\nD.Inhalation injury (inhalation injury)\nanswer:\n",
+          "completion": "C.Organophosphate poisoning (organophosphate intoxication)"
+        },
+        "hits": [
+          {
+            "query_index": 1,
+            "method": "bm25",
+            "rank": 2,
+            "score": 15.090609880877373
+          },
+          {
+            "query_index": 1,
+            "method": "embedding",
+            "rank": 4,
+            "score": 0.24481448531150818
+          },
+          {
+            "query_index": 2,
+            "method": "bm25",
+            "rank": 2,
+            "score": 21.585938015489145
+          },
+          {
+            "query_index": 2,
+            "method": "embedding",
+            "rank": 1,
+            "score": 0.38498643040657043
+          },
+          {
+            "query_index": 3,
+            "method": "bm25",
+            "rank": 8,
+            "score": 13.315345565470531
+          }
+        ]
+      },
+      {
+        "candidate_id": "medical:09cb7229a313995f63fb4ee7d776448c475183c5f33190fa692c0e92d0b14b82",
+        "source_line": 9279,
+        "sample": {
+          "prompt": "question:\nAbout organophosphate poisoning (organophosphate intoxication), the following statements is wrong?\noptions:\nA.Parasympathetic hyperactivity often show symptoms such as restlessness, salivation and slow heartbeat\nB.Prone to complications of aspiration pneumonia\nC.atropine as an antidote\nD.pralidoxime (PAM) can improve muscle tremor circumstances, to use at least three months\nanswer:\n",
+          "completion": "D.pralidoxime (PAM) can improve muscle tremor circumstances, to use at least three months"
+        },
+        "hits": [
+          {
+            "query_index": 1,
+            "method": "embedding",
+            "rank": 5,
+            "score": 0.23806308209896088
+          },
+          {
+            "query_index": 2,
+            "method": "bm25",
+            "rank": 3,
+            "score": 21.043405348940233
+          },
+          {
+            "query_index": 2,
+            "method": "embedding",
+            "rank": 4,
+            "score": 0.3073006868362427
+          },
+          {
+            "query_index": 3,
+            "method": "bm25",
+            "rank": 9,
+            "score": 12.353286570039373
+          },
+          {
+            "query_index": 3,
+            "method": "embedding",
+            "rank": 1,
+            "score": 0.305856317281723
+          }
+        ]
+      },
+      {
+        "candidate_id": "medical:22f0e327a924eec6f4b6c87971e2b7b1a028ed344bd23fa8f961998029d7a206",
+        "source_line": 10309,
+        "sample": {
+          "prompt": "question:\nThe following related poisoning and the antidote pair of use, whichever is wrong?\noptions:\nA.methanol---folinate\nB.lead encephalopathy---dimercaprol + edetate calcium disodium\nC.organophosphorus compounds---physostigmine\nD.cyanide---sodium thiosulfate\nanswer:\n",
+          "completion": "C.organophosphorus compounds---physostigmine"
+        },
+        "hits": [
+          {
+            "query_index": 2,
+            "method": "embedding",
+            "rank": 2,
+            "score": 0.33965012431144714
+          },
+          {
+            "query_index": 3,
+            "method": "bm25",
+            "rank": 5,
+            "score": 15.26208755414481
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "group": "results_6",
+    "file": "3_2_1_chemistry_domain_count_2.jsonl",
+    "line": 2,
+    "domain": "legal",
+    "queries": [
+      "UK COSHH hazardous reaction products risk assessment and employee information duties",
+      "UK COSHH exposure prevention and control duties below workplace exposure limits",
+      "UK COSHH toxic gas emergency arrangements slight risk exception"
+    ],
+    "idea": "Ask which paired hazard identification and workplace-compliance assessment is correct when phosphate or thiophosphate esters may contact strong reducing agents, retaining the source identification of phosphine as the potential toxic gas. Chemistry identifies the foreseeable reaction-product hazard; legal knowledge determines whether an employer's parent-material-only hazard communication, exposure controls, and emergency arrangements meet a specified jurisdiction's obligations. Retrieve applicable provisions and establish coverage, relevant emergency-response arrangements, adequate parent-material precautions, and no applicable exemptions; use three distinct hazard-and-compliance pairings without supplying the gas identity or legal conclusion.",
+    "full_union_size": 57,
+    "replay_top20_matches": true,
+    "changes": {
+      "1": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "5": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "10": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "20": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      },
+      "30": {
+        "top1_changed": false,
+        "top20_overlap": 1.0
+      }
+    },
+    "top3": [
+      {
+        "candidate_id": "legal:ef0e3873d3f858a9b76b41c0a57f78bd48fa65aae5744a1654256ad4dd6fc53f",
+        "source_line": 49019,
+        "sample": {
+          "prompt": "Classify each clause by type.\nOptions: Arbitration, Unilateral change, Content removal, Jurisdiction, Choice of law, Limitation of liability, Unilateral termination, Contract by using, Other\n\n\n\n\n\n\n\n\nClause: uber shall not be liable for delay or failure in performance resulting from causes beyond uber 's reasonable control .  Reply with either: Arbitration, Unilateral change, Content removal, Jurisdiction, Choice of law, Limitation of Liability, Unilateral termination, Contract by using, Other\nLabel:",
+          "completion": "Limitation of liability"
+        },
+        "hits": [
+          {
+            "query_index": 2,
+            "method": "embedding",
+            "rank": 2,
+            "score": 0.2421470582485199
+          },
+          {
+            "query_index": 3,
+            "method": "embedding",
+            "rank": 3,
+            "score": 0.21512199938297272
+          }
+        ]
+      },
+      {
+        "candidate_id": "legal:08b3e02ee474fd76a951ef9b413595e76ac562aabb35ea7a6ebbbe9061cb814f",
+        "source_line": 20199,
+        "sample": {
+          "prompt": "Does the post discuss issues with paying your rent or mortgage, landlord-tenant issues, housing subsidies and public housing, eviction, and other problems with your apartment, mobile home, or house?\n\n\n\n\n\nPost: I'm an FLSA exempt employees in California.  Last weekend, my employer had a major emergency and needed me to remedy it.  After working my 40 hour week, I was kept in the office until obscene hours and asked to return each day of the weekend.  When the problem was fully solved, I had spent nearly 40 extra hours working between the hours of 6pm friday and midnight Sunday. I slept very little each day. When I asked if I could take Monday off to fix my sleep schedule, I was told no. I have yet to receive any extra compensation and am being asked to work every Saturday for a month, on top of my Monday-Friday work week. By EOD this Saturday, I believe I will have seen a 90+ hour work week with no extra compensation.  Enough of the sob story. I just wanted to give context around the magnitude of the situation.  I've read many posts on FLSA exempt employees and how they can be required to work extra without a compensation change. I consider that a given.  My question is, what's the upper boundary of extra required hours? Surely there are laws to protect these workers from situations that are a danger to their health? Reply with either: Yes, No\nLabel:",
+          "completion": "No"
+        },
+        "hits": [
+          {
+            "query_index": 2,
+            "method": "embedding",
+            "rank": 4,
+            "score": 0.23974768817424774
+          },
+          {
+            "query_index": 3,
+            "method": "embedding",
+            "rank": 8,
+            "score": 0.20310507714748383
+          }
+        ]
+      },
+      {
+        "candidate_id": "legal:5ac299a483bcc7a8b51f70fd0fce407100c6bc3999ebab19e5e9c776c2d72c39",
+        "source_line": 52500,
+        "sample": {
+          "prompt": "Classify each clause by type.\nOptions: Arbitration, Unilateral change, Content removal, Jurisdiction, Choice of law, Limitation of liability, Unilateral termination, Contract by using, Other\n\n\n\n\n\n\n\n\nClause: we are not responsible for any loss or damage that is not foreseeable .  Reply with either: Arbitration, Unilateral change, Content removal, Jurisdiction, Choice of law, Limitation of Liability, Unilateral termination, Contract by using, Other\nLabel:",
+          "completion": "Limitation of liability"
+        },
+        "hits": [
+          {
+            "query_index": 2,
+            "method": "embedding",
+            "rank": 8,
+            "score": 0.23610609769821167
+          },
+          {
+            "query_index": 3,
+            "method": "embedding",
+            "rank": 5,
+            "score": 0.20460766553878784
+          }
+        ]
+      }
+    ]
+  }
+]

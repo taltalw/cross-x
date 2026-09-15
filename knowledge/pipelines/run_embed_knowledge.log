@@ -1,0 +1,966 @@
+nohup: 忽略输入
+Fetching 4 files:   0%|          | 0/4 [00:00<?, ?it/s]Fetching 4 files:  25%|██▌       | 1/4 [02:19<06:59, 139.82s/it]Fetching 4 files:  50%|█████     | 2/4 [07:06<07:06, 213.22s/it]Fetching 4 files:  75%|███████▌  | 3/4 [07:12<02:24, 144.29s/it]Fetching 4 files: 100%|██████████| 4/4 [08:47<00:00, 131.81s/it]Fetching 4 files: 100%|██████████| 4/4 [08:47<00:00, 131.81s/it]
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:00<00:00, 56.49it/s]
+Embedding model=Qwen/Qwen3-Embedding-8B device=cuda:0 dtype=bfloat16 dimension=4096
+You're using a Qwen2TokenizerFast tokenizer. Please note that with a fast tokenizer, using the `__call__` method is faster than using a method to encode the text followed by a call to the `pad` method to get a padded encoding.
+medical: 500 samples, 496 chunks
+medical: 1000 samples, 1000 chunks
+medical: 1500 samples, 1496 chunks
+medical: 2000 samples, 2000 chunks
+medical: 2500 samples, 2496 chunks
+medical: 3000 samples, 3000 chunks
+medical: 3500 samples, 3496 chunks
+medical: 4000 samples, 4000 chunks
+medical: 4500 samples, 4496 chunks
+medical: 5000 samples, 5000 chunks
+medical: 5500 samples, 5496 chunks
+medical: 6000 samples, 6000 chunks
+medical: 6500 samples, 6496 chunks
+medical: 7000 samples, 7000 chunks
+medical: 7500 samples, 7496 chunks
+medical: 8000 samples, 8000 chunks
+medical: 8500 samples, 8496 chunks
+medical: 9000 samples, 9000 chunks
+medical: 9500 samples, 9496 chunks
+medical: 10000 samples, 10000 chunks
+medical: 10500 samples, 10496 chunks
+{"domain": "medical", "status": "built", "new_vectors": 10823, "sources": [{"path": "/mnt/data1/wangyatong/cross-x/knowledge/atomic/medical/train.jsonl", "sha256": "acc9b351b16bf85cc6d52e1b4aed6051ec19d0cdc52a16c02e551c120df55c09", "split": "train"}], "samples": 10823, "chunks": 10823, "model_config_hash": "343a14f97328bf486df0ee79464e44f3347c71f86a2a770fff50d45c2daeb7e4"}
+legal: 500 samples, 496 chunks
+legal: 1000 samples, 1000 chunks
+legal: 1500 samples, 1496 chunks
+legal: 2000 samples, 2000 chunks
+legal: 2500 samples, 2496 chunks
+legal: 3000 samples, 3000 chunks
+legal: 3500 samples, 3504 chunks
+legal: 4000 samples, 4000 chunks
+legal: 4500 samples, 4504 chunks
+legal: 5000 samples, 5000 chunks
+legal: 5500 samples, 5504 chunks
+legal: 6000 samples, 6000 chunks
+legal: 6500 samples, 6504 chunks
+legal: 7000 samples, 7008 chunks
+legal: 7500 samples, 7504 chunks
+legal: 8000 samples, 8008 chunks
+legal: 8500 samples, 8504 chunks
+legal: 9000 samples, 9008 chunks
+legal: 9500 samples, 9504 chunks
+legal: 10000 samples, 10008 chunks
+legal: 10500 samples, 10504 chunks
+legal: 11000 samples, 11008 chunks
+legal: 11500 samples, 11504 chunks
+legal: 12000 samples, 12008 chunks
+legal: 12500 samples, 12504 chunks
+legal: 13000 samples, 13008 chunks
+legal: 13500 samples, 13504 chunks
+legal: 14000 samples, 14008 chunks
+legal: 14500 samples, 14504 chunks
+legal: 15000 samples, 15008 chunks
+legal: 15500 samples, 15504 chunks
+legal: 16000 samples, 16008 chunks
+legal: 16500 samples, 16504 chunks
+legal: 17000 samples, 17008 chunks
+legal: 17500 samples, 17504 chunks
+legal: 18000 samples, 18008 chunks
+legal: 18500 samples, 18512 chunks
+legal: 19000 samples, 19008 chunks
+legal: 19500 samples, 19512 chunks
+legal: 20000 samples, 20008 chunks
+legal: 20500 samples, 20512 chunks
+legal: 21000 samples, 21008 chunks
+legal: 21500 samples, 21512 chunks
+legal: 22000 samples, 22008 chunks
+legal: 22500 samples, 22512 chunks
+legal: 23000 samples, 23008 chunks
+legal: 23500 samples, 23512 chunks
+legal: 24000 samples, 24008 chunks
+legal: 24500 samples, 24512 chunks
+legal: 25000 samples, 25016 chunks
+legal: 25500 samples, 25512 chunks
+legal: 26000 samples, 26016 chunks
+legal: 26500 samples, 26512 chunks
+legal: 27000 samples, 27016 chunks
+legal: 27500 samples, 27512 chunks
+legal: 28000 samples, 28016 chunks
+legal: 28500 samples, 28512 chunks
+legal: 29000 samples, 29016 chunks
+legal: 29500 samples, 29512 chunks
+legal: 30000 samples, 30016 chunks
+legal: 30500 samples, 30512 chunks
+legal: 31000 samples, 31016 chunks
+legal: 31500 samples, 31512 chunks
+legal: 32000 samples, 32016 chunks
+legal: 32500 samples, 32512 chunks
+legal: 33000 samples, 33016 chunks
+legal: 33500 samples, 33512 chunks
+legal: 34000 samples, 34016 chunks
+legal: 34500 samples, 34512 chunks
+legal: 35000 samples, 35016 chunks
+legal: 35500 samples, 35512 chunks
+legal: 36000 samples, 36016 chunks
+legal: 36500 samples, 36512 chunks
+legal: 37000 samples, 37016 chunks
+legal: 37500 samples, 37512 chunks
+legal: 38000 samples, 38016 chunks
+legal: 38500 samples, 38512 chunks
+legal: 39000 samples, 39016 chunks
+legal: 39500 samples, 39512 chunks
+legal: 40000 samples, 40016 chunks
+legal: 40500 samples, 40512 chunks
+legal: 41000 samples, 41016 chunks
+legal: 41500 samples, 41520 chunks
+legal: 42000 samples, 42016 chunks
+legal: 42500 samples, 42520 chunks
+legal: 43000 samples, 43016 chunks
+legal: 43500 samples, 43520 chunks
+legal: 44000 samples, 44016 chunks
+legal: 44500 samples, 44520 chunks
+legal: 45000 samples, 45016 chunks
+legal: 45500 samples, 45520 chunks
+legal: 46000 samples, 46016 chunks
+legal: 46500 samples, 46520 chunks
+legal: 47000 samples, 47024 chunks
+legal: 47500 samples, 47520 chunks
+legal: 48000 samples, 48024 chunks
+legal: 48500 samples, 48520 chunks
+legal: 49000 samples, 49024 chunks
+legal: 49500 samples, 49520 chunks
+legal: 50000 samples, 50024 chunks
+legal: 50500 samples, 50520 chunks
+legal: 51000 samples, 51024 chunks
+legal: 51500 samples, 51528 chunks
+legal: 52000 samples, 52024 chunks
+legal: 52500 samples, 52528 chunks
+legal: 53000 samples, 53024 chunks
+legal: 53500 samples, 53528 chunks
+legal: 54000 samples, 54032 chunks
+legal: 54500 samples, 54528 chunks
+legal: 55000 samples, 55032 chunks
+legal: 55500 samples, 55528 chunks
+legal: 56000 samples, 56032 chunks
+legal: 56500 samples, 56528 chunks
+{"domain": "legal", "status": "built", "new_vectors": 56899, "sources": [{"path": "/mnt/data1/wangyatong/cross-x/knowledge/atomic/legal/train.jsonl", "sha256": "4e6581a734677824bbd3ca2126a8c5734460a69f060575285239acd34bcaf908", "split": "train"}], "samples": 56865, "chunks": 56899, "model_config_hash": "343a14f97328bf486df0ee79464e44f3347c71f86a2a770fff50d45c2daeb7e4"}
+financial: 500 samples, 496 chunks
+financial: 1000 samples, 1000 chunks
+{"domain": "financial", "status": "built", "new_vectors": 1023, "sources": [{"path": "/mnt/data1/wangyatong/cross-x/knowledge/atomic/financial/train.jsonl", "sha256": "5a86796216df2b3608ef8d81c18adadc18609a9b70d96fb66192fb603f73fcc0", "split": "train"}], "samples": 1023, "chunks": 1023, "model_config_hash": "343a14f97328bf486df0ee79464e44f3347c71f86a2a770fff50d45c2daeb7e4"}
+mathematics: 500 samples, 496 chunks
+mathematics: 1000 samples, 1000 chunks
+{"domain": "mathematics", "status": "built", "new_vectors": 1022, "sources": [{"path": "/mnt/data1/wangyatong/cross-x/knowledge/atomic/mathematics/train.jsonl", "sha256": "4f862ee84938b256bc9d0a99985ccca95d01672c9d353ef3ae021add07b28184", "split": "train"}], "samples": 1022, "chunks": 1022, "model_config_hash": "343a14f97328bf486df0ee79464e44f3347c71f86a2a770fff50d45c2daeb7e4"}
+computer_science: 500 samples, 496 chunks
+computer_science: 1000 samples, 1000 chunks
+computer_science: 1500 samples, 1496 chunks
+{"domain": "computer_science", "status": "built", "new_vectors": 1864, "sources": [{"path": "/mnt/data1/wangyatong/cross-x/knowledge/atomic/computer_science/train.jsonl", "sha256": "4340a28ab6f8ec4b90936eeab4d14c59f8c542d5da45317e39afd84b92bb2202", "split": "train"}], "samples": 1864, "chunks": 1864, "model_config_hash": "343a14f97328bf486df0ee79464e44f3347c71f86a2a770fff50d45c2daeb7e4"}
+geography: 500 samples, 504 chunks
+geography: 1000 samples, 1016 chunks
+geography: 1500 samples, 1520 chunks
+{"domain": "geography", "status": "built", "new_vectors": 1873, "sources": [{"path": "/mnt/data1/wangyatong/cross-x/knowledge/atomic/geography/train.jsonl", "sha256": "8c063332021d949e4cb3c1c4382ec7989344f33505f082bbb0d77d763f66d35f", "split": "train"}], "samples": 1840, "chunks": 1873, "model_config_hash": "343a14f97328bf486df0ee79464e44f3347c71f86a2a770fff50d45c2daeb7e4"}
+chemistry: 500 samples, 496 chunks
+chemistry: 1000 samples, 1000 chunks
+chemistry: 1500 samples, 1496 chunks
+chemistry: 2000 samples, 2000 chunks
+{"domain": "chemistry", "status": "built", "new_vectors": 2222, "sources": [{"path": "/mnt/data1/wangyatong/cross-x/knowledge/atomic/chemistry/train.jsonl", "sha256": "5860639099176b83873d5118f93c4fe075bbd06e66fdce4e24dbddcabb68886d", "split": "train"}], "samples": 2222, "chunks": 2222, "model_config_hash": "343a14f97328bf486df0ee79464e44f3347c71f86a2a770fff50d45c2daeb7e4"}
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:00<00:00, 52.28it/s]
+Embedding model=Qwen/Qwen3-Embedding-8B device=cuda:0 dtype=bfloat16 dimension=4096
+You're using a Qwen2TokenizerFast tokenizer. Please note that with a fast tokenizer, using the `__call__` method is faster than using a method to encode the text followed by a call to the `pad` method to get a padded encoding.
+Queries embedded: 8/6412
+Queries embedded: 16/6412
+Queries embedded: 24/6412
+Queries embedded: 32/6412
+Queries embedded: 40/6412
+Queries embedded: 48/6412
+Queries embedded: 56/6412
+Queries embedded: 64/6412
+Queries embedded: 72/6412
+Queries embedded: 80/6412
+Queries embedded: 88/6412
+Queries embedded: 96/6412
+Queries embedded: 104/6412
+Queries embedded: 112/6412
+Queries embedded: 120/6412
+Queries embedded: 128/6412
+Queries embedded: 136/6412
+Queries embedded: 144/6412
+Queries embedded: 152/6412
+Queries embedded: 160/6412
+Queries embedded: 168/6412
+Queries embedded: 176/6412
+Queries embedded: 184/6412
+Queries embedded: 192/6412
+Queries embedded: 200/6412
+Queries embedded: 208/6412
+Queries embedded: 216/6412
+Queries embedded: 224/6412
+Queries embedded: 232/6412
+Queries embedded: 240/6412
+Queries embedded: 248/6412
+Queries embedded: 256/6412
+Queries embedded: 264/6412
+Queries embedded: 272/6412
+Queries embedded: 280/6412
+Queries embedded: 288/6412
+Queries embedded: 296/6412
+Queries embedded: 304/6412
+Queries embedded: 312/6412
+Queries embedded: 320/6412
+Queries embedded: 328/6412
+Queries embedded: 336/6412
+Queries embedded: 344/6412
+Queries embedded: 352/6412
+Queries embedded: 360/6412
+Queries embedded: 368/6412
+Queries embedded: 376/6412
+Queries embedded: 384/6412
+Queries embedded: 392/6412
+Queries embedded: 400/6412
+Queries embedded: 408/6412
+Queries embedded: 416/6412
+Queries embedded: 424/6412
+Queries embedded: 432/6412
+Queries embedded: 440/6412
+Queries embedded: 448/6412
+Queries embedded: 456/6412
+Queries embedded: 464/6412
+Queries embedded: 472/6412
+Queries embedded: 480/6412
+Queries embedded: 488/6412
+Queries embedded: 496/6412
+Queries embedded: 504/6412
+Queries embedded: 512/6412
+Queries embedded: 520/6412
+Queries embedded: 528/6412
+Queries embedded: 536/6412
+Queries embedded: 544/6412
+Queries embedded: 552/6412
+Queries embedded: 560/6412
+Queries embedded: 568/6412
+Queries embedded: 576/6412
+Queries embedded: 584/6412
+Queries embedded: 592/6412
+Queries embedded: 600/6412
+Queries embedded: 608/6412
+Queries embedded: 616/6412
+Queries embedded: 624/6412
+Queries embedded: 632/6412
+Queries embedded: 640/6412
+Queries embedded: 648/6412
+Queries embedded: 656/6412
+Queries embedded: 664/6412
+Queries embedded: 672/6412
+Queries embedded: 680/6412
+Queries embedded: 688/6412
+Queries embedded: 696/6412
+Queries embedded: 704/6412
+Queries embedded: 712/6412
+Queries embedded: 720/6412
+Queries embedded: 728/6412
+Queries embedded: 736/6412
+Queries embedded: 744/6412
+Queries embedded: 752/6412
+Queries embedded: 760/6412
+Queries embedded: 768/6412
+Queries embedded: 776/6412
+Queries embedded: 784/6412
+Queries embedded: 792/6412
+Queries embedded: 800/6412
+Queries embedded: 808/6412
+Queries embedded: 816/6412
+Queries embedded: 824/6412
+Queries embedded: 832/6412
+Queries embedded: 840/6412
+Queries embedded: 848/6412
+Queries embedded: 856/6412
+Queries embedded: 864/6412
+Queries embedded: 872/6412
+Queries embedded: 880/6412
+Queries embedded: 888/6412
+Queries embedded: 896/6412
+Queries embedded: 904/6412
+Queries embedded: 912/6412
+Queries embedded: 920/6412
+Queries embedded: 928/6412
+Queries embedded: 936/6412
+Queries embedded: 944/6412
+Queries embedded: 952/6412
+Queries embedded: 960/6412
+Queries embedded: 968/6412
+Queries embedded: 976/6412
+Queries embedded: 984/6412
+Queries embedded: 992/6412
+Queries embedded: 1000/6412
+Queries embedded: 1008/6412
+Queries embedded: 1016/6412
+Queries embedded: 1024/6412
+Queries embedded: 1032/6412
+Queries embedded: 1040/6412
+Queries embedded: 1048/6412
+Queries embedded: 1056/6412
+Queries embedded: 1064/6412
+Queries embedded: 1072/6412
+Queries embedded: 1080/6412
+Queries embedded: 1088/6412
+Queries embedded: 1096/6412
+Queries embedded: 1104/6412
+Queries embedded: 1112/6412
+Queries embedded: 1120/6412
+Queries embedded: 1128/6412
+Queries embedded: 1136/6412
+Queries embedded: 1144/6412
+Queries embedded: 1152/6412
+Queries embedded: 1160/6412
+Queries embedded: 1168/6412
+Queries embedded: 1176/6412
+Queries embedded: 1184/6412
+Queries embedded: 1192/6412
+Queries embedded: 1200/6412
+Queries embedded: 1208/6412
+Queries embedded: 1216/6412
+Queries embedded: 1224/6412
+Queries embedded: 1232/6412
+Queries embedded: 1240/6412
+Queries embedded: 1248/6412
+Queries embedded: 1256/6412
+Queries embedded: 1264/6412
+Queries embedded: 1272/6412
+Queries embedded: 1280/6412
+Queries embedded: 1288/6412
+Queries embedded: 1296/6412
+Queries embedded: 1304/6412
+Queries embedded: 1312/6412
+Queries embedded: 1320/6412
+Queries embedded: 1328/6412
+Queries embedded: 1336/6412
+Queries embedded: 1344/6412
+Queries embedded: 1352/6412
+Queries embedded: 1360/6412
+Queries embedded: 1368/6412
+Queries embedded: 1376/6412
+Queries embedded: 1384/6412
+Queries embedded: 1392/6412
+Queries embedded: 1400/6412
+Queries embedded: 1408/6412
+Queries embedded: 1416/6412
+Queries embedded: 1424/6412
+Queries embedded: 1432/6412
+Queries embedded: 1440/6412
+Queries embedded: 1448/6412
+Queries embedded: 1456/6412
+Queries embedded: 1464/6412
+Queries embedded: 1472/6412
+Queries embedded: 1480/6412
+Queries embedded: 1488/6412
+Queries embedded: 1496/6412
+Queries embedded: 1504/6412
+Queries embedded: 1512/6412
+Queries embedded: 1520/6412
+Queries embedded: 1528/6412
+Queries embedded: 1536/6412
+Queries embedded: 1544/6412
+Queries embedded: 1552/6412
+Queries embedded: 1560/6412
+Queries embedded: 1568/6412
+Queries embedded: 1576/6412
+Queries embedded: 1584/6412
+Queries embedded: 1592/6412
+Queries embedded: 1600/6412
+Queries embedded: 1608/6412
+Queries embedded: 1616/6412
+Queries embedded: 1624/6412
+Queries embedded: 1632/6412
+Queries embedded: 1640/6412
+Queries embedded: 1648/6412
+Queries embedded: 1656/6412
+Queries embedded: 1664/6412
+Queries embedded: 1672/6412
+Queries embedded: 1680/6412
+Queries embedded: 1688/6412
+Queries embedded: 1696/6412
+Queries embedded: 1704/6412
+Queries embedded: 1712/6412
+Queries embedded: 1720/6412
+Queries embedded: 1728/6412
+Queries embedded: 1736/6412
+Queries embedded: 1744/6412
+Queries embedded: 1752/6412
+Queries embedded: 1760/6412
+Queries embedded: 1768/6412
+Queries embedded: 1776/6412
+Queries embedded: 1784/6412
+Queries embedded: 1792/6412
+Queries embedded: 1800/6412
+Queries embedded: 1808/6412
+Queries embedded: 1816/6412
+Queries embedded: 1824/6412
+Queries embedded: 1832/6412
+Queries embedded: 1840/6412
+Queries embedded: 1848/6412
+Queries embedded: 1856/6412
+Queries embedded: 1864/6412
+Queries embedded: 1872/6412
+Queries embedded: 1880/6412
+Queries embedded: 1888/6412
+Queries embedded: 1896/6412
+Queries embedded: 1904/6412
+Queries embedded: 1912/6412
+Queries embedded: 1920/6412
+Queries embedded: 1928/6412
+Queries embedded: 1936/6412
+Queries embedded: 1944/6412
+Queries embedded: 1952/6412
+Queries embedded: 1960/6412
+Queries embedded: 1968/6412
+Queries embedded: 1976/6412
+Queries embedded: 1984/6412
+Queries embedded: 1992/6412
+Queries embedded: 2000/6412
+Queries embedded: 2008/6412
+Queries embedded: 2016/6412
+Queries embedded: 2024/6412
+Queries embedded: 2032/6412
+Queries embedded: 2040/6412
+Queries embedded: 2048/6412
+Queries embedded: 2056/6412
+Queries embedded: 2064/6412
+Queries embedded: 2072/6412
+Queries embedded: 2080/6412
+Queries embedded: 2088/6412
+Queries embedded: 2096/6412
+Queries embedded: 2104/6412
+Queries embedded: 2112/6412
+Queries embedded: 2120/6412
+Queries embedded: 2128/6412
+Queries embedded: 2136/6412
+Queries embedded: 2144/6412
+Queries embedded: 2152/6412
+Queries embedded: 2160/6412
+Queries embedded: 2168/6412
+Queries embedded: 2176/6412
+Queries embedded: 2184/6412
+Queries embedded: 2192/6412
+Queries embedded: 2200/6412
+Queries embedded: 2208/6412
+Queries embedded: 2216/6412
+Queries embedded: 2224/6412
+Queries embedded: 2232/6412
+Queries embedded: 2240/6412
+Queries embedded: 2248/6412
+Queries embedded: 2256/6412
+Queries embedded: 2264/6412
+Queries embedded: 2272/6412
+Queries embedded: 2280/6412
+Queries embedded: 2288/6412
+Queries embedded: 2296/6412
+Queries embedded: 2304/6412
+Queries embedded: 2312/6412
+Queries embedded: 2320/6412
+Queries embedded: 2328/6412
+Queries embedded: 2336/6412
+Queries embedded: 2344/6412
+Queries embedded: 2352/6412
+Queries embedded: 2360/6412
+Queries embedded: 2368/6412
+Queries embedded: 2376/6412
+Queries embedded: 2384/6412
+Queries embedded: 2392/6412
+Queries embedded: 2400/6412
+Queries embedded: 2408/6412
+Queries embedded: 2416/6412
+Queries embedded: 2424/6412
+Queries embedded: 2432/6412
+Queries embedded: 2440/6412
+Queries embedded: 2448/6412
+Queries embedded: 2456/6412
+Queries embedded: 2464/6412
+Queries embedded: 2472/6412
+Queries embedded: 2480/6412
+Queries embedded: 2488/6412
+Queries embedded: 2496/6412
+Queries embedded: 2504/6412
+Queries embedded: 2512/6412
+Queries embedded: 2520/6412
+Queries embedded: 2528/6412
+Queries embedded: 2536/6412
+Queries embedded: 2544/6412
+Queries embedded: 2552/6412
+Queries embedded: 2560/6412
+Queries embedded: 2568/6412
+Queries embedded: 2576/6412
+Queries embedded: 2584/6412
+Queries embedded: 2592/6412
+Queries embedded: 2600/6412
+Queries embedded: 2608/6412
+Queries embedded: 2616/6412
+Queries embedded: 2624/6412
+Queries embedded: 2632/6412
+Queries embedded: 2640/6412
+Queries embedded: 2648/6412
+Queries embedded: 2656/6412
+Queries embedded: 2664/6412
+Queries embedded: 2672/6412
+Queries embedded: 2680/6412
+Queries embedded: 2688/6412
+Queries embedded: 2696/6412
+Queries embedded: 2704/6412
+Queries embedded: 2712/6412
+Queries embedded: 2720/6412
+Queries embedded: 2728/6412
+Queries embedded: 2736/6412
+Queries embedded: 2744/6412
+Queries embedded: 2752/6412
+Queries embedded: 2760/6412
+Queries embedded: 2768/6412
+Queries embedded: 2776/6412
+Queries embedded: 2784/6412
+Queries embedded: 2792/6412
+Queries embedded: 2800/6412
+Queries embedded: 2808/6412
+Queries embedded: 2816/6412
+Queries embedded: 2824/6412
+Queries embedded: 2832/6412
+Queries embedded: 2840/6412
+Queries embedded: 2848/6412
+Queries embedded: 2856/6412
+Queries embedded: 2864/6412
+Queries embedded: 2872/6412
+Queries embedded: 2880/6412
+Queries embedded: 2888/6412
+Queries embedded: 2896/6412
+Queries embedded: 2904/6412
+Queries embedded: 2912/6412
+Queries embedded: 2920/6412
+Queries embedded: 2928/6412
+Queries embedded: 2936/6412
+Queries embedded: 2944/6412
+Queries embedded: 2952/6412
+Queries embedded: 2960/6412
+Queries embedded: 2968/6412
+Queries embedded: 2976/6412
+Queries embedded: 2984/6412
+Queries embedded: 2992/6412
+Queries embedded: 3000/6412
+Queries embedded: 3008/6412
+Queries embedded: 3016/6412
+Queries embedded: 3024/6412
+Queries embedded: 3032/6412
+Queries embedded: 3040/6412
+Queries embedded: 3048/6412
+Queries embedded: 3056/6412
+Queries embedded: 3064/6412
+Queries embedded: 3072/6412
+Queries embedded: 3080/6412
+Queries embedded: 3088/6412
+Queries embedded: 3096/6412
+Queries embedded: 3104/6412
+Queries embedded: 3112/6412
+Queries embedded: 3120/6412
+Queries embedded: 3128/6412
+Queries embedded: 3136/6412
+Queries embedded: 3144/6412
+Queries embedded: 3152/6412
+Queries embedded: 3160/6412
+Queries embedded: 3168/6412
+Queries embedded: 3176/6412
+Queries embedded: 3184/6412
+Queries embedded: 3192/6412
+Queries embedded: 3200/6412
+Queries embedded: 3208/6412
+Queries embedded: 3216/6412
+Queries embedded: 3224/6412
+Queries embedded: 3232/6412
+Queries embedded: 3240/6412
+Queries embedded: 3248/6412
+Queries embedded: 3256/6412
+Queries embedded: 3264/6412
+Queries embedded: 3272/6412
+Queries embedded: 3280/6412
+Queries embedded: 3288/6412
+Queries embedded: 3296/6412
+Queries embedded: 3304/6412
+Queries embedded: 3312/6412
+Queries embedded: 3320/6412
+Queries embedded: 3328/6412
+Queries embedded: 3336/6412
+Queries embedded: 3344/6412
+Queries embedded: 3352/6412
+Queries embedded: 3360/6412
+Queries embedded: 3368/6412
+Queries embedded: 3376/6412
+Queries embedded: 3384/6412
+Queries embedded: 3392/6412
+Queries embedded: 3400/6412
+Queries embedded: 3408/6412
+Queries embedded: 3416/6412
+Queries embedded: 3424/6412
+Queries embedded: 3432/6412
+Queries embedded: 3440/6412
+Queries embedded: 3448/6412
+Queries embedded: 3456/6412
+Queries embedded: 3464/6412
+Queries embedded: 3472/6412
+Queries embedded: 3480/6412
+Queries embedded: 3488/6412
+Queries embedded: 3496/6412
+Queries embedded: 3504/6412
+Queries embedded: 3512/6412
+Queries embedded: 3520/6412
+Queries embedded: 3528/6412
+Queries embedded: 3536/6412
+Queries embedded: 3544/6412
+Queries embedded: 3552/6412
+Queries embedded: 3560/6412
+Queries embedded: 3568/6412
+Queries embedded: 3576/6412
+Queries embedded: 3584/6412
+Queries embedded: 3592/6412
+Queries embedded: 3600/6412
+Queries embedded: 3608/6412
+Queries embedded: 3616/6412
+Queries embedded: 3624/6412
+Queries embedded: 3632/6412
+Queries embedded: 3640/6412
+Queries embedded: 3648/6412
+Queries embedded: 3656/6412
+Queries embedded: 3664/6412
+Queries embedded: 3672/6412
+Queries embedded: 3680/6412
+Queries embedded: 3688/6412
+Queries embedded: 3696/6412
+Queries embedded: 3704/6412
+Queries embedded: 3712/6412
+Queries embedded: 3720/6412
+Queries embedded: 3728/6412
+Queries embedded: 3736/6412
+Queries embedded: 3744/6412
+Queries embedded: 3752/6412
+Queries embedded: 3760/6412
+Queries embedded: 3768/6412
+Queries embedded: 3776/6412
+Queries embedded: 3784/6412
+Queries embedded: 3792/6412
+Queries embedded: 3800/6412
+Queries embedded: 3808/6412
+Queries embedded: 3816/6412
+Queries embedded: 3824/6412
+Queries embedded: 3832/6412
+Queries embedded: 3840/6412
+Queries embedded: 3848/6412
+Queries embedded: 3856/6412
+Queries embedded: 3864/6412
+Queries embedded: 3872/6412
+Queries embedded: 3880/6412
+Queries embedded: 3888/6412
+Queries embedded: 3896/6412
+Queries embedded: 3904/6412
+Queries embedded: 3912/6412
+Queries embedded: 3920/6412
+Queries embedded: 3928/6412
+Queries embedded: 3936/6412
+Queries embedded: 3944/6412
+Queries embedded: 3952/6412
+Queries embedded: 3960/6412
+Queries embedded: 3968/6412
+Queries embedded: 3976/6412
+Queries embedded: 3984/6412
+Queries embedded: 3992/6412
+Queries embedded: 4000/6412
+Queries embedded: 4008/6412
+Queries embedded: 4016/6412
+Queries embedded: 4024/6412
+Queries embedded: 4032/6412
+Queries embedded: 4040/6412
+Queries embedded: 4048/6412
+Queries embedded: 4056/6412
+Queries embedded: 4064/6412
+Queries embedded: 4072/6412
+Queries embedded: 4080/6412
+Queries embedded: 4088/6412
+Queries embedded: 4096/6412
+Queries embedded: 4104/6412
+Queries embedded: 4112/6412
+Queries embedded: 4120/6412
+Queries embedded: 4128/6412
+Queries embedded: 4136/6412
+Queries embedded: 4144/6412
+Queries embedded: 4152/6412
+Queries embedded: 4160/6412
+Queries embedded: 4168/6412
+Queries embedded: 4176/6412
+Queries embedded: 4184/6412
+Queries embedded: 4192/6412
+Queries embedded: 4200/6412
+Queries embedded: 4208/6412
+Queries embedded: 4216/6412
+Queries embedded: 4224/6412
+Queries embedded: 4232/6412
+Queries embedded: 4240/6412
+Queries embedded: 4248/6412
+Queries embedded: 4256/6412
+Queries embedded: 4264/6412
+Queries embedded: 4272/6412
+Queries embedded: 4280/6412
+Queries embedded: 4288/6412
+Queries embedded: 4296/6412
+Queries embedded: 4304/6412
+Queries embedded: 4312/6412
+Queries embedded: 4320/6412
+Queries embedded: 4328/6412
+Queries embedded: 4336/6412
+Queries embedded: 4344/6412
+Queries embedded: 4352/6412
+Queries embedded: 4360/6412
+Queries embedded: 4368/6412
+Queries embedded: 4376/6412
+Queries embedded: 4384/6412
+Queries embedded: 4392/6412
+Queries embedded: 4400/6412
+Queries embedded: 4408/6412
+Queries embedded: 4416/6412
+Queries embedded: 4424/6412
+Queries embedded: 4432/6412
+Queries embedded: 4440/6412
+Queries embedded: 4448/6412
+Queries embedded: 4456/6412
+Queries embedded: 4464/6412
+Queries embedded: 4472/6412
+Queries embedded: 4480/6412
+Queries embedded: 4488/6412
+Queries embedded: 4496/6412
+Queries embedded: 4504/6412
+Queries embedded: 4512/6412
+Queries embedded: 4520/6412
+Queries embedded: 4528/6412
+Queries embedded: 4536/6412
+Queries embedded: 4544/6412
+Queries embedded: 4552/6412
+Queries embedded: 4560/6412
+Queries embedded: 4568/6412
+Queries embedded: 4576/6412
+Queries embedded: 4584/6412
+Queries embedded: 4592/6412
+Queries embedded: 4600/6412
+Queries embedded: 4608/6412
+Queries embedded: 4616/6412
+Queries embedded: 4624/6412
+Queries embedded: 4632/6412
+Queries embedded: 4640/6412
+Queries embedded: 4648/6412
+Queries embedded: 4656/6412
+Queries embedded: 4664/6412
+Queries embedded: 4672/6412
+Queries embedded: 4680/6412
+Queries embedded: 4688/6412
+Queries embedded: 4696/6412
+Queries embedded: 4704/6412
+Queries embedded: 4712/6412
+Queries embedded: 4720/6412
+Queries embedded: 4728/6412
+Queries embedded: 4736/6412
+Queries embedded: 4744/6412
+Queries embedded: 4752/6412
+Queries embedded: 4760/6412
+Queries embedded: 4768/6412
+Queries embedded: 4776/6412
+Queries embedded: 4784/6412
+Queries embedded: 4792/6412
+Queries embedded: 4800/6412
+Queries embedded: 4808/6412
+Queries embedded: 4816/6412
+Queries embedded: 4824/6412
+Queries embedded: 4832/6412
+Queries embedded: 4840/6412
+Queries embedded: 4848/6412
+Queries embedded: 4856/6412
+Queries embedded: 4864/6412
+Queries embedded: 4872/6412
+Queries embedded: 4880/6412
+Queries embedded: 4888/6412
+Queries embedded: 4896/6412
+Queries embedded: 4904/6412
+Queries embedded: 4912/6412
+Queries embedded: 4920/6412
+Queries embedded: 4928/6412
+Queries embedded: 4936/6412
+Queries embedded: 4944/6412
+Queries embedded: 4952/6412
+Queries embedded: 4960/6412
+Queries embedded: 4968/6412
+Queries embedded: 4976/6412
+Queries embedded: 4984/6412
+Queries embedded: 4992/6412
+Queries embedded: 5000/6412
+Queries embedded: 5008/6412
+Queries embedded: 5016/6412
+Queries embedded: 5024/6412
+Queries embedded: 5032/6412
+Queries embedded: 5040/6412
+Queries embedded: 5048/6412
+Queries embedded: 5056/6412
+Queries embedded: 5064/6412
+Queries embedded: 5072/6412
+Queries embedded: 5080/6412
+Queries embedded: 5088/6412
+Queries embedded: 5096/6412
+Queries embedded: 5104/6412
+Queries embedded: 5112/6412
+Queries embedded: 5120/6412
+Queries embedded: 5128/6412
+Queries embedded: 5136/6412
+Queries embedded: 5144/6412
+Queries embedded: 5152/6412
+Queries embedded: 5160/6412
+Queries embedded: 5168/6412
+Queries embedded: 5176/6412
+Queries embedded: 5184/6412
+Queries embedded: 5192/6412
+Queries embedded: 5200/6412
+Queries embedded: 5208/6412
+Queries embedded: 5216/6412
+Queries embedded: 5224/6412
+Queries embedded: 5232/6412
+Queries embedded: 5240/6412
+Queries embedded: 5248/6412
+Queries embedded: 5256/6412
+Queries embedded: 5264/6412
+Queries embedded: 5272/6412
+Queries embedded: 5280/6412
+Queries embedded: 5288/6412
+Queries embedded: 5296/6412
+Queries embedded: 5304/6412
+Queries embedded: 5312/6412
+Queries embedded: 5320/6412
+Queries embedded: 5328/6412
+Queries embedded: 5336/6412
+Queries embedded: 5344/6412
+Queries embedded: 5352/6412
+Queries embedded: 5360/6412
+Queries embedded: 5368/6412
+Queries embedded: 5376/6412
+Queries embedded: 5384/6412
+Queries embedded: 5392/6412
+Queries embedded: 5400/6412
+Queries embedded: 5408/6412
+Queries embedded: 5416/6412
+Queries embedded: 5424/6412
+Queries embedded: 5432/6412
+Queries embedded: 5440/6412
+Queries embedded: 5448/6412
+Queries embedded: 5456/6412
+Queries embedded: 5464/6412
+Queries embedded: 5472/6412
+Queries embedded: 5480/6412
+Queries embedded: 5488/6412
+Queries embedded: 5496/6412
+Queries embedded: 5504/6412
+Queries embedded: 5512/6412
+Queries embedded: 5520/6412
+Queries embedded: 5528/6412
+Queries embedded: 5536/6412
+Queries embedded: 5544/6412
+Queries embedded: 5552/6412
+Queries embedded: 5560/6412
+Queries embedded: 5568/6412
+Queries embedded: 5576/6412
+Queries embedded: 5584/6412
+Queries embedded: 5592/6412
+Queries embedded: 5600/6412
+Queries embedded: 5608/6412
+Queries embedded: 5616/6412
+Queries embedded: 5624/6412
+Queries embedded: 5632/6412
+Queries embedded: 5640/6412
+Queries embedded: 5648/6412
+Queries embedded: 5656/6412
+Queries embedded: 5664/6412
+Queries embedded: 5672/6412
+Queries embedded: 5680/6412
+Queries embedded: 5688/6412
+Queries embedded: 5696/6412
+Queries embedded: 5704/6412
+Queries embedded: 5712/6412
+Queries embedded: 5720/6412
+Queries embedded: 5728/6412
+Queries embedded: 5736/6412
+Queries embedded: 5744/6412
+Queries embedded: 5752/6412
+Queries embedded: 5760/6412
+Queries embedded: 5768/6412
+Queries embedded: 5776/6412
+Queries embedded: 5784/6412
+Queries embedded: 5792/6412
+Queries embedded: 5800/6412
+Queries embedded: 5808/6412
+Queries embedded: 5816/6412
+Queries embedded: 5824/6412
+Queries embedded: 5832/6412
+Queries embedded: 5840/6412
+Queries embedded: 5848/6412
+Queries embedded: 5856/6412
+Queries embedded: 5864/6412
+Queries embedded: 5872/6412
+Queries embedded: 5880/6412
+Queries embedded: 5888/6412
+Queries embedded: 5896/6412
+Queries embedded: 5904/6412
+Queries embedded: 5912/6412
+Queries embedded: 5920/6412
+Queries embedded: 5928/6412
+Queries embedded: 5936/6412
+Queries embedded: 5944/6412
+Queries embedded: 5952/6412
+Queries embedded: 5960/6412
+Queries embedded: 5968/6412
+Queries embedded: 5976/6412
+Queries embedded: 5984/6412
+Queries embedded: 5992/6412
+Queries embedded: 6000/6412
+Queries embedded: 6008/6412
+Queries embedded: 6016/6412
+Queries embedded: 6024/6412
+Queries embedded: 6032/6412
+Queries embedded: 6040/6412
+Queries embedded: 6048/6412
+Queries embedded: 6056/6412
+Queries embedded: 6064/6412
+Queries embedded: 6072/6412
+Queries embedded: 6080/6412
+Queries embedded: 6088/6412
+Queries embedded: 6096/6412
+Queries embedded: 6104/6412
+Queries embedded: 6112/6412
+Queries embedded: 6120/6412
+Queries embedded: 6128/6412
+Queries embedded: 6136/6412
+Queries embedded: 6144/6412
+Queries embedded: 6152/6412
+Queries embedded: 6160/6412
+Queries embedded: 6168/6412
+Queries embedded: 6176/6412
+Queries embedded: 6184/6412
+Queries embedded: 6192/6412
+Queries embedded: 6200/6412
+Queries embedded: 6208/6412
+Queries embedded: 6216/6412
+Queries embedded: 6224/6412
+Queries embedded: 6232/6412
+Queries embedded: 6240/6412
+Queries embedded: 6248/6412
+Queries embedded: 6256/6412
+Queries embedded: 6264/6412
+Queries embedded: 6272/6412
+Queries embedded: 6280/6412
+Queries embedded: 6288/6412
+Queries embedded: 6296/6412
+Queries embedded: 6304/6412
+Queries embedded: 6312/6412
+Queries embedded: 6320/6412
+Queries embedded: 6328/6412
+Queries embedded: 6336/6412
+Queries embedded: 6344/6412
+Queries embedded: 6352/6412
+Queries embedded: 6360/6412
+Queries embedded: 6368/6412
+Queries embedded: 6376/6412
+Queries embedded: 6384/6412
+Queries embedded: 6392/6412
+Queries embedded: 6400/6412
+Queries embedded: 6408/6412
+Queries embedded: 6412/6412
+{"queries": 6412, "new_queries": 6412}

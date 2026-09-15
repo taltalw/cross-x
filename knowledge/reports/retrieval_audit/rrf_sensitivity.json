@@ -1,0 +1,92 @@
+{
+  "domain_lists": 2144,
+  "score_errors": 0,
+  "order_errors": 0,
+  "hit_count_histogram": {
+    "3": 3503,
+    "2": 14046,
+    "1": 24012,
+    "4": 934,
+    "6": 97,
+    "5": 288
+  },
+  "top1_method_patterns": {
+    "embedding": 455,
+    "bm25+embedding": 1559,
+    "bm25": 130
+  },
+  "sensitivity": {
+    "1": {
+      "top1_changed": 0.29571,
+      "top5_overlap": 0.71549,
+      "top10_overlap": 0.80611
+    },
+    "5": {
+      "top1_changed": 0.11707,
+      "top5_overlap": 0.94506,
+      "top10_overlap": 0.95858
+    },
+    "10": {
+      "top1_changed": 0.02985,
+      "top5_overlap": 0.98769,
+      "top10_overlap": 0.99809
+    },
+    "20": {
+      "top1_changed": 0.0056,
+      "top5_overlap": 0.99832,
+      "top10_overlap": 0.99944
+    },
+    "30": {
+      "top1_changed": 0.00187,
+      "top5_overlap": 0.99935,
+      "top10_overlap": 0.99986
+    },
+    "60": {
+      "top1_changed": 0.0,
+      "top5_overlap": 1.0,
+      "top10_overlap": 1.0
+    },
+    "100": {
+      "top1_changed": 0.00047,
+      "top5_overlap": 1.0,
+      "top10_overlap": 1.0
+    }
+  },
+  "by_domain": {
+    "chemistry": {
+      "lists": 225,
+      "top1_change_k20": 0.0,
+      "best_semantic_median": 0.3007643222808838
+    },
+    "computer_science": {
+      "lists": 342,
+      "top1_change_k20": 0.0058,
+      "best_semantic_median": 0.27296529710292816
+    },
+    "financial": {
+      "lists": 324,
+      "top1_change_k20": 0.0093,
+      "best_semantic_median": 0.322301983833313
+    },
+    "geography": {
+      "lists": 144,
+      "top1_change_k20": 0.0139,
+      "best_semantic_median": 0.321571409702301
+    },
+    "legal": {
+      "lists": 321,
+      "top1_change_k20": 0.0093,
+      "best_semantic_median": 0.297127366065979
+    },
+    "mathematics": {
+      "lists": 544,
+      "top1_change_k20": 0.0,
+      "best_semantic_median": 0.28745628893375397
+    },
+    "medical": {
+      "lists": 244,
+      "top1_change_k20": 0.0082,
+      "best_semantic_median": 0.340833455324173
+    }
+  }
+}
