@@ -24,9 +24,18 @@ from pathlib import Path
 import sys
 from typing import Any
 
-# Reuse the existing provider-neutral HTTP client and JSONL helpers.
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "pipelines"))
-from _knowledge_search_common import APIError, DOMAINS, JSONAPI, read_rows, validate_sample, write_row
+# Reuse the existing provider-neutral HTTP client and JSONL helpers. Add the
+# repository root so this also works when the script is launched outside cwd.
+REPO_ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(REPO_ROOT))
+from knowledge.pipelines._knowledge_search_common import (  # noqa: E402  # pylint: disable=import-error
+    APIError,
+    DOMAINS,
+    JSONAPI,
+    read_rows,
+    validate_sample,
+    write_row,
+)
 
 
 DEFAULT_OUTPUT_ROOT = Path(__file__).resolve().parent / "outputs" / "0_extract_key_facts"

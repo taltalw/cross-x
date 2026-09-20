@@ -30,13 +30,13 @@ class ExtractionTests(unittest.TestCase):
         self.source.write_text("\n" + json.dumps(self.sample) + "\n" + json.dumps(self.sample) + "\n", encoding="utf-8")
         self.api = m.JSONAPI("https://mock.invalid/v1", "test-key", "test-model", retries=1)
         self.addCleanup(patch.stopall)
-        patch("_knowledge_search_common.time.sleep").start()
+        patch("knowledge.pipelines._knowledge_search_common.time.sleep").start()
         self.stderr = contextlib.redirect_stderr(io.StringIO())
         self.stderr.__enter__()
         self.addCleanup(self.stderr.__exit__, None, None, None)
 
     def test_request_and_output_keep_sample_and_physical_line(self):
-        with patch("_knowledge_search_common.urllib.request.urlopen", return_value=response({
+        with patch("knowledge.pipelines._knowledge_search_common.urllib.request.urlopen", return_value=response({
             "key_facts": ["IPv4 packet header", "variable header length"],
         })) as http:
             report = m.run_extraction(self.source, self.output, api=self.api, num=1, source_domain="computer_science")
@@ -54,7 +54,7 @@ class ExtractionTests(unittest.TestCase):
         self.assertEqual(data["sample"], {k: self.sample[k] for k in ("prompt", "completion")})
 
     def test_invalid_model_output_is_retried(self):
-        with patch("_knowledge_search_common.urllib.request.urlopen", side_effect=[
+        with patch("knowledge.pipelines._knowledge_search_common.urllib.request.urlopen", side_effect=[
             response({"key_facts": ["only one"]}),
             response({"key_facts": ["IPv4", "variable header length"]}),
         ]) as http:
@@ -63,7 +63,7 @@ class ExtractionTests(unittest.TestCase):
         self.assertEqual(len(json.loads(self.output.read_text())["key_facts"]), 2)
 
     def test_failed_request_retains_only_completed_rows(self):
-        with patch("_knowledge_search_common.urllib.request.urlopen", side_effect=[
+        with patch("knowledge.pipelines._knowledge_search_common.urllib.request.urlopen", side_effect=[
             response({"key_facts": ["IPv4", "variable header length"]}),
             TimeoutError(), TimeoutError(),
         ]):
