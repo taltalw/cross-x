@@ -1,0 +1,64 @@
+{
+  "status": "completed",
+  "git_commit": "22b45a54a874ce2d7261977ad1d2412628fd8c80",
+  "api_base_url": "https://joyrouter.jd.com/v1",
+  "api_route": "/chat/completions",
+  "model": "gt-6-as-a",
+  "temperature": 1,
+  "reasoning_effort": "low",
+  "max_tokens": 4096,
+  "timeout_seconds": 180,
+  "retries": 2,
+  "samples_per_domain": 10,
+  "split": "test",
+  "domains": [
+    "medical",
+    "legal",
+    "financial",
+    "mathematics",
+    "computer_science",
+    "geography",
+    "chemistry"
+  ],
+  "command": [
+    "bash",
+    "knowledge/pipelines_v2/run_0_extract_key_facts.sh",
+    "--max-tokens",
+    "4096",
+    "--timeout",
+    "180",
+    "--retries",
+    "2"
+  ],
+  "output_root": "/pfs/ydy/wyt/cross-x/knowledge/pipelines_v2/outputs/0_extract_key_facts_joyrouter",
+  "started_at": "2026-09-20T11:51:58.671896+00:00",
+  "tls_verification": true,
+  "credential_source": "user-provided JoyRouter key; process memory only",
+  "preflight": {
+    "http_status": 200,
+    "requested_model": "gt-6-as-a",
+    "response_model": "gt-6-as-a",
+    "response_text": "Hello! How can I help you today?"
+  },
+  "exit_code": 0,
+  "finished_at": "2026-09-20T12:07:54.131515+00:00",
+  "elapsed_seconds": 955.45,
+  "total_rows": 70,
+  "validation": "validation.json",
+  "response_models": [
+    "gt-6-as-a"
+  ],
+  "successful_responses": 70,
+  "reported_usage_for_successful_responses": {
+    "prompt_tokens": 26623,
+    "completion_tokens": 3623,
+    "total_tokens": 30246,
+    "reasoning_tokens": 1533
+  },
+  "local_changes_preserved": true,
+  "source_sha256": {
+    "knowledge/pipelines_v2/0_extract_key_facts.py": "2513bfc2a9c701fbe33b1b8e95c133161cf01788abfb7b915fc8381a57c31411",
+    "knowledge/pipelines_v2/run_0_extract_key_facts.sh": "b646745498bcd4f77624a27c09b15856a7c8d803225f3f2307233d745c453d81",
+    "knowledge/pipelines/_knowledge_search_common.py": "c02056011b727603b4b0dbb442165639561237a3d1495cfe48977ef35c3f3ab5"
+  }
+}
