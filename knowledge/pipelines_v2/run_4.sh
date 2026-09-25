@@ -1,6 +1,14 @@
 #!/usr/bin/env bash
 # Generate questions for all seven sources x domain counts 2/3/4.
 set -euo pipefail
+
+# 在这里填写 API 配置；也可通过同名环境变量覆盖。
+V2_ROOT="${V2_ROOT:-/mnt/data1/wangyatong/cross-x/knowledge/outpupts}"
+API_BASE_URL="${API_BASE_URL:-}"  # 例如 https://your-provider/v1
+API_KEY="${API_KEY:-}"            # 填写 API key
+MODEL="${MODEL:-}"                # 填写模型名称
+export V2_ROOT API_BASE_URL API_KEY MODEL
+
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/run_config.sh"
 v2_arguments "$@"

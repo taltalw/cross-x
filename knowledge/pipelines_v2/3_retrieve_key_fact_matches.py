@@ -61,12 +61,17 @@ def retrieve(row, retriever, annotations, domain_count=None):
     query_row = retrieval_query_row(row, domain_count)
     found = retriever.retrieve(query_row)
     retrieved = {}
+    skipped_unannotated = {}
     for domain, candidates in found['candidates'].items():
         retrieved[domain] = []
+        skipped_unannotated[domain] = []
         for candidate in candidates:
             annotation = annotations.get((domain, sample_hash(candidate['sample'])))
             if annotation is None:
-                raise ValueError(f'missing key-fact annotation for {candidate["candidate_id"]}; run step 0 on the retrieval corpus')
+                # Some provider-filtered samples may have no LLM key-fact annotation.
+                # Exclude them from downstream materials while preserving an audit trail.
+                skipped_unannotated[domain].append(candidate['candidate_id'])
+                continue
             # Retrieve the original QA snapshot, attach annotations only after verifying QA identity.
             retrieved[domain].append({
                 **candidate, 'source_domain': domain,
@@ -78,7 +83,8 @@ def retrieve(row, retriever, annotations, domain_count=None):
             })
     fields = ('source_file', 'source_domain', 'model', 'sample', 'key_facts', 'fusion_domains',
               'domain_count', 'question_plan', 'answer_plans', 'required_key_facts')
-    return {**{key: row[key] for key in fields}, 'retrieved_samples': retrieved, 'retrieval': found['retrieval']}
+    retrieval = {**found['retrieval'], 'skipped_unannotated_candidates': skipped_unannotated}
+    return {**{key: row[key] for key in fields}, 'retrieved_samples': retrieved, 'retrieval': retrieval}
 
 
 def process(input_file, output_file, corpus_paths, *, retriever, domain_count=None, num=None, overwrite=False):

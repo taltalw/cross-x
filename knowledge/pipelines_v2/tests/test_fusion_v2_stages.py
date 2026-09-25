@@ -148,8 +148,8 @@ class StageTests(unittest.TestCase):
                 first_query_hits = [h for c in semantic_result['retrieved_samples']['medical']
                                     for h in c['hits'] if h['query_index'] == 1]
                 self.assertEqual({h['method'] for h in first_query_hits}, {'embedding'})
-                with self.assertRaisesRegex(ValueError, 'missing key-fact annotation'):
-                    s3.retrieve(row, retriever, {})
+                skipped = s3.retrieve(row, retriever, {})
+                self.assertTrue(skipped['retrieval']['skipped_unannotated_candidates']['medical'])
                 missing = copy.deepcopy(row)
                 missing['required_key_facts']['medical'][0]['key_fact'] = 'unembedded query'
                 with self.assertRaisesRegex(ValueError, 'missing saved query embedding'):

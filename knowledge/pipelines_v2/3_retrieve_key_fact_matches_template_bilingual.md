@@ -57,7 +57,7 @@ queries = [entry.key_fact for entry in required_key_facts[目标领域]]
 `method` 为 `bm25` 或 `embedding`；`query_index` 为三个需求中的序号，从 1 开始。分数仅用于排序，不表示候选知识充分或事实正确。
 输出还保存步骤 2 的完整内容，以及原版 `retrieval` 字段：实际方法、划分、每路 top-k、候选上限、RRF 参数；混合模式另外记录 embedding 模型、revision、配置哈希、库路径、分块参数、query 指令和语料来源。
 
-缺少已保存的需求向量或候选 key facts 时明确报错，不伪造标注、不隐式调用模型。重复问答的标注冲突也报错。完成的行即时写入并在错误后保留。最终阶段读取这些材料及其 key facts 来实现构造思路。
+缺少已保存的需求向量时明确报错，不隐式调用模型。候选没有 key facts 标注时跳过该候选，并在 `retrieval.skipped_unannotated_candidates` 中记录其 ID；不伪造标注。重复问答的标注冲突仍报错。完成的行即时写入并在错误后保留。最终阶段读取这些材料及其 key facts 来实现构造思路。
 
 # English Template
 
@@ -112,4 +112,4 @@ This example shows one candidate from one selected domain. Expand it for all fus
 method is bm25 or embedding; query_index is the one-based index of the requirement. Scores indicate ranking, not knowledge sufficiency or factual correctness.
 Saved rows also retain the complete step-2 content and the original retrieval settings: method, splits, top-k per method, candidate limit, and RRF constant. Hybrid mode additionally records embedding model, revision, configuration hash, store path, chunking parameters, query instruction, and corpus sources.
 
-Missing query vectors or candidate key-fact annotations cause an explicit error, without fabricating annotations or silently invoking a model. Conflicting annotations for duplicate question-answer pairs are rejected. Completed rows are flushed immediately and retained on failure. The final stage uses these samples and their key facts to realize the construction ideas.
+Missing query vectors cause an explicit error, without silently invoking a model. Candidates without key-fact annotations are skipped and their IDs are recorded in `retrieval.skipped_unannotated_candidates`; no annotations are fabricated. Conflicting annotations for duplicate question-answer pairs are rejected. Completed rows are flushed immediately and retained on failure. The final stage uses these samples and their key facts to realize the construction ideas.

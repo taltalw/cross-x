@@ -2,6 +2,14 @@
 # Embed complete test corpora and the 21 requirement files, then retrieve all groups.
 set -euo pipefail
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+# Defaults for the completed 2026-09-22 0-1-2 run; environment variables override them.
+V2_ROOT="${V2_ROOT:-${SCRIPT_DIR}/../../run_012_joyrouter_20260922}"
+EMBEDDING_ROOT="${EMBEDDING_ROOT:-${SCRIPT_DIR}/../embeddings/v2-test-Qwen3-Embedding-8B}"
+PYTHON_BIN="${PYTHON_BIN:-/mnt/data1/wangyatong/anaconda3/envs/crossx/bin/python}"
+EMBEDDING_PYTHON_BIN="${EMBEDDING_PYTHON_BIN:-/mnt/data1/wangyatong/anaconda3/envs/crossx/bin/python}"
+GPU_ID="${GPU_ID:-1}"
+EMBEDDING_DEVICE="${EMBEDDING_DEVICE:-cuda:0}"
+export CUDA_VISIBLE_DEVICES="$GPU_ID"
 source "$SCRIPT_DIR/run_config.sh"
 v2_arguments "$@"
 CORPUS_FILES=()
