@@ -1,0 +1,16 @@
+{
+  "chunk_overlap_tokens": 128,
+  "dimension": 4096,
+  "document_text": "prompt + newline + completion",
+  "dtype": "float16",
+  "format_version": 1,
+  "local_model_identity": null,
+  "max_length": 2048,
+  "model": "Qwen/Qwen3-Embedding-8B",
+  "normalize": true,
+  "pooling": "last_non_padding_token",
+  "query_instruction": "Given a knowledge requirement, retrieve question-answer samples that provide the domain concepts, mechanisms, rules, or methods needed to satisfy it.",
+  "revision": "1d8ad4ca9b3dd8059ad90a75d4983776a23d44af",
+  "tokenizer_hash": "5b7f88e7d3e6693e431ed25c256923456b3734b70c5e0080a1f9ddc84fad5bb3",
+  "transformers_version": "4.51.3"
+}
