@@ -1,0 +1,10 @@
+# Direct v3 runtime requirements extracted from the existing crossx Python 3.10 environment.
+# The CUDA wheel also supports CPU execution when no NVIDIA driver is available.
+--extra-index-url https://download.pytorch.org/whl/cu128
+numpy==1.26.4
+torch==2.7.1+cu128
+transformers==4.51.3
+safetensors==0.5.3
+packaging==26.3
+huggingface-hub==0.36.2
+tokenizers==0.21.4
