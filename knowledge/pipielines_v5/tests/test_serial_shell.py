@@ -3,6 +3,7 @@ import json
 import os
 from pathlib import Path
 import subprocess
+import sys
 import tempfile
 import unittest
 
@@ -155,6 +156,50 @@ if '--output' in args:
         self.assertEqual(self.calls(), [])
         self.assertNotEqual(self.run_entry('run_4.sh').returncode, 0)
         self.assertEqual(self.calls(), [])
+
+    def prepare_concise_inputs(self):
+        for domain in DOMAINS:
+            for count in (2, 3, 4):
+                path = Path(self.env['V4_ROOT']) / '3_retrieve_key_fact_matches' / domain / f'test_domain_count_{count}.jsonl'
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text('{}\n')
+        self.env['V4_CONCISE_ROOT'] = str(self.root / 'concise')
+        self.env['V4_CONCISE_AUDIT_ROOT'] = str(self.root / 'audits')
+
+    def test_concise_shell_isolates_outputs_and_limits_input_plans(self):
+        self.prepare_concise_inputs()
+        result = self.run_entry('run_4_concise.sh')
+        self.assertEqual(result.returncode, 0, result.stderr)
+        calls = [args for args in self.calls() if Path(args[0]).name == '4_generate_fusion_question.py']
+        self.assertEqual(len(calls), 21)
+        for args in calls:
+            self.assertTrue(args[args.index('--input') + 1].startswith(self.env['V4_ROOT']))
+            self.assertTrue(args[args.index('--output') + 1].startswith(self.env['V4_CONCISE_ROOT']))
+            self.assertTrue(args[args.index('--audit-output') + 1].startswith(self.env['V4_CONCISE_AUDIT_ROOT']))
+            self.assertEqual(args[args.index('--num') + 1], '10')
+            self.assertEqual(args[args.index('--max-repairs') + 1], '1')
+        self.assertFalse((Path(self.env['V4_ROOT']) / '4_generate_fusion_question').exists())
+
+    def test_concise_preflight_rejects_old_root_alias_with_real_python(self):
+        self.prepare_concise_inputs()
+        self.env['PYTHON_BIN'] = sys.executable
+        self.env['V4_CONCISE_ROOT'] = self.env['V4_ROOT']
+        result = self.run_entry('run_4_concise.sh', '--overwrite')
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('must be distinct', result.stderr)
+        self.assertFalse((Path(self.env['V4_ROOT']) / '4_generate_fusion_question').exists())
+        self.assertFalse(Path(self.env['V4_CONCISE_AUDIT_ROOT']).exists())
+
+    def test_concise_batch_preflight_before_any_calls(self):
+        self.prepare_concise_inputs()
+        final_audit = Path(self.env['V4_CONCISE_AUDIT_ROOT']) / '4_generate_fusion_question/chemistry/test_domain_count_4.audit.jsonl'
+        final_audit.parent.mkdir(parents=True)
+        final_audit.write_text('KEEP')
+        result = self.run_entry('run_4_concise.sh')
+        self.assertNotEqual(result.returncode, 0)
+        self.assertEqual(self.calls(), [])
+        self.assertFalse(Path(self.env['V4_CONCISE_ROOT']).exists())
+        self.assertEqual(final_audit.read_text(), 'KEEP')
 
     def test_missing_dependency_stops_before_paid_calls(self):
         self.prepare_resume_inputs()

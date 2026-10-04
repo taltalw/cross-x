@@ -1,15 +1,5 @@
-# 第 4 步实际提示词 / Actual Step-4 Prompts
-
-以下英文逐字来自 `_concise_prompts.py`，中文解释用途和边界。具体 schema、CLI、预算和失败行为见 [第 4 步文档](4_generate_fusion_question.md)。预算为本项目设计，不是外部 benchmark 官方参数。
-
-The English blocks below are the exact prompts used by the implementation. Runtime budgets and evidence are supplied in separate JSON payloads.
-
-## SCREEN_PROMPT
-
-筛选同时选择精确证据、收缩单目标、重写三个知识短语并构造蓝图；保留源知识及全部领域，不增加单独规划调用。不可行时计划及蓝图为 null，每域所选证据为空。
-
-```text
-Find one compact, evidence-supported cross-domain task using the source
+"""Actual English prompts used by step 4 (documented verbatim)."""
+SCREEN_PROMPT = """Find one compact, evidence-supported cross-domain task using the source
 sample's core knowledge and every chosen fusion domain.
 The existing question_plan and answer_plans are optional starting points.
 Prefer the smallest coherent final target supported by the available evidence,
@@ -60,14 +50,27 @@ Return only the required English JSON object (replace domain with actual names):
 answer_form must be one of number, decision, short_text, expression, code.
 selected_samples and required_key_facts cover only fusion_domains;
 domain_roles covers the source and every fusion domain exactly.
-```
+"""
 
-## SYSTEM_PROMPT
+GENERATION_SCHEMA = """
+Return only this English JSON object:
+{
+ "question": "Self-contained question asking one final result",
+ "options": {"A": "Outcome", "B": "Outcome", "C": "Outcome", "D": "Outcome"},
+ "answer": "A", "explanation": "Full correct reasoning, referring to content, not option letters",
+ "distractor_analysis": [
+  {"option": "B", "type": "missing_domain_knowledge", "missing_domain": "participating domain", "reason": "Erroneous step -> wrong result -> why this option"},
+  {"option": "C", "type": "parallel_knowledge", "missing_domain": null, "reason": "Erroneous step -> wrong result -> why this option"},
+  {"option": "D", "type": "incorrect_domain_relation", "missing_domain": null, "reason": "Erroneous step -> wrong result -> why this option"}
+ ],
+ "used_samples": {"fusion_domain": [{"prompt": "Exact supplied prompt", "completion": "Exact supplied completion"}]},
+ "plan_adjustment": "Substantive change from revised plans, or empty string"
+}
+Each wrong option is annotated once; each error type occurs once. Cite only
+actually used selected samples, at least one per fusion domain. Preserve schema.
+"""
 
-生成简洁题干和同型结果选项；必要条件、被测领域知识依赖和合法代码格式不可削弱。推理与具体错误机制只放后台，难度通过关系或边界条件调节，不靠增加独立子问。
-
-```text
-Write one compact, single-target cross-domain multiple-choice item from the
+SYSTEM_PROMPT = """Write one compact, single-target cross-domain multiple-choice item from the
 compact_blueprint, revised plans, and selected evidence.
 Ask for one final result. Keep all participating domains necessary for it.
 Do not expand the blueprint into a report, independent questions, or a worked
@@ -97,30 +100,9 @@ unique diagnoses recoverable from a short wrong answer.
 Do not silently change target or domain set. Record substantive plan adjustments.
 In free prose describe option CONTENT, never 'Option A', 'Choice B', etc.;
 programmatic permutation moves structured labels only, not variables in code.
+""" + GENERATION_SCHEMA
 
-Return only this English JSON object:
-{
- "question": "Self-contained question asking one final result",
- "options": {"A": "Outcome", "B": "Outcome", "C": "Outcome", "D": "Outcome"},
- "answer": "A", "explanation": "Full correct reasoning, referring to content, not option letters",
- "distractor_analysis": [
-  {"option": "B", "type": "missing_domain_knowledge", "missing_domain": "participating domain", "reason": "Erroneous step -> wrong result -> why this option"},
-  {"option": "C", "type": "parallel_knowledge", "missing_domain": null, "reason": "Erroneous step -> wrong result -> why this option"},
-  {"option": "D", "type": "incorrect_domain_relation", "missing_domain": null, "reason": "Erroneous step -> wrong result -> why this option"}
- ],
- "used_samples": {"fusion_domain": [{"prompt": "Exact supplied prompt", "completion": "Exact supplied completion"}]},
- "plan_adjustment": "Substantive change from revised plans, or empty string"
-}
-Each wrong option is annotated once; each error type occurs once. Cite only
-actually used selected samples, at least one per fusion domain. Preserve schema.
-```
-
-## AUDIT_PROMPT
-
-只审最终题面，隐藏生成答案、解释、错误标签、计划和蓝图，允许查看源问答与所选证据。检查答案唯一、六项质量标准及全部领域必要性；零/多答案和 uncertain 均允许返回但程序判失败。这不是闭卷测试或独立专家验证，也不从短错误答案唯一诊断认知机制。
-
-```text
-Audit the actual visible multiple-choice item. No proposed answer key or
+AUDIT_PROMPT = """Audit the actual visible multiple-choice item. No proposed answer key or
 construction explanation is provided. Independently determine ALL correct
 options, allowing none or several if invalid or underdetermined.
 References are private provenance. Use them to verify tested domain knowledge,
@@ -150,14 +132,9 @@ Return only English JSON:
 checks allow pass/fail/uncertain; necessary allows true/false/null. Include each
 participating domain exactly. correct_options allows zero or multiple distinct
 labels. issues is a list of unresolved issue strings, empty only if none.
-```
+"""
 
-## REPAIR_PROMPT
-
-最多一次定向重写。载荷包含原候选、字段级超限或语义反馈、已排列审查候选与映射、证据、蓝图及预算。重写不能仅更换答案键、删条件或截断代码；重写后重新执行全部检查。
-
-```text
-Rewrite the supplied original_candidate once using the specific structured
+REPAIR_PROMPT = """Rewrite the supplied original_candidate once using the specific structured
 feedback. Return a new unpermuted candidate in the original generation schema.
 Recheck every issue, not just length. Preserve source core knowledge, all
 participating domains, the compact_blueprint's final target, evidence-supported
@@ -166,50 +143,4 @@ wrong outcomes. The previous audit may be wrong: verify it against evidence.
 Do not simply change the answer key to the judge's label. Do not remove spaces,
 truncate code, weaken domain dependence, or bundle independent outputs to fit
 limits. Describe option content instead of option letters in free prose.
-Write one compact, single-target cross-domain multiple-choice item from the
-compact_blueprint, revised plans, and selected evidence.
-Ask for one final result. Keep all participating domains necessary for it.
-Do not expand the blueprint into a report, independent questions, or a worked
-solution. A report with multiple unrelated results is not one target.
-The question must be self-contained for a knowledgeable model that cannot see
-source samples or construction metadata. Include necessary instance conditions,
-units, precision, local API contracts and boundaries. Do not supply tested
-general rules, formulas, or the entire cross-domain bridge as a given rule.
-All four distinct options answer the same target in the declared answer_form.
-Use concrete final outcomes, not explanations or statements about missing
-knowledge. Put common conditions/code once in the question. Put reasoning and
-error mechanisms in private metadata. For code, prefer a local completion
-snippet and preserve newlines/indentation; do not give away tested logic in
-common code. Obey supplied word AND character hard limits. The soft question
-target is guidance, not a minimum; options may be single numbers.
-Never remove spaces, truncate code, omit necessary conditions or discard a
-domain to meet budgets. Do not expose difficulty, retrieval, coverage, or error
-labels in question/options. Difficulty changes application conditions, relations
-or boundary cases, not background length or independent subquestions.
-Construct one correct option and three concrete wrong outcomes. For
-missing_domain_knowledge, omit or misuse necessary domain knowledge; for
-parallel_knowledge, fail to propagate a needed local result into the final
-decision; for incorrect_domain_relation, connect a mapping, direction, object
-or combination incorrectly. Explain the erroneous step and produced outcome
-in reason, not a synonym of the label. These are construction intents, not
-unique diagnoses recoverable from a short wrong answer.
-Do not silently change target or domain set. Record substantive plan adjustments.
-In free prose describe option CONTENT, never 'Option A', 'Choice B', etc.;
-programmatic permutation moves structured labels only, not variables in code.
-
-Return only this English JSON object:
-{
- "question": "Self-contained question asking one final result",
- "options": {"A": "Outcome", "B": "Outcome", "C": "Outcome", "D": "Outcome"},
- "answer": "A", "explanation": "Full correct reasoning, referring to content, not option letters",
- "distractor_analysis": [
-  {"option": "B", "type": "missing_domain_knowledge", "missing_domain": "participating domain", "reason": "Erroneous step -> wrong result -> why this option"},
-  {"option": "C", "type": "parallel_knowledge", "missing_domain": null, "reason": "Erroneous step -> wrong result -> why this option"},
-  {"option": "D", "type": "incorrect_domain_relation", "missing_domain": null, "reason": "Erroneous step -> wrong result -> why this option"}
- ],
- "used_samples": {"fusion_domain": [{"prompt": "Exact supplied prompt", "completion": "Exact supplied completion"}]},
- "plan_adjustment": "Substantive change from revised plans, or empty string"
-}
-Each wrong option is annotated once; each error type occurs once. Cite only
-actually used selected samples, at least one per fusion domain. Preserve schema.
-```
+""" + SYSTEM_PROMPT
