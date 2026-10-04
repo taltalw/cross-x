@@ -2,6 +2,8 @@
 import copy
 import importlib.util
 import json
+import math
+import textwrap
 from pathlib import Path
 import subprocess
 import sys
@@ -419,6 +421,58 @@ class ConciseTests(unittest.TestCase):
         document=(ROOT/'4_generate_fusion_question_prompt_bilingual.md').read_text()
         for prompt in (SCREEN_PROMPT,SYSTEM_PROMPT,AUDIT_PROMPT,REPAIR_PROMPT):
             self.assertIn(prompt.rstrip(),document)
+
+    def prompt_example(self, prompt):
+        section=prompt.split('\nExample\n',1)[1]
+        decoder=json.JSONDecoder()
+        payload,_=decoder.raw_decode(section.split('\nInput:\n',1)[1])
+        output,_=decoder.raw_decode(section.split('\nOutput:\n',1)[1])
+        return payload,output
+
+    def test_runtime_prompt_examples_match_pipeline_contracts(self):
+        screen_input,screen_output=self.prompt_example(s4.SCREEN_PROMPT)
+        domains=screen_input['fusion_domains']
+        participating=[screen_input['source_domain'],*domains]
+        references={d:{(s['prompt'],s['completion']) for s in samples}
+                    for d,samples in screen_input['retrieved_samples'].items()}
+        screened=s4.validate_screening(screen_output,screen_input['source_domain'],domains,references)
+        self.assertTrue(screened['feasible'])
+        for prompt in (s4.SYSTEM_PROMPT,s4.REPAIR_PROMPT):
+            payload,output=self.prompt_example(prompt)
+            generated=validate_generation(output,participating,references,payload['compact_blueprint']['answer_form'])
+            self.assertEqual(generated['used_samples'],screened['selected_samples'])
+            self.assertEqual(payload['compact_blueprint'],screened['compact_blueprint'])
+            self.assertEqual(hard_issues(generated,payload['length_budget']),[])
+            validate_budget(payload['length_budget'])
+            # Static repository example: verify the code bodies have the advertised
+            # concrete outcomes rather than relying on a mock judge's pass labels.
+            results={}
+            for label,body in generated['options'].items():
+                namespace={'math':math}
+                exec('def area(r):\n'+textwrap.indent(body,'    '),namespace)
+                results[label]=namespace['area'](2)
+            self.assertAlmostEqual(results[generated['answer']],math.pi*4)
+            wrong={e['type']:results[e['option']] for e in generated['distractor_analysis']}
+            self.assertEqual(wrong['missing_domain_knowledge'],4)
+            self.assertEqual(wrong['parallel_knowledge'],2)
+            self.assertAlmostEqual(wrong['incorrect_domain_relation'],(math.pi*2)**2)
+        repair_input,_=self.prompt_example(s4.REPAIR_PROMPT)
+        self.assertIn('original_candidate',repair_input)
+        self.assertTrue(repair_input['feedback']['issues'])
+
+    def test_runtime_audit_example_uses_only_blind_payload_and_moved_labels(self):
+        payload,output=self.prompt_example(s4.AUDIT_PROMPT)
+        gen_input,generated=self.prompt_example(s4.SYSTEM_PROMPT)
+        self.assertEqual(set(payload),{'question','options','participating_domains','source_sample','selected_samples'})
+        self.assertEqual(payload['selected_samples'],generated['used_samples'])
+        self.assertEqual(payload['source_sample'],gen_input['sample'])
+        self.assertEqual(set(payload['participating_domains']),
+                         {gen_input['source_domain'],*gen_input['fusion_domains']})
+        validated=validate_audit(output,payload['participating_domains'])
+        answer_text=generated['options'][generated['answer']]
+        moved_answer=next(k for k,v in payload['options'].items() if v==answer_text)
+        self.assertNotEqual(moved_answer,generated['answer'])
+        self.assertEqual(audit_issues(validated,moved_answer),[])
 
     def test_separate_judge_and_semantic_repair_success(self):
         generation=FakeAPI()
