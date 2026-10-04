@@ -1,0 +1,37 @@
+{
+  "passed": true,
+  "python": "/pfs/ydy/wyt/cross-x/knowledge/pipielines_v3/.env/bin/python",
+  "prefix": "/pfs/ydy/wyt/cross-x/knowledge/pipielines_v3/.env",
+  "versions": {
+    "numpy": "1.26.4",
+    "torch": "2.7.1+cu128",
+    "transformers": "4.51.3",
+    "safetensors": "0.5.3",
+    "packaging": "26.3",
+    "huggingface-hub": "0.36.2",
+    "tokenizers": "0.21.4"
+  },
+  "gpu_id": 7,
+  "gpu_name": "NVIDIA H200",
+  "embedding_model": {
+    "format_version": 1,
+    "model": "/pfs/zhangjun/models/Qwen3-Embedding-8B",
+    "revision": null,
+    "local_model_identity": "753a48f6e95b7ab1dea94363eca2f16ed86bfb2aa1524b1c0439249459340c81",
+    "dimension": 4096,
+    "dtype": "float16",
+    "max_length": 2048,
+    "chunk_overlap_tokens": 128,
+    "query_instruction": "Given a knowledge requirement, retrieve question-answer samples that provide the domain concepts, mechanisms, rules, or methods needed to satisfy it.",
+    "pooling": "last_non_padding_token",
+    "normalize": true,
+    "document_text": "prompt + newline + completion",
+    "transformers_version": "4.51.3",
+    "tokenizer_hash": "5b7f88e7d3e6693e431ed25c256923456b3734b70c5e0080a1f9ddc84fad5bb3"
+  },
+  "embedding_test_shape": [
+    2,
+    4096
+  ],
+  "peak_gpu_allocated_bytes": 15176860672
+}

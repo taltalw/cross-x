@@ -1,0 +1,24 @@
+test_only_validated_responses_are_cached (__main__.AdapterTests) ... ok
+test_partial_generation_is_not_emitted_after_refusal (__main__.AdapterTests) ... START 4_generate_fusion_question__medical__test_domain_count_2: 2 inputs, 3 workers
+PROGRESS 4_generate_fusion_question__medical__test_domain_count_2: 2/2 inputs; 3 outputs; 1 rejected; 0 screened out
+ok
+test_refusal_auth_and_model_checks (__main__.AdapterTests) ... ok
+test_source_lines_order_skip_and_resume (__main__.AdapterTests) ... START 0_extract_key_facts__medical__test: 3 inputs, 3 workers
+PROGRESS 0_extract_key_facts__medical__test: 3/3 inputs; 2 outputs; 1 rejected; 0 screened out
+START 0_extract_key_facts__medical__test: 3 inputs, 3 workers
+PROGRESS 0_extract_key_facts__medical__test: 3/3 inputs; 2 outputs; 1 rejected; 0 screened out
+ok
+test_stage1_limit_does_not_replace_rejections (__main__.AdapterTests) ... START 1_generate_fusion_plans__medical__test_domain_count_2: 3 inputs, 3 workers
+PROGRESS 1_generate_fusion_plans__medical__test_domain_count_2: 3/3 inputs; 2 outputs; 1 rejected; 0 screened out
+ok
+test_technical_error_remains_fatal (__main__.AdapterTests) ... START 0_extract_key_facts__medical__test: 3 inputs, 1 workers
+FAILED 0_extract_key_facts__medical__test: input line 2: HTTP 401; completed rows retained
+ok
+test_truncation_increases_output_budget (__main__.AdapterTests) ... ok
+test_v4_infeasible_retry_explains_nulls_and_domain_keys (__main__.AdapterTests) ... ok
+test_v4_revised_screening_is_checkpointed_and_revalidated (__main__.AdapterTests) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.050s
+
+OK
