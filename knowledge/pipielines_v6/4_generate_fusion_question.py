@@ -17,6 +17,7 @@ from _pipeline_common import (
     compact_text,
     row_domains,
     sample_reference,
+    validate_generation,
     validate_plans,
     validate_required_key_facts,
     validate_v2_row,
@@ -26,20 +27,205 @@ from _pipeline_common import (
 DIFFICULTIES = ("easy", "medium", "hard")
 
 
-from _concise_prompts import SCREEN_PROMPT, SYSTEM_PROMPT, AUDIT_PROMPT, REPAIR_PROMPT
-from _concise_fusion import (
-    VERSION, audit_payload, audit_issues, budget_for, digest,
-    hard_issues, item_id, json_object, length_stats, load_budget_file, plan_key,
-    shuffle_options, validate_audit, validate_blueprint, validate_generation,
-)
+SCREEN_PROMPT = """Find a natural cross-domain question that can be constructed
+from the original sample and the retrieved samples in every fusion domain.
+The existing question_plan and answer_plans are optional starting points,
+not requirements that the retrieved samples must match.
+
+Tasks:
+1. Select the exact retrieved samples that can contribute necessary knowledge
+   to one joint question with the source sample. Use every fusion domain.
+2. If such a question is feasible, revise question_plan and all four
+   answer_plans to fit the selected samples. Preserve the source sample's core
+   knowledge and the chosen fusion_domains.
+3. Rewrite required_key_facts to describe the knowledge actually used from
+   each fusion domain: exactly three short keyword phrases and a brief
+   necessity for each.
+
+Requirements:
+- Judge facts from the original prompt and completion of each sample. Do not
+  invent facts or add an unrelated domain merely to force a combination.
+- Do not reject a useful sample because it does not support the old plan;
+  adjust the plan to what the retrieved material can naturally support.
+- Set feasible to false only when the available samples cannot support one
+  coherent joint task using every fusion domain. Then use null for all plan
+  fields and empty selected_samples lists.
+- List only exact supplied samples from their own domains. Keep each key_fact
+  to a few English words, not a sentence; put explanations in necessity.
+- Return only this English JSON object:
+{
+  "feasible": true,
+  "reason": "Why the selected samples form one joint task, or why none do.",
+  "selected_samples": {
+    "fusion_domain": [{"prompt": "Original question", "completion": "Original answer"}]
+  },
+  "question_plan": "Brief revised joint question idea.",
+  "answer_plans": [
+    {"type": "correct", "missing_domain": null, "plan": "..."},
+    {"type": "missing_domain_knowledge", "missing_domain": "participating domain", "plan": "..."},
+    {"type": "parallel_knowledge", "missing_domain": null, "plan": "..."},
+    {"type": "incorrect_domain_relation", "missing_domain": null, "plan": "..."}
+  ],
+  "required_key_facts": {
+    "fusion_domain": [
+      {"key_fact": "short phrase", "necessity": "Why needed."},
+      {"key_fact": "short phrase", "necessity": "Why needed."},
+      {"key_fact": "short phrase", "necessity": "Why needed."}
+    ]
+  }
+}
+
+Example:
+- input
+{
+  "source_domain": "mathematics",
+  "sample": {"prompt": "Calculate the area of a circle of radius r.", "completion": "pi * r**2"},
+  "key_facts": ["circle area", "pi times radius squared"],
+  "fusion_domains": ["computer_science"],
+  "question_plan": "Reverse a string before calculating a circle's area.",
+  "answer_plans": [
+    {"type": "correct", "missing_domain": null, "plan": "Reverse the string and calculate the area."},
+    {"type": "missing_domain_knowledge", "missing_domain": "mathematics", "plan": "Omit pi."},
+    {"type": "parallel_knowledge", "missing_domain": null, "plan": "Keep the two computations separate."},
+    {"type": "incorrect_domain_relation", "missing_domain": null, "plan": "Apply the string operation to the radius."}
+  ],
+  "retrieved_samples": {
+    "computer_science": [
+      {"prompt": "What do return, math.pi, and ** do in Python?", "completion": "return sends back a value; math.pi is pi; ** exponentiates."}
+    ]
+  }
+}
+
+- output
+{
+  "feasible": true,
+  "reason": "The Python sample can express and return the circle-area calculation.",
+  "selected_samples": {
+    "computer_science": [
+      {"prompt": "What do return, math.pi, and ** do in Python?", "completion": "return sends back a value; math.pi is pi; ** exponentiates."}
+    ]
+  },
+  "question_plan": "Write a Python function that returns the area of a circle from its radius.",
+  "answer_plans": [
+    {"type": "correct", "missing_domain": null, "plan": "Return pi times radius squared."},
+    {"type": "missing_domain_knowledge", "missing_domain": "mathematics", "plan": "Return radius squared without pi."},
+    {"type": "parallel_knowledge", "missing_domain": null, "plan": "Compute the area but return the radius."},
+    {"type": "incorrect_domain_relation", "missing_domain": null, "plan": "Square pi with the radius."}
+  ],
+  "required_key_facts": {
+    "computer_science": [
+      {"key_fact": "Python return statement", "necessity": "Return the computed value."},
+      {"key_fact": "math.pi constant", "necessity": "Represent pi in code."},
+      {"key_fact": "Python exponentiation", "necessity": "Square the radius."}
+    ]
+  }
+}
+"""
+
+
+SYSTEM_PROMPT = """Construct one cross-domain multiple-choice question from
+the supplied plan and evidence-supported retrieved samples.
+
+The input includes the original atomic sample and key facts, fusion_domains,
+question_plan, answer_plans, required_key_facts, retrieved_samples, and the
+requested difficulty. The source domain is represented by the original sample;
+the fusion domains are represented by retrieved samples.
+
+Tasks:
+1. Follow the question_plan to create one natural joint task using the original
+   sample's core knowledge and every chosen fusion domain.
+2. Create four distinct options: one correct answer and three distractors of
+   types missing_domain_knowledge, parallel_knowledge, and
+   incorrect_domain_relation. The correct option may be A, B, C, or D.
+3. Explain the correct answer, analyze each distractor, and list at least one
+   used sample from every fusion domain in used_samples.
+
+Requirements:
+- Write the question at the requested difficulty. Do not define difficulty
+  levels or put the difficulty label in the question or options.
+- Keep the question and answer options as concise as possible while including
+  the conditions needed to solve it. Put no extra reasoning steps in the
+  question or options; use explanation for reasoning.
+- Use the supplied sample text as evidence. Do not invent domain facts, add
+  domains, or replace the joint task with another task.
+- If the plan needs a substantive adjustment, describe it in plan_adjustment;
+  otherwise use an empty string.
+- Return only an English JSON object in this format:
+
+{
+  "question": "Complete question with all necessary conditions.",
+  "options": {"A": "...", "B": "...", "C": "...", "D": "..."},
+  "answer": "B",
+  "explanation": "Why the correct option follows from the participating domains.",
+  "distractor_analysis": [
+    {"option": "A", "type": "missing_domain_knowledge", "missing_domain": "domain", "reason": "..."},
+    {"option": "C", "type": "parallel_knowledge", "missing_domain": null, "reason": "..."},
+    {"option": "D", "type": "incorrect_domain_relation", "missing_domain": null, "reason": "..."}
+  ],
+  "used_samples": {"fusion_domain": [{"prompt": "Original question", "completion": "Original answer"}]},
+  "plan_adjustment": ""
+}
+
+Example:
+- input
+{
+  "source_domain": "mathematics",
+  "sample": {"prompt": "Calculate the area of a circle of radius r.", "completion": "pi * r**2"},
+  "key_facts": ["circle area", "pi times radius squared"],
+  "fusion_domains": ["computer_science"],
+  "question_plan": "Write a Python function that calculates a circle's area from its radius and returns the result, assuming math is imported and the radius is positive.",
+  "answer_plans": [
+    {"type": "correct", "missing_domain": null, "plan": "Compute pi times the radius squared and return the computed area."},
+    {"type": "missing_domain_knowledge", "missing_domain": "mathematics", "plan": "Return the radius squared while omitting the required factor pi."},
+    {"type": "parallel_knowledge", "missing_domain": null, "plan": "Compute the correct area expression but return the radius instead of the computed value."},
+    {"type": "incorrect_domain_relation", "missing_domain": null, "plan": "Square the product of pi and the radius, applying the square to pi as well as the radius."}
+  ],
+  "required_key_facts": {
+    "computer_science": [
+      {"key_fact": "Python function return statement", "necessity": "The function must return the area."},
+      {"key_fact": "Python math module pi constant", "necessity": "The expression needs pi."},
+      {"key_fact": "Python exponentiation and parentheses", "necessity": "Only the radius is squared."}
+    ]
+  },
+  "retrieved_samples": {
+    "computer_science": [
+      {"prompt": "What do return, math.pi, **, and parentheses do in Python?", "completion": "return sends back a value; math.pi is pi; ** exponentiates; parentheses group operations."}
+    ]
+  },
+  "option_count": 4,
+  "difficulty": "easy"
+}
+
+- output
+{
+  "question": "With math imported and r > 0, which function returns a circle's area?",
+  "options": {
+    "A": "def area(r): return math.pi * r**2",
+    "B": "def area(r): return r**2",
+    "C": "def area(r): math.pi * r**2; return r",
+    "D": "def area(r): return (math.pi * r)**2"
+  },
+  "answer": "A",
+  "explanation": "The function returns pi times the radius squared.",
+  "distractor_analysis": [
+    {"option": "B", "type": "missing_domain_knowledge", "missing_domain": "mathematics", "reason": "It omits pi."},
+    {"option": "C", "type": "parallel_knowledge", "missing_domain": null, "reason": "It computes the area but returns the radius."},
+    {"option": "D", "type": "incorrect_domain_relation", "missing_domain": null, "reason": "It squares pi along with the radius."}
+  ],
+  "used_samples": {
+    "computer_science": [
+      {"prompt": "What do return, math.pi, **, and parentheses do in Python?", "completion": "return sends back a value; math.pi is pi; ** exponentiates; parentheses group operations."}
+    ]
+  },
+  "plan_adjustment": ""
+}
+"""
 
 
 def validate_screening(value: Any, source: str, fusion_domains: list[str],
-                       available_samples: dict[str, set[tuple[str, str]]], blueprint_limits=None) -> dict:
+                       available_samples: dict[str, set[tuple[str, str]]]) -> dict:
     if not isinstance(value, dict) or type(value.get("feasible")) is not bool:
         raise ValueError("screening result must contain a boolean feasible")
-    if any(field not in value for field in ("question_plan", "answer_plans", "required_key_facts", "compact_blueprint")):
-        raise ValueError("screening must include all plan fields and compact_blueprint (null if infeasible)")
     reason = compact_text(value.get("reason"), "screening reason")
     selected = value.get("selected_samples")
     if not isinstance(selected, dict) or set(selected) != set(fusion_domains):
@@ -61,228 +247,132 @@ def validate_screening(value: Any, source: str, fusion_domains: list[str],
             raise ValueError("feasible screening requires samples from every fusion domain")
     if not value["feasible"]:
         if any(normalized.values()) or any(value.get(field) is not None for field in
-                                        ("question_plan", "answer_plans", "required_key_facts", "compact_blueprint")):
+                                        ("question_plan", "answer_plans", "required_key_facts")):
             raise ValueError("infeasible screening must not return samples or plans")
-        return {"feasible": False, "reason": reason, "selected_samples": normalized, "compact_blueprint": None}
+        return {"feasible": False, "reason": reason, "selected_samples": normalized}
     plans = validate_plans(value, [source, *fusion_domains])
     required = validate_required_key_facts(value.get("required_key_facts"), fusion_domains)
     return {"feasible": True, "reason": reason, "selected_samples": normalized,
-            **plans, "required_key_facts": required,
-            "compact_blueprint": validate_blueprint(value.get("compact_blueprint"), [source, *fusion_domains], blueprint_limits)}
-
-
-def preflight_paths(input_file, output_file, audit_file, overwrite):
-    paths = [Path(p) for p in (input_file, output_file, audit_file)]
-    for i, first in enumerate(paths):
-        for second in paths[i+1:]:
-            if first.resolve() == second.resolve() or (first.exists() and second.exists() and os.path.samefile(first, second)):
-                raise ValueError('input, output and audit paths must refer to different files')
-    if not paths[0].is_file():
-        raise FileNotFoundError(paths[0])
-    for path in paths[1:]:
-        if path.exists() and (not overwrite or not path.is_file()):
-            raise FileExistsError(f'output exists: {path}; choose a new path or use --overwrite')
-        parent = path.parent
-        while not parent.exists():
-            parent = parent.parent
-        if not parent.is_dir():
-            raise ValueError(f'output parent is not a directory: {parent}')
-    return paths
+            **plans, "required_key_facts": required}
 
 
 def process(input_file: Path, output_file: Path, *, api: JSONAPI, domain_count: int | None,
-            num: int | None, max_tokens: int, max_input_chars: int, overwrite: bool,
-            max_repairs: int = 1, seed: int = 42, judge_api=None,
-            skip_semantic_audit: bool = False, length_budget_file: Path | None = None,
-            audit_output: Path | None = None) -> dict[str, Any]:
+            num: int | None, max_tokens: int,
+            max_input_chars: int, overwrite: bool) -> dict[str, Any]:
+    if input_file.resolve() == output_file.resolve():
+        raise ValueError("input and output must be different files")
+    if not input_file.is_file():
+        raise FileNotFoundError(input_file)
     if num is not None and num < 1 or max_tokens < 1 or max_input_chars < 1:
-        raise ValueError('num, max-tokens, and max-input-chars must be positive')
-    if type(max_repairs) is not int or max_repairs not in (0, 1):
-        raise ValueError('max-repairs must be 0 or 1 (at most one directed rewrite)')
-    if type(seed) is not int:
-        raise ValueError('seed must be an integer')
-    budgets, blueprint_limits = load_budget_file(length_budget_file)
-    input_file, output_file, audit_file = preflight_paths(
-        input_file, output_file, audit_output or output_file.with_suffix('.audit.jsonl'), overwrite)
-    judge_api = judge_api or api
-    if skip_semantic_audit:
-        print('WARNING: semantic audit disabled; outputs are format-debug records, not quality-qualified items', file=sys.stderr)
-    for path in (output_file, audit_file):
-        path.parent.mkdir(parents=True, exist_ok=True)
-    report = dict(processed=0, skipped=0, feasible_plans=0, initial_candidates=0,
-                  repair_candidates=0, generated=0, accepted=0, debug_accepted=0,
-                  final_rejected=0, duplicate_plans=0, logical_api_calls=0)
-    seen_plans = {}
-    output_ids = set()
-
-    def call(client, prompt, payload, validate):
-        if len(json.dumps(payload, ensure_ascii=False, allow_nan=False)) > max_input_chars:
-            raise ValueError('API input exceeds --max-input-chars; no evidence or code was truncated')
-        report['logical_api_calls'] += 1
-        return client.chat(prompt, payload, validate, max_tokens)
-
-    with output_file.open('w' if overwrite else 'x', encoding='utf-8') as output, \
-            audit_file.open('w' if overwrite else 'x', encoding='utf-8') as audit:
+        raise ValueError("num, max-tokens, and max-input-chars must be positive")
+    output_file.parent.mkdir(parents=True, exist_ok=True)
+    processed = 0
+    skipped = 0
+    generated_count = 0
+    with output_file.open("w" if overwrite else "x", encoding="utf-8") as output:
         for line, row in read_rows(input_file):
-            if num is not None and report['processed'] >= num:
+            if num is not None and processed >= num:
                 break
-            context = dict(upstream_line=line, source_domain=row.get('source_domain'),
-                           domain_count=row.get('domain_count'), generation_model=api.model,
-                           judge_model=judge_api.model, semantic_audit_enabled=not skip_semantic_audit,
-                           api_retry_limits={'generation': getattr(api, 'retries', None),
-                                             'judge': getattr(judge_api, 'retries', None)},
-                           max_tokens=max_tokens, max_input_chars=max_input_chars,
-                           max_repairs=max_repairs, seed=seed)
             try:
                 validate_v2_row(row)
-                source = row['source_domain']
-                domains = row_domains(row, domain_count)
-                participating = [source, *domains]
-                plans = validate_plans(row, participating)
-                required = validate_required_key_facts(row.get('required_key_facts'), domains)
-                retrieved_candidates = row.get('retrieved_samples')
-                if not isinstance(retrieved_candidates, dict) or set(retrieved_candidates) != set(domains):
-                    raise ValueError('retrieved_samples must cover exactly the fusion domains')
+                source = row["source_domain"]
+                fusion_domains = row_domains(row, domain_count)
+                participating = [source, *fusion_domains]
+                plans = validate_plans({"question_plan": row.get("question_plan"), "answer_plans": row.get("answer_plans")}, participating)
+                validate_required_key_facts(row.get("required_key_facts"), fusion_domains)
+                retrieved_candidates = row.get("retrieved_samples")
+                if not isinstance(retrieved_candidates, dict) or set(retrieved_candidates) != set(fusion_domains):
+                    raise ValueError("retrieved_samples must cover exactly the fusion domains")
                 retrieved = {}
-                for domain in domains:
-                    candidates = retrieved_candidates[domain]
-                    if not isinstance(candidates, list):
-                        raise ValueError(f'retrieved_samples.{domain} must be a list')
+                empty_domains = []
+                for domain in fusion_domains:
+                    if not isinstance(retrieved_candidates[domain], list):
+                        raise ValueError(f"retrieved_samples.{domain} must be a list")
+                    if not retrieved_candidates[domain]:
+                        empty_domains.append(domain)
                     retrieved[domain] = []
-                    references = set()
-                    for candidate in candidates:
+                    seen = set()
+                    for candidate in retrieved_candidates[domain]:
                         if not isinstance(candidate, dict):
-                            raise ValueError('retrieved candidate is invalid')
-                        sample = candidate.get('sample', candidate)
-                        if not isinstance(sample, dict):
-                            raise ValueError('retrieved sample is invalid')
-                        sample = {k: sample.get(k) for k in ('prompt', 'completion')}
+                            raise ValueError("retrieved candidate is invalid")
+                        source_sample = candidate.get("sample", candidate)
+                        if not isinstance(source_sample, dict):
+                            raise ValueError("retrieved sample is invalid")
+                        sample = {field: source_sample.get(field) for field in ("prompt", "completion")}
                         reference = sample_reference(sample)
-                        if reference not in references:
+                        if reference not in seen:
                             retrieved[domain].append(sample)
-                            references.add(reference)
-                report['processed'] += 1
-                key = plan_key(row)
-                context['plan_key'] = key
-                # Different contents with an explicit shared ID are an input error.
-                fingerprint = digest({k: row[k] for k in ('source_domain', 'sample', 'key_facts', 'fusion_domains',
-                                                         'question_plan', 'answer_plans', 'required_key_facts')})
-                if key in seen_plans:
-                    if seen_plans[key] != fingerprint:
-                        raise ValueError('plan_key collision with different input contents')
-                    report['duplicate_plans'] += 1
-                    report['skipped'] += 1
-                    write_row(audit, {**context, 'event': 'screening', 'status': 'duplicate',
-                                      'issues': [{'check': 'duplicate_input', 'reason': 'Identical plan already processed'}]})
+                            seen.add(reference)
+
+                processed += 1
+                if empty_domains:
+                    skipped += 1
+                    print(f"line={line} skipped: no retrieved samples for {', '.join(empty_domains)}", file=sys.stderr, flush=True)
                     continue
-                seen_plans[key] = fingerprint
-                empty = [d for d in domains if not retrieved[d]]
-                if empty:
-                    report['skipped'] += 1
-                    write_row(audit, {**context, 'event': 'screening', 'status': 'rejected',
-                                      'issues': [{'check': 'empty_retrieval', 'domains': empty}]})
+
+                screen_payload = {
+                    "source_domain": source,
+                    "sample": row["sample"],
+                    "key_facts": row["key_facts"],
+                    "fusion_domains": fusion_domains,
+                    "question_plan": plans["question_plan"],
+                    "answer_plans": plans["answer_plans"],
+                    "retrieved_samples": retrieved,
+                }
+                if len(json.dumps(screen_payload, ensure_ascii=False)) > max_input_chars:
+                    raise ValueError("screening input exceeds --max-input-chars; no sample was truncated")
+
+                available = {domain: {sample_reference(sample) for sample in retrieved[domain]}
+                             for domain in fusion_domains}
+                screen = api.chat(SCREEN_PROMPT, screen_payload,
+                                  lambda value: validate_screening(value, source, fusion_domains, available), max_tokens)
+                if not screen["feasible"]:
+                    skipped += 1
+                    print(f"line={line} skipped: {screen['reason']}", file=sys.stderr, flush=True)
                     continue
-                budget = budget_for(row['domain_count'], budgets)
-                if budget['status'] == 'uncalibrated_extension':
-                    print(f'line={line} budget=uncalibrated_extension domains={row["domain_count"]}', file=sys.stderr)
-                screen_payload = dict(source_domain=source, sample=row['sample'], key_facts=row['key_facts'],
-                                      fusion_domains=domains, **plans, required_key_facts=required,
-                                      retrieved_samples=retrieved, blueprint_limits=blueprint_limits)
-                available = {d: {sample_reference(s) for s in retrieved[d]} for d in domains}
-                screen = call(api, SCREEN_PROMPT, screen_payload,
-                              lambda v: validate_screening(v, source, domains, available, blueprint_limits))
-                write_row(audit, {**context, 'event': 'screening', 'status': 'passed' if screen['feasible'] else 'rejected',
-                                  'screening': screen, 'issues': [] if screen['feasible'] else [
-                                      {'check': 'infeasible', 'reason': screen['reason']}]})
-                if not screen['feasible']:
-                    report['skipped'] += 1
-                    continue
-                report['feasible_plans'] += 1
-                selected = screen['selected_samples']
-                selected_keys = {d: {sample_reference(s) for s in selected[d]} for d in domains}
-                original_plan = {k: row[k] for k in ('question_plan', 'answer_plans', 'required_key_facts')}
-                scope = 'none' if all(screen[k] == row[k] for k in original_plan) else 'target_narrowed'
-                previous_items = []
+
+                selected = screen["selected_samples"]
+                selected_keys = {domain: {sample_reference(sample) for sample in selected[domain]}
+                                  for domain in fusion_domains}
+
                 for difficulty in DIFFICULTIES:
-                    identity = item_id(key, difficulty)
-                    payload = {**screen_payload, 'question_plan': screen['question_plan'],
-                               'answer_plans': screen['answer_plans'], 'required_key_facts': screen['required_key_facts'],
-                               'retrieved_samples': selected, 'compact_blueprint': screen['compact_blueprint'],
-                               'length_budget': budget, 'option_count': 4, 'difficulty': difficulty}
-                    repair_payload = None
-                    for attempt in range(max_repairs + 1):
-                        counter = 'initial_candidates' if attempt == 0 else 'repair_candidates'
-                        report[counter] += 1
-                        raw = call(api, SYSTEM_PROMPT if attempt == 0 else REPAIR_PROMPT,
-                                   payload if attempt == 0 else repair_payload, json_object)
-                        issues, stats, semantic, mapping = [], None, None, None
-                        generated = None
-                        # Candidate structure failures are quality failures, not malformed HTTP/JSON.
-                        try:
-                            generated = validate_generation(raw, participating, selected_keys, screen['compact_blueprint']['answer_form'])
-                        except ValueError as exc:
-                            issues = [{'check': 'structure', 'reason': str(exc)}]
-                        if generated is not None:
-                            stats = length_stats(generated)
-                            issues = hard_issues(generated, budget)
-                            if not issues:
-                                generated, mapping = shuffle_options(generated, seed, identity)
-                                if not skip_semantic_audit:
-                                    semantic = call(judge_api, AUDIT_PROMPT,
-                                                    audit_payload(generated, source, row['sample'], domains, selected),
-                                                    lambda v: validate_audit(v, participating))
-                                    issues += audit_issues(semantic, generated['answer'])
-                        passed = not issues
-                        status = 'accepted' if passed else ('repairing' if attempt < max_repairs else 'rejected')
-                        audit_status = ('passed' if passed else 'failed') if semantic is not None else 'not_run'
-                        # Compare visible content, ignoring option order and difficulty labels.
-                        signature = digest([generated['question'], sorted(generated['options'].values())]) if generated else None
-                        duplicate_difficulties = [d for d, s in previous_items if s == signature] if signature else []
-                        write_row(audit, {**context, 'event': 'candidate', 'item_id': identity,
-                                          'difficulty': difficulty, 'attempt': attempt, 'status': status,
-                                          'issues': issues, 'length_budget': budget, 'length_stats': stats,
-                                          'semantic_audit_status': audit_status, 'semantic_audit': semantic,
-                                          'option_permutation': mapping, 'original_candidate': raw,
-                                          'candidate': generated, 'duplicate_difficulties': duplicate_difficulties})
-                        if passed:
-                            if identity in output_ids:
-                                raise ValueError('duplicate item_id; refusing duplicate output')
-                            output_ids.add(identity)
-                            construction = dict(version=VERSION, plan_key=key, upstream_line=line,
-                                                compact_blueprint=screen['compact_blueprint'], original_plan=original_plan,
-                                                selected_samples=selected, length_budget=budget, length_stats=stats,
-                                                scope_change=scope, difficulty_status='uncalibrated',
-                                                error_label_status='construction_intent', semantic_audit_status=audit_status,
-                                                semantic_audit=semantic, repair_count=attempt, option_permutation=mapping,
-                                                seed=seed, generation_model=api.model, judge_model=judge_api.model,
-                                                duplicate_difficulties=duplicate_difficulties)
-                            write_row(output, dict(source_file=row.get('source_file', str(input_file.resolve())),
-                                                   source_domain=source, model=api.model, sample=row['sample'],
-                                                   key_facts=row['key_facts'], fusion_domains=domains, domain_count=row['domain_count'],
-                                                   question_plan=screen['question_plan'], answer_plans=screen['answer_plans'],
-                                                   required_key_facts=screen['required_key_facts'], retrieved_samples=retrieved,
-                                                   retrieval=row.get('retrieval', {}), **generated,
-                                                   difficulty=difficulty, item_id=identity, construction=construction))
-                            report['generated'] += 1
-                            report['debug_accepted' if skip_semantic_audit else 'accepted'] += 1
-                            previous_items.append((difficulty, signature))
-                            break
-                        if attempt == max_repairs:
-                            report['final_rejected'] += 1
-                        else:
-                            repair_payload = {**payload, 'original_candidate': raw,
-                                              'feedback': {'issues': issues, 'semantic_audit': semantic,
-                                                           'audited_candidate': generated, 'option_permutation': mapping,
-                                                           'preserve': ['source sample core knowledge', 'all participating domains',
-                                                                        'blueprint final target', 'supported facts and necessary conditions',
-                                                                        'one correct option and three concrete wrong outcomes']}}
-                    print(f'line={line} difficulty={difficulty} status={status} generated={report["generated"]}', file=sys.stderr, flush=True)
-            except (APIError, ValueError) as exc:
-                write_row(audit, {**context, 'event': 'fatal_error', 'status': 'error', 'reason': str(exc)})
-                message = f'{input_file}:{line}: {exc}; completed output retained at {output_file}; audit retained at {audit_file}'
-                raise type(exc)(message) from None
-    return {**report, 'output': str(output_file.resolve()), 'audit_output': str(audit_file.resolve()),
-            'transport_attempts': 'not_exposed_by_shared_JSONAPI'}
+                    payload = {**screen_payload, "question_plan": screen["question_plan"],
+                               "answer_plans": screen["answer_plans"],
+                               "required_key_facts": screen["required_key_facts"],
+                               "retrieved_samples": selected,
+                               "option_count": 4, "difficulty": difficulty}
+                    if len(json.dumps(payload, ensure_ascii=False)) > max_input_chars:
+                        raise ValueError("generation input exceeds --max-input-chars; no sample was truncated")
+
+                    def validate(value: Any) -> dict[str, Any]:
+                        return validate_generation(value, participating, selected_keys)
+
+                    generated = api.chat(SYSTEM_PROMPT, payload, validate, max_tokens)
+                    output_row = {
+                        "source_file": row.get("source_file", str(input_file.resolve())),
+                        "source_domain": source,
+                        "model": api.model,
+                        "sample": row["sample"],
+                        "key_facts": row["key_facts"],
+                        "fusion_domains": fusion_domains,
+                        "domain_count": row["domain_count"],
+                        "question_plan": screen["question_plan"],
+                        "answer_plans": screen["answer_plans"],
+                        "required_key_facts": screen["required_key_facts"],
+                        "retrieved_samples": retrieved,
+                        "retrieval": row.get("retrieval", {}),
+                        **generated,
+                        "difficulty": difficulty,
+                    }
+                    write_row(output, output_row)
+                    generated_count += 1
+                    print(f"line={line} difficulty={difficulty} generated={generated_count}", file=sys.stderr, flush=True)
+            except APIError as exc:
+                raise APIError(f"{input_file}:{line}: {exc}; completed output retained") from None
+            except ValueError as exc:
+                raise ValueError(f"{input_file}:{line}: {exc}; completed output retained") from None
+    return {"processed": processed, "skipped": skipped, "generated": generated_count,
+            "output": str(output_file.resolve())}
 
 
 def main() -> int:
@@ -299,22 +389,12 @@ def main() -> int:
     parser.add_argument("--max-tokens", type=int, default=4096)
     parser.add_argument("--max-input-chars", type=int, default=160000)
     parser.add_argument("--overwrite", action="store_true")
-    parser.add_argument("--max-repairs", type=int, choices=(0, 1), default=1)
-    parser.add_argument("--seed", type=int, default=42)
-    parser.add_argument("--judge-model")
-    parser.add_argument("--skip-semantic-audit", action="store_true")
-    parser.add_argument("--length-budget-file", type=Path)
-    parser.add_argument("--audit-output", type=Path)
     args = parser.parse_args()
     try:
         api = JSONAPI(args.api_base_url, args.api_key, args.model, args.timeout, args.retries)
-        judge = JSONAPI(args.api_base_url, args.api_key, args.judge_model, args.timeout, args.retries) if args.judge_model else api
         report = process(args.input, args.output, api=api, domain_count=args.domain_count,
                          num=args.num, max_tokens=args.max_tokens,
-                         max_input_chars=args.max_input_chars, overwrite=args.overwrite,
-                         max_repairs=args.max_repairs, seed=args.seed, judge_api=judge,
-                         skip_semantic_audit=args.skip_semantic_audit,
-                         length_budget_file=args.length_budget_file, audit_output=args.audit_output)
+                         max_input_chars=args.max_input_chars, overwrite=args.overwrite)
     except (OSError, ValueError, APIError) as exc:
         print(f"Error: {exc}", file=sys.stderr)
         return 1

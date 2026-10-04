@@ -25,7 +25,7 @@
 步骤 3 入口会依次准备原始语料向量、需求 query 向量并运行混合检索：
 
 ```bash
-bash knowledge/pipielines_v5/run_3.sh
+bash knowledge/pipielines_v4/run_3.sh
 ```
 
 详情见[向量准备说明](embed_required_key_facts.md)。`EMBEDDING_ROOT` 选择库，`TOP_K`、`CANDIDATE_LIMIT` 控制召回数；`--rrf-k` 默认 60。入口固定使用 test 划分与混合检索；需要其他模式时直接调用 Python 脚本。

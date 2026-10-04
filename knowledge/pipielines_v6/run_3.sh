@@ -3,20 +3,20 @@
 set -euo pipefail
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/run_config.sh"
-v5_arguments "$@"
+v4_arguments "$@"
 export CUDA_VISIBLE_DEVICES="$GPU_ID"
 
 CORPUS_FILES=()
 QUERY_FILES=()
-for domain in "${V5_DOMAINS[@]}"; do
-  v5_input "$ATOMIC_ROOT/$domain/$V5_SPLIT.jsonl"
-  v5_input "$V5_ROOT/0_extract_key_facts/$domain/$V5_SPLIT.jsonl"
-  CORPUS_FILES+=("$ATOMIC_ROOT/$domain/$V5_SPLIT.jsonl")
-  for count in "${V5_DOMAIN_COUNTS[@]}"; do
-    query_file="$(v5_group_path 2_extract_required_key_facts "$domain" "$count")"
-    v5_input "$query_file"
+for domain in "${V4_DOMAINS[@]}"; do
+  v4_input "$ATOMIC_ROOT/$domain/$V4_SPLIT.jsonl"
+  v4_input "$V4_ROOT/0_extract_key_facts/$domain/$V4_SPLIT.jsonl"
+  CORPUS_FILES+=("$ATOMIC_ROOT/$domain/$V4_SPLIT.jsonl")
+  for count in "${V4_DOMAIN_COUNTS[@]}"; do
+    query_file="$(v4_group_path 2_extract_required_key_facts "$domain" "$count")"
+    v4_input "$query_file"
     QUERY_FILES+=("$query_file")
-    v5_output "$(v5_group_path 3_retrieve_key_fact_matches "$domain" "$count")"
+    v4_output "$(v4_group_path 3_retrieve_key_fact_matches "$domain" "$count")"
   done
 done
 
@@ -24,20 +24,20 @@ ENCODER_ARGS=(--embedding-root "$EMBEDDING_ROOT" --model "$EMBEDDING_MODEL"
   --device "$EMBEDDING_DEVICE" --dtype "$EMBEDDING_DTYPE" --batch-size "$EMBEDDING_BATCH_SIZE")
 
 "$EMBEDDING_PYTHON_BIN" "$SCRIPT_DIR/../pipelines/embed_knowledge.py" \
-  --kind corpus --input "${CORPUS_FILES[@]}" --splits "$V5_SPLIT" \
+  --kind corpus --input "${CORPUS_FILES[@]}" --splits "$V4_SPLIT" \
   "${ENCODER_ARGS[@]}" "${EMBEDDING_ARGS[@]}"
 "$EMBEDDING_PYTHON_BIN" "$SCRIPT_DIR/embed_required_key_facts.py" \
   --kind queries --input "${QUERY_FILES[@]}" \
   "${ENCODER_ARGS[@]}" "${EMBEDDING_ARGS[@]}"
 
-for count in "${V5_DOMAIN_COUNTS[@]}"; do
-  for domain in "${V5_DOMAINS[@]}"; do
+for count in "${V4_DOMAIN_COUNTS[@]}"; do
+  for domain in "${V4_DOMAINS[@]}"; do
     "$PYTHON_BIN" "$SCRIPT_DIR/3_retrieve_key_fact_matches.py" \
-      --input "$(v5_group_path 2_extract_required_key_facts "$domain" "$count")" \
-      --output "$(v5_group_path 3_retrieve_key_fact_matches "$domain" "$count")" \
-      --corpus "$V5_ROOT/0_extract_key_facts" --atomic-root "$ATOMIC_ROOT" \
-      --embedding-root "$EMBEDDING_ROOT" --splits "$V5_SPLIT" --method hybrid \
+      --input "$(v4_group_path 2_extract_required_key_facts "$domain" "$count")" \
+      --output "$(v4_group_path 3_retrieve_key_fact_matches "$domain" "$count")" \
+      --corpus "$V4_ROOT/0_extract_key_facts" --atomic-root "$ATOMIC_ROOT" \
+      --embedding-root "$EMBEDDING_ROOT" --splits "$V4_SPLIT" --method hybrid \
       --domain-count "$count" --top-k "$TOP_K" --candidate-limit "$CANDIDATE_LIMIT" \
-      "${RETRIEVAL_ARGS[@]}" "${V5_WRITE_ARGS[@]}"
+      "${RETRIEVAL_ARGS[@]}" "${V4_WRITE_ARGS[@]}"
   done
 done

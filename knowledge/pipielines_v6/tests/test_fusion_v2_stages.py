@@ -1,4 +1,4 @@
-"""Offline integration checks for v5 stages 1-4."""
+"""Offline integration checks for v4 stages 1-4."""
 
 import importlib.util
 import json
@@ -25,16 +25,6 @@ s2 = load("stage2", "2_extract_required_key_facts.py")
 s3 = load("stage3", "3_retrieve_key_fact_matches.py")
 s4 = load("stage4", "4_generate_fusion_question.py")
 e = load("v2_embed", "embed_required_key_facts.py")
-from _concise_fusion import CHECKS
-
-
-def blueprint(domains):
-    return {"target": "One final decision", "answer_form": "decision",
-            "dependency_summary": "The participating knowledge jointly constrains the decision.",
-            "domain_roles": {d: {"knowledge": "Needed domain rule", "role": "Constrain the final result",
-                                 "removal_effect": "The final result is underdetermined"} for d in domains}}
-
-
 from _pipeline_common import retrieval_query_row, validate_domain_configuration, validate_selected_plan, row_domains
 
 
@@ -47,12 +37,7 @@ class FakeAPI:
 
     def chat(self, prompt, data, validate, max_tokens):
         self.calls.append(data)
-        if "participating_domains" in data:
-            value = {"correct_options": [k for k,v in data["options"].items() if v == "Correct integrated conclusion."],
-                     "solution_summary": "Fixture verification only.", "checks": dict.fromkeys(CHECKS, "pass"),
-                     "domain_necessity": {d: {"necessary": True, "reason": "Fixture necessity."} for d in data["participating_domains"]},
-                     "issues": []}
-        elif "question_plan" not in data:
+        if "question_plan" not in data:
             value = {
                 "fusion_domains": ["medical", "legal"],
                 "question_plan": "Assess how a site's exposure pattern, medical effects, and legal duty combine in one decision.",
@@ -69,7 +54,6 @@ class FakeAPI:
             revised_answers = copy.deepcopy(data["answer_plans"])
             revised_answers[0]["plan"] = "Use the selected evidence for one joint answer."
             value = {"feasible": self.screen_feasible,
-                     "compact_blueprint": blueprint([data['source_domain'], *data['fusion_domains']]) if self.screen_feasible else None,
                      "reason": "Selected samples support a revised task." if self.screen_feasible else "No natural joint task uses every domain.",
                      "selected_samples": selected,
                      "question_plan": "Use the selected samples for a revised joint task." if self.screen_feasible else None,
@@ -256,7 +240,6 @@ class StageTests(unittest.TestCase):
         sample = {"prompt": "What is dose response?", "completion": "The effect changes with dose."}
         available = {"medical": {(sample["prompt"], sample["completion"])}}
         base = {"feasible": True, "reason": "A joint task is possible.",
-                "compact_blueprint": blueprint(["geography", "medical"]),
                 "selected_samples": {"medical": [sample]},
                 "question_plan": "Combine the source with dose response.",
                 "answer_plans": [
@@ -276,7 +259,7 @@ class StageTests(unittest.TestCase):
                 s4.validate_screening(bad, "geography", ["medical"], available)
         rejected = {"feasible": False, "reason": "No joint task.",
                     "selected_samples": {"medical": []}, "question_plan": None,
-                    "answer_plans": None, "required_key_facts": None, "compact_blueprint": None}
+                    "answer_plans": None, "required_key_facts": None}
         self.assertFalse(s4.validate_screening(rejected, "geography", ["medical"], available)["feasible"])
 
     def test_generation_rejects_samples_outside_the_supplied_domain(self):
