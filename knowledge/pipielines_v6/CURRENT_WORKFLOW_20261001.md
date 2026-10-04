@@ -213,3 +213,25 @@ bash knowledge/pipelines_v2/run_4.sh
 7. 从小批次记录各阶段漏斗及失败原因，再扩量。当前32/210是这批旧流程的保守审阅保留比例，不是未来生成器的预期通过率。
 
 修改提示词时要改Python中的SYSTEM_PROMPT；双语Markdown目前是说明副本，不被脚本读取。修改schema或数量约束时还需同步 `_pipeline_common.py`、相关读取逻辑、测试及双语文档。
+
+---
+
+## v6 第 4 步更新（2026-10-04，非 2026-10-01 历史事实）
+
+本节补充当前 v6 实际实现。第 0–3 步、原有 SCREEN_PROMPT、筛选 payload、`validate_screening()` 和 feasible 判定保持不变；本次改动只发生在筛选通过后的题目生成、硬检查、程序化排列、盲审和定向重写。现有第 4 步实现集中在 `knowledge/pipielines_v6/4_generate_fusion_question.py`，没有新增辅助模块、脚本或测试文件。
+
+筛选通过后，程序为每个 easy / medium / hard 候选构造只读 `compact_blueprint` 后台记录，并把长度预算只加入生成/重写 payload。题面只保留必要情境、数据、假设、边界条件和一个最终问题；四个选项用同一种答案形式表达最终结果。完整推理在 `explanation`，三类干扰项的后台机制在 `distractor_analysis.reason`，实际证据在 `used_samples`、顶层 `retrieval` 和 `construction.retrieved_candidates`。短数字或短决策选项不承担完整错误解释，也不要求盲审仅凭短答案唯一恢复错误机制。
+
+三类构造机制仍各一次：`missing_domain_knowledge` 表示缺少必要知识并产生具体错结果，`parallel_knowledge` 表示局部结果未传入最终判断，`incorrect_domain_relation` 表示映射、方向、对象或组合错误。每个 reason 说明错误步骤 → 错误结果 → 对应选项；`error_label_status=construction_intent`，不表示认知诊断已被证明。
+
+生成候选通过原有结构/引用校验后，程序按总领域数计算英文词数及字符硬预算。默认 2/3/4 个总领域的题干硬上限为 75/95/115 词、单选项为 18/20/22 词、题干加四选项为 130/160/190 词；字符上限默认为相应词数的 12 倍。软目标不是最低长度，短选项允许为单个结果。超限不截断，而是记录字段级原因并最多定向重写一次；重写重新执行完整检查。
+
+每个合格未排列候选只由程序排列一次，使用原计划 `plan_id` 或包含源样本、源领域、排序后的融合领域和原始问题/答案计划的稳定 hash 生成 `plan_key`，再由版本、计划和 difficulty 生成 `item_id`。程序同步移动选项文本、答案标签和 `distractor_analysis.option`，保存 old→new 映射。代码选项在第 4 步局部保留换行、缩进和大小写；共享校验器的空白规范化不会覆盖落盘的可见代码。
+
+排列后默认进行一次独立答案标签盲审。盲审输入白名单只有 question、options、参与领域、源样本和 selected_samples；不含 answer、explanation、distractor_analysis、计划、blueprint 或构造标签。盲审检查唯一/多答案、自包含、证据支持、知识赠送、同型选项、表面捷径及每个领域的实际必要性。程序要求恰好一个正确选项、六项检查均 pass、全部领域 necessary=true 且 issues 为空；答案冲突不会直接改键。`--skip-semantic-audit` 只用于格式调试并标记 `not_run`。
+
+新增参数为 `--max-repairs`（默认 1）、`--seed`（42）、`--judge-model`、`--skip-semantic-audit`、`--length-budget-file` 和 `--audit-output`。保留 `--num` 的原含义：限制输入计划数，不限制最终题数；每个筛选通过计划可接受 0–3 道题。API/JSON 传输重试沿用共享 JSONAPI；候选质量失败进入有限重写，重写耗尽只写审计，不把生成失败改成筛选 infeasible。
+
+新增正式行的 `construction` 保存 v6-concise-1、原筛选快照、compact_blueprint、selected_samples、完整 retrieved_candidates、length_budget/length_stats、排列、审查、重写和模型配置；旧顶层字段和检索元数据保持兼容。默认正式输出和审计路径由直接调用者分别指定，输入、正式输出和审计文件必须不同，默认不覆盖已有文件。
+
+当前修改只做了静态、现有测试及仓库外 mock 验证，未进行真实模型生成。离线验证可以证明控制流、结构、预算、证据引用、选项同步和盲审字段白名单，不能证明真实题目的事实正确性、答案唯一性、跨领域必要性、接受率或语义质量。
