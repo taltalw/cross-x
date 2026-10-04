@@ -1,12 +1,23 @@
-# Pipelines v4
+# Pipelines v5
 
-在 `cross-x` 目录，一次性安装与现有 `crossx` 环境对应的 v4 依赖：
+已有第 3 步结果时，一键重跑简洁版第 4 步：
 
 ```bash
-bash knowledge/pipielines_v4/install_env.sh
+API_BASE_URL="https://your-provider/v1" \
+API_KEY="your-key" \
+MODEL="your-model" \
+NUM=all bash knowledge/pipielines_v5/run_4_concise.sh
 ```
 
-安装到 `knowledge/pipielines_v4/.env`，不修改现有 `crossx` 环境。依赖版本见 [requirements-crossx.txt](requirements-crossx.txt)。本机已有 `crossx` 环境时可以跳过安装；启动脚本会优先使用本地 `.env`，否则使用本机 `crossx` 环境。
+默认读取本目录 `outputs/3_retrieve_key_fact_matches`，正式结果写入 `outputs_concise/4_generate_fusion_question`，审计写入 `outputs_concise_audit/4_generate_fusion_question`。路径覆盖变量统一使用 `V5_ROOT`、`V5_CONCISE_ROOT`、`V5_CONCISE_AUDIT_ROOT`。`NUM` 限制该入口每组处理的输入计划数，`NUM=all` 处理全部；覆盖新结果时追加 `--overwrite`。
+
+在 `cross-x` 目录，一次性安装与现有 `crossx` 环境对应的 v5 依赖：
+
+```bash
+bash knowledge/pipielines_v5/install_env.sh
+```
+
+安装到 `knowledge/pipielines_v5/.env`，不修改现有 `crossx` 环境。依赖版本见 [requirements-crossx.txt](requirements-crossx.txt)。本机已有 `crossx` 环境时可以跳过安装；启动脚本会优先使用本地 `.env`，否则使用本机 `crossx` 环境。
 
 只需配置 API 信息，再使用已有步骤 0、1结果重跑步骤 2、3、4：
 
@@ -14,10 +25,10 @@ bash knowledge/pipielines_v4/install_env.sh
 export API_BASE_URL=https://your-provider/v1
 export API_KEY=your-key
 export MODEL=your-model
-bash knowledge/pipielines_v4/run_all.sh
+bash knowledge/pipielines_v5/run_all.sh
 ```
 
-共享配置见 [run_config.sh](run_config.sh)。默认处理七领域的 `test.jsonl`；步骤 1 对每个源领域及总领域数 2、3、4 各取前 100 条，可用 `NUM=all` 处理全部。`NUM` 不限制步骤 0；步骤 2–4 消费上一步的全部结果。步骤 3 每个新增领域最多保留 10 条候选。输出默认写入 `knowledge/pipielines_v4/outputs`，向量库默认位于 `knowledge/embeddings/v4-test-Qwen3-Embedding-8B`。步骤 3 自动选择 CUDA 或 CPU；没有可用 NVIDIA 驱动时会用 CPU，编码速度会明显较慢。
+共享配置见 [run_config.sh](run_config.sh)。默认处理七领域的 `test.jsonl`；步骤 1 对每个源领域及总领域数 2、3、4 各取前 100 条，可用 `NUM=all` 处理全部。`NUM` 不限制步骤 0；步骤 2–4 消费上一步的全部结果。步骤 3 每个新增领域最多保留 10 条候选。输出默认写入 `knowledge/pipielines_v5/outputs`，向量库默认位于 `knowledge/embeddings/v5-test-Qwen3-Embedding-8B`。步骤 3 自动选择 CUDA 或 CPU；没有可用 NVIDIA 驱动时会用 CPU，编码速度会明显较慢。
 
 | 步骤 | 单独入口 | 工作 |
 | --- | --- | --- |
@@ -26,6 +37,7 @@ bash knowledge/pipielines_v4/run_all.sh
 | 2 | [run_2.sh](run_2.sh) | 提取各新增领域的检索需求 |
 | 3 | [run_3.sh](run_3.sh) | 编码语料和需求查询，执行混合检索 |
 | 4 | [run_4.sh](run_4.sh) | 从候选样本构造并调整可行 plan，为其生成三种难度的问题 |
+| 4（简洁版独立输出） | [run_4_concise.sh](run_4_concise.sh) | 读取已有检索结果，生成、检查并盲审，通过后写入独立输出目录 |
 
 `run_all.sh` 要求步骤 0、1的输入结果已经存在，只执行步骤 2、3、4；步骤 0、1不会被重新调用。也可以单独运行五个入口。入口只接受可选的 `--overwrite`，会从头覆盖相应阶段的 JSONL；已有输出默认受保护。步骤 3 的向量缓存独立于 JSONL 覆盖参数。单步 Python 命令可使用各自的 `--input`、`--output` 和其他参数。
 
@@ -34,5 +46,5 @@ bash knowledge/pipielines_v4/run_all.sh
 离线测试：
 
 ```bash
-python3 -m unittest discover -s knowledge/pipielines_v4/tests -v
+python3 -m unittest discover -s knowledge/pipielines_v5/tests -v
 ```

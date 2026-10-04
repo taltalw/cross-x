@@ -1,4 +1,4 @@
-"""Shared validation and argument helpers for v4 stages 1-4."""
+"""Shared validation and argument helpers for v5 stages 1-4."""
 
 from __future__ import annotations
 
@@ -93,7 +93,7 @@ def validate_selected_plan(value: Any, source_domain: str, domain_count: int) ->
 
 
 def retrieval_query_row(row: dict, expected_count: int | None = None) -> dict:
-    """Adapt v4 requirements for the original retrieval and embedding interfaces."""
+    """Adapt v5 requirements for the original retrieval and embedding interfaces."""
     domains = row_domains(row, expected_count)
     validate_plans(row, [row["source_domain"], *domains])
     required = validate_required_key_facts(row.get("required_key_facts"), domains)

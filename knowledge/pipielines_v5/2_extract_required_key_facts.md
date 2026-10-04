@@ -28,7 +28,7 @@
 ## 运行
 
 ```bash
-bash knowledge/pipielines_v4/run_2.sh
+bash knowledge/pipielines_v5/run_2.sh
 ```
 
 入口处理全部七个源领域和三种领域数量，输入/输出均采用 `<source>/<split>_domain_count_<N>.jsonl`。步骤 3 会为这些需求预计算 query 向量，见[向量准备](embed_required_key_facts.md)。

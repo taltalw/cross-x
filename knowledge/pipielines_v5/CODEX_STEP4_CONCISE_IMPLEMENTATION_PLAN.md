@@ -1,16 +1,18 @@
-# Codex 执行任务：将 v4 第 4 步改为简洁、单目标的跨领域题目生成
+# Codex 执行任务：将 v5 第 4 步改为简洁、单目标的跨领域题目生成
 
 ## 0. 任务与实施原则
+
+路径迁移说明：按用户后续要求，本目录运行脚本、配置变量和文档命令统一使用 V5_* / v5_* 及 v5 路径；允许对第 0–3 步入口作这类命名迁移，但不改变其算法、共享检索行为或既有结果。原始附件名称中的 v4 仅用于历史溯源，不是当前运行路径。
 
 请直接修改本地仓库中的代码、提示词、文档和测试，而不是仅提出建议。
 
 本次目标：保留 Instance-Conditioned Need-First 的前置流程，直接读取已有第 3 步检索结果，只在第 4 步把“展开多领域计划、输出完整报告”改为“围绕一个最终回答对象，生成简洁但仍依赖所有参与领域的题目”。
 
-本任务是针对现有 v4 的工程修改，不是复现 XDomainBench。本文件中的长度预算、质检方式及新字段均是本项目的设计选择，不得在文档中称为 XDomainBench 的官方参数或已验证结论。
+本任务是针对现有 v5 的工程修改，不是复现 XDomainBench。本文件中的长度预算、质检方式及新字段均是本项目的设计选择，不得在文档中称为 XDomainBench 的官方参数或已验证结论。
 
 **成功标准不是题目越短越好，而是在不损害可解性、跨领域依赖和证据支持的前提下，减少显式子任务、重复背景和报告型选项。**
 
-上传源码的目录实际拼写为 `pipielines_v4`。先定位本地 `4_generate_fusion_question.py`；常见路径为 `knowledge/pipielines_v4/`，不要根据聊天中的拼写变体重命名目录。本文件以下以 `<PIPELINE_DIR>` 代指该目录。
+当前工作目录实际拼写为 `pipielines_v5`。先定位本地 `4_generate_fusion_question.py`；常见路径为 `knowledge/pipielines_v5/`，不要根据聊天中的拼写变体重命名目录。本文件以下以 `<PIPELINE_DIR>` 代指该目录。
 
 如本地已经应用之前的 `pipelines_v4_step4_concise_patch.zip`，先检查差异，再按本文件补齐；不要重复叠加生成、审查或随机打乱逻辑。之前的补丁是参考实现，不是必须逐行覆盖的目标。本规范特别明确了短选项错误标签的解释边界、稳定 ID、代码格式和运行输出隔离。
 
@@ -40,7 +42,7 @@
 | `SYSTEM_PROMPT` | 已有“尽量简洁”的文字要求 | 增加答案形式、长度预算、反报告化约束 |
 | `process()` | 筛选一次，依次生成 easy/medium/hard | 加入硬检查、打乱、语义审查和有限定向重写 |
 | `validate_generation()` | 校验结构、错误类型和引用 | 第 4 步局部加强错误选项覆盖检查，并保留代码换行缩进 |
-| `run_4.sh` / `run_config.sh` | 输入、输出共用 V4_ROOT | 新增独立运行入口，旧第 3 步输入与新第 4 步输出分开 |
+| `run_4.sh` / `run_config.sh` | 输入、输出共用 V5_ROOT | 新增独立运行入口，旧第 3 步输入与新第 4 步输出分开 |
 
 不要把原代码描述成“不允许调整原计划”或“完全没有简洁要求”。问题是这些要求尚未落实为单目标结构与可执行检查。
 
@@ -457,7 +459,7 @@ shuffle_seed = SHA256(user_seed, item_id)
 
 ```json
 {
-  "version": "v4.1-concise",
+  "version": "v5-concise-1",
   "plan_key": "stable-plan-key",
   "upstream_line": 1,
   "compact_blueprint": {},
@@ -521,7 +523,7 @@ scope_change 使用明确枚举，如 none / presentation_only / target_narrowed
 
 跳过语义审查时写 `semantic_audit_status="not_run"`，控制台警告；这些输出不能标记为正式质量合格。在统计脚本中与审查通过的题目分开报告。
 
-`run_4_concise.sh` 可以读取原 run_config.sh 的领域、领域数和 API 配置，但输入保持旧 V4_ROOT 下的第 3 步，新输出由独立的 `V4_CONCISE_ROOT` 控制，审计由 `V4_CONCISE_AUDIT_ROOT` 控制。
+`run_4_concise.sh` 可以读取原 run_config.sh 的领域、领域数和 API 配置，但输入保持旧 V5_ROOT 下的第 3 步，新输出由独立的 `V5_CONCISE_ROOT` 控制，审计由 `V5_CONCISE_AUDIT_ROOT` 控制。
 
 建议默认布局：
 
@@ -531,15 +533,15 @@ scope_change 使用明确枚举，如 none / presentation_only / target_narrowed
 <PIPELINE_DIR>/outputs_concise_audit/4_generate_fusion_question/...# 新审计
 ```
 
-不要仅把 V4_ROOT 改为 outputs_concise，那会连第 3 步输入路径一起改错。旧 run_4.sh 仍保持原行为。
+不要仅把 V5_ROOT 改为 outputs_concise，那会连第 3 步输入路径一起改错。旧 run_4.sh 仍保持原行为。
 
 在根目录的单组 smoke 命令应类似下面，按真实路径调整；新增参数实现后再运行：
 
 ```bash
-python knowledge/pipielines_v4/4_generate_fusion_question.py \
-  --input knowledge/pipielines_v4/outputs/3_retrieve_key_fact_matches/mathematics/test_domain_count_2.jsonl \
-  --output knowledge/pipielines_v4/outputs_concise/4_generate_fusion_question/mathematics/test_domain_count_2.jsonl \
-  --audit-output knowledge/pipielines_v4/outputs_concise_audit/4_generate_fusion_question/mathematics/test_domain_count_2.audit.jsonl \
+python knowledge/pipielines_v5/4_generate_fusion_question.py \
+  --input knowledge/pipielines_v5/outputs/3_retrieve_key_fact_matches/mathematics/test_domain_count_2.jsonl \
+  --output knowledge/pipielines_v5/outputs_concise/4_generate_fusion_question/mathematics/test_domain_count_2.jsonl \
+  --audit-output knowledge/pipielines_v5/outputs_concise_audit/4_generate_fusion_question/mathematics/test_domain_count_2.audit.jsonl \
   --domain-count 2 \
   --num 3 \
   --max-repairs 1 \

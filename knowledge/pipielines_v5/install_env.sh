@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Install the v4 runtime into a local conda prefix without changing crossx.
+# Install the v5 runtime into a local conda prefix without changing crossx.
 set -euo pipefail
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 ENV_DIR="$SCRIPT_DIR/.env"
@@ -18,4 +18,4 @@ if [[ ! -x "$ENV_DIR/bin/python" ]]; then
 fi
 "$CONDA_BIN" run --prefix "$ENV_DIR" python -m pip install \
   --disable-pip-version-check -r "$SCRIPT_DIR/requirements-crossx.txt"
-"$ENV_DIR/bin/python" -c 'import numpy, torch, transformers, safetensors, packaging; print("crossx v4 runtime ready")'
+"$ENV_DIR/bin/python" -c 'import numpy, torch, transformers, safetensors, packaging; print("crossx v5 runtime ready")'

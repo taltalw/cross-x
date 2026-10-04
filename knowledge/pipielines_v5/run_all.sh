@@ -3,17 +3,17 @@
 set -euo pipefail
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/run_config.sh"
-v4_arguments "$@"
-v4_api_config
+v5_arguments "$@"
+v5_api_config
 
-for domain in "${V4_DOMAINS[@]}"; do
-  v4_input "$ATOMIC_ROOT/$domain/$V4_SPLIT.jsonl"
-  v4_input "$V4_ROOT/0_extract_key_facts/$domain/$V4_SPLIT.jsonl"
-  for count in "${V4_DOMAIN_COUNTS[@]}"; do
-    v4_input "$(v4_group_path 1_generate_fusion_plans "$domain" "$count")"
-    v4_output "$(v4_group_path 2_extract_required_key_facts "$domain" "$count")"
-    v4_output "$(v4_group_path 3_retrieve_key_fact_matches "$domain" "$count")"
-    v4_output "$(v4_group_path 4_generate_fusion_question "$domain" "$count")"
+for domain in "${V5_DOMAINS[@]}"; do
+  v5_input "$ATOMIC_ROOT/$domain/$V5_SPLIT.jsonl"
+  v5_input "$V5_ROOT/0_extract_key_facts/$domain/$V5_SPLIT.jsonl"
+  for count in "${V5_DOMAIN_COUNTS[@]}"; do
+    v5_input "$(v5_group_path 1_generate_fusion_plans "$domain" "$count")"
+    v5_output "$(v5_group_path 2_extract_required_key_facts "$domain" "$count")"
+    v5_output "$(v5_group_path 3_retrieve_key_fact_matches "$domain" "$count")"
+    v5_output "$(v5_group_path 4_generate_fusion_question "$domain" "$count")"
   done
 done
 

@@ -1,10 +1,10 @@
 # 融合领域知识需求提示词 / Required Key Facts Prompt
 
-用于 v4 第 2 步的模板对照。包含中文语义模板、脚本实际使用的完整英文系统模板，以及输入字段介绍。运行方法见 [步骤说明](2_extract_required_key_facts.md)。
+用于 v5 第 2 步的模板对照。包含中文语义模板、脚本实际使用的完整英文系统模板，以及输入字段介绍。运行方法见 [步骤说明](2_extract_required_key_facts.md)。
 
 脚本：`2_extract_required_key_facts.py`；系统提示词变量：`SYSTEM_PROMPT`。中文部分用于解释模板语义，实际请求使用英文模板，要求模型生成英文内容；JSON 字段名和枚举值在中英文中保持一致。
 
-For presentation and comparison of step 2 in v4. The Chinese section explains the template; the English system prompt is copied from the script. Runtime output is English, and JSON keys and enum values are unchanged between languages.
+For presentation and comparison of step 2 in v5. The Chinese section explains the template; the English system prompt is copied from the script. Runtime output is English, and JSON keys and enum values are unchanged between languages.
 
 ## 消息组织 / Message Structure
 

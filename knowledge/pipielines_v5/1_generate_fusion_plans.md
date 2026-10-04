@@ -34,9 +34,9 @@
 
 ```bash
 # 先设置 API_BASE_URL、API_KEY、MODEL。
-NUM=100 bash knowledge/pipielines_v4/run_1.sh
+NUM=100 bash knowledge/pipielines_v5/run_1.sh
 ```
 
-入口依次处理七个源领域和总领域数 2、3、4；默认输入、输出位于 `V4_ROOT`。只运行某个领域或数量时，可直接调用 Python 脚本并指定 `--input`、`--output`、`--domain-count`。
+入口依次处理七个源领域和总领域数 2、3、4；默认输入、输出位于 `V5_ROOT`。只运行某个领域或数量时，可直接调用 Python 脚本并指定 `--input`、`--output`、`--domain-count`。
 
 已有输出需要 `--overwrite` 才能覆盖；逐行写入并保留失败前已完成的结果。

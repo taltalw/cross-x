@@ -1,10 +1,10 @@
 # 融合问题与四类答案构造思路提示词 / Fusion Question and Four Answer Construction Ideas Prompt
 
-用于 v4 第 1 步的模板对照。包含中文语义说明、脚本实际使用的完整英文系统模板，以及输入字段介绍。运行方法见 [步骤说明](1_generate_fusion_plans.md)。
+用于 v5 第 1 步的模板对照。包含中文语义说明、脚本实际使用的完整英文系统模板，以及输入字段介绍。运行方法见 [步骤说明](1_generate_fusion_plans.md)。
 
 脚本：`1_generate_fusion_plans.py`；系统提示词变量：`SYSTEM_PROMPT`。中文部分用于解释模板语义，实际请求使用英文模板，要求模型生成英文内容；JSON 字段名和枚举值在中英文中保持一致。
 
-For presentation and comparison of step 1 in v4. The Chinese section explains the template; the English system prompt is copied from the script. Runtime output is English, and JSON keys and enum values are unchanged between languages.
+For presentation and comparison of step 1 in v5. The Chinese section explains the template; the English system prompt is copied from the script. Runtime output is English, and JSON keys and enum values are unchanged between languages.
 
 ## 消息组织 / Message Structure
 

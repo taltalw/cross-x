@@ -1,6 +1,6 @@
 # 第 4 步：单目标简洁跨领域题（v5）
 
-v5 直接读取现有第 3 步 JSONL，不要求迁移或重新检索。原筛选已允许调整旧计划，也已有简洁要求；本实现把这些要求落实为单目标蓝图、预算和质量门控。第 0–3 步、共享 JSONAPI / 校验器、领域集合、旧 shell 脚本和旧结果均不修改。长度参数是本项目工程初值，不是 XDomainBench 官方参数或已验证结论。
+v5 直接读取现有第 3 步 JSONL，不要求迁移或重新检索。原筛选已允许调整旧计划，也已有简洁要求；本实现把这些要求落实为单目标蓝图、预算和质量门控。第 0–3 步算法、共享 JSONAPI / 校验行为、领域集合和既有结果保持不变；本目录运行入口变量、路径与文档统一使用 v5 命名。长度参数是本项目工程初值，不是 XDomainBench 官方参数或已验证结论。
 
 ## 流程与调用成本
 
@@ -87,15 +87,15 @@ plan_key 优先使用非空 upstream plan_id，否则 SHA256 规范 JSON 的源�
 
 默认拒绝覆盖正式文件和审计文件；创建/截断任何文件前检查全部路径、别名和已有文件。输入、正式输出和审计不得相同。显式 `--overwrite` 才允许覆盖；失败后已完成内容保留，不自动 append 或续传。批处理先预检所有组。
 
-新入口 `run_4_concise.sh` 只运行第 4 步，读取旧 run_config 的领域、数量、API 和 NUM/STEP_4_ARGS；不修改旧 run_4.sh / run_config。旧输入根为 V4_ROOT，新输出根 V4_CONCISE_ROOT，审计根 V4_CONCISE_AUDIT_ROOT，默认分别是 outputs、outputs_concise、outputs_concise_audit。批入口要求三根不同，显式把审计放独立目录，避免评测 glob 读入。
+新入口 `run_4_concise.sh` 只运行第 4 步，读取本目录 run_config 的领域、数量、API 和 NUM/STEP_4_ARGS。第 3 步输入根为 V5_ROOT，新输出根 V5_CONCISE_ROOT，审计根 V5_CONCISE_AUDIT_ROOT，默认分别是 outputs、outputs_concise、outputs_concise_audit。批入口要求三根不同，显式把审计放独立目录，避免评测 glob 读入。
 
-当前 v5 副本的 outputs 仅有第 0、1 步，未找到符合当前 schema 的第 3 步结果；环境 API 三变量未配置。本次未重新运行前置步骤或真实生成。下面命令需把 STEP3_INPUT 指向已有、符合当前 v4 schema 的第 3 步 JSONL，不能直接拿更早版本不同 schema 的结果冒充。
+当前 v5 的 outputs 已有第 0–3 步结果，第 3 步共 21 个输入文件、2100 个计划；默认直接读取本目录 outputs。下面命令使用已有第 3 步 JSONL，无须重新检索。运行时由环境提供已授权 API 配置。
 
 在仓库根目录，首次仅处理 3 个输入计划（最多 9 道初始候选）：
 
 ```bash
 # API_BASE_URL、API_KEY、MODEL 由已授权环境提供，不在命令/日志写真实 key。
-STEP3_INPUT=/absolute/path/to/existing/3_retrieve_key_fact_matches/mathematics/test_domain_count_2.jsonl
+STEP3_INPUT=knowledge/pipielines_v5/outputs/3_retrieve_key_fact_matches/mathematics/test_domain_count_2.jsonl
 PYTHONDONTWRITEBYTECODE=1 /mnt/data1/wangyatong/anaconda3/envs/crossx/bin/python \
   knowledge/pipielines_v5/4_generate_fusion_question.py \
   --input "$STEP3_INPUT" \
@@ -107,9 +107,9 @@ PYTHONDONTWRITEBYTECODE=1 /mnt/data1/wangyatong/anaconda3/envs/crossx/bin/python
 后续明确需要批量时才运行；`NUM=3` 是每组 3 计划，不是本次授权的总计 3 计划 smoke：
 
 ```bash
-V4_ROOT=/absolute/path/to/existing/v4/outputs \
-V4_CONCISE_ROOT="$PWD/knowledge/pipielines_v5/outputs_concise" \
-V4_CONCISE_AUDIT_ROOT="$PWD/knowledge/pipielines_v5/outputs_concise_audit" \
+V5_ROOT="$PWD/knowledge/pipielines_v5/outputs" \
+V5_CONCISE_ROOT="$PWD/knowledge/pipielines_v5/outputs_concise" \
+V5_CONCISE_AUDIT_ROOT="$PWD/knowledge/pipielines_v5/outputs_concise_audit" \
 NUM=3 bash knowledge/pipielines_v5/run_4_concise.sh
 ```
 
@@ -140,6 +140,6 @@ bash -n knowledge/pipielines_v5/run_4_concise.sh
 
 测试包含蓝图/引用/schema、三短语约束、干扰项覆盖、各项长度和字符防绕过、多行代码、稳定 ID 和排列同步、防泄漏审查、定向修复/拒绝、各难度继续、API 重试耗尽、预检不截断、调试状态、num/重复计数、统计匹配，以及原第 0–3 步和 shell 回归。Mock 题目和 judge 只验证工程控制流，不验证生成质量。
 
-2026-10-04 实际验证：v5 测试 44/44 通过；同一 Python 环境运行 `knowledge/pipelines/tests` 共享流程测试 38/38 通过，原 `knowledge/pipielines_v4/tests` 回归 17/17 通过。`bash -n`、统计 CLI 独立启动和 `git diff --check` 通过。逐文件比对确认第 0–3 步、共享校验器与旧运行脚本保持原副本内容，旧结果没有 diff。
+2026-10-04 实际验证：v5 测试 44/44 通过；同一 Python 环境运行 `knowledge/pipelines/tests` 共享流程测试 38/38 通过，原副本回归 17/17 通过。`bash -n`、统计 CLI 独立启动和 `git diff --check` 通过。该次实施未修改第 0–3 步、共享校验器或旧结果；随后本目录入口变量与文档路径统一迁移为 V5_* / v5_*，第 0–3 步算法不变。
 
 未进行真实模型生成，语义质量、真实接受率、2/3/4 域长度改善、近重复难度、5–7 域预算和错误机制的人工复核尚未验证。不得以离线测试通过宣称这些结论成立。

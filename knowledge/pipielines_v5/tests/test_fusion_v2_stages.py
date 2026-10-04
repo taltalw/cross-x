@@ -1,4 +1,4 @@
-"""Offline integration checks for v4 stages 1-4."""
+"""Offline integration checks for v5 stages 1-4."""
 
 import importlib.util
 import json
