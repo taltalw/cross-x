@@ -1,0 +1,170 @@
+{
+  "status": "Descriptive statistics only; no support judgments or masking runs.",
+  "source": "/home/zhangpengyue/benchmark/cross-x/knowledge/pipielines_v4/outputs",
+  "by_domain_count": {
+    "2": {
+      "plans": 700,
+      "conditional_combination_entropy": 0.6341889687233058,
+      "conditional_marginal_entropy": 0.6341889687233058,
+      "conditional_combination_coverage": 0.880952380952381,
+      "combination_entropy_by_source": {
+        "chemistry": 0.6160395744202755,
+        "computer_science": 0.43761407119290024,
+        "financial": 0.6438852862317205,
+        "geography": 0.8944743879847945,
+        "legal": 0.4403630920103461,
+        "mathematics": 0.6667395127056237,
+        "medical": 0.7402068565174793
+      },
+      "rank_strength_mean": 0.8582910810292739,
+      "rank_strength_median": 0.827956989247312,
+      "rank_strength_p10": 0.6613756613756614,
+      "rank_strength_p90": 0.9870554177005791,
+      "requirements": 2100,
+      "retained_hit_missing_fraction": 0.0014285714285714286
+    },
+    "3": {
+      "plans": 700,
+      "conditional_combination_entropy": 0.5433672891651131,
+      "conditional_marginal_entropy": 0.7561623768763619,
+      "conditional_combination_coverage": 0.6,
+      "combination_entropy_by_source": {
+        "chemistry": 0.5750440138832791,
+        "computer_science": 0.3987054448034499,
+        "financial": 0.47526048733003917,
+        "geography": 0.6527238749912866,
+        "legal": 0.5779474331378944,
+        "mathematics": 0.5673902186759022,
+        "medical": 0.5564995513339402
+      },
+      "rank_strength_mean": 0.8586583745381275,
+      "rank_strength_median": 0.8888345997956579,
+      "rank_strength_p10": 0.7356946618942587,
+      "rank_strength_p90": 0.9782856740551884,
+      "requirements": 4200,
+      "retained_hit_missing_fraction": 0.0
+    },
+    "4": {
+      "plans": 700,
+      "conditional_combination_entropy": 0.5203694793287956,
+      "conditional_marginal_entropy": 0.8661710219119602,
+      "conditional_combination_coverage": 0.5142857142857143,
+      "combination_entropy_by_source": {
+        "chemistry": 0.5860711996823579,
+        "computer_science": 0.5551954586544672,
+        "financial": 0.33433032217267067,
+        "geography": 0.6586206058156774,
+        "legal": 0.33794681137702565,
+        "mathematics": 0.6930816741981134,
+        "medical": 0.47734028340125684
+      },
+      "rank_strength_mean": 0.8512661249227316,
+      "rank_strength_median": 0.8656623721436341,
+      "rank_strength_p10": 0.7599721414354486,
+      "rank_strength_p90": 0.9313306428547261,
+      "requirements": 6300,
+      "retained_hit_missing_fraction": 0.0006349206349206349
+    }
+  },
+  "ipv4_examples": {
+    "2": {
+      "requirements": {
+        "mathematics": [
+          {
+            "key_fact": "Multiplicative unit conversion",
+            "necessity": "A supplied conversion factor converts the IHL word count into bytes so header and total lengths use matching units."
+          },
+          {
+            "key_fact": "Part equals whole minus remainder",
+            "necessity": "Subtracting header bytes from total bytes isolates the payload rather than incorrectly treating the whole packet as payload."
+          },
+          {
+            "key_fact": "Percentage as part divided by whole",
+            "necessity": "Dividing payload bytes by total packet bytes and multiplying by 100 gives the requested percentage, unlike dividing by header bytes."
+          }
+        ]
+      },
+      "normalized_rank_strength": 0.6490531214893275
+    },
+    "3": {
+      "requirements": {
+        "mathematics": [
+          {
+            "key_fact": "Scaled differences",
+            "necessity": "Subtracting the IHL values and multiplying by the supplied word size converts the change into bytes rather than treating the raw difference as bytes."
+          },
+          {
+            "key_fact": "Repeated-quantity multiplication",
+            "necessity": "Multiplying the per-packet byte increase by one million gives the aggregate additional volume."
+          },
+          {
+            "key_fact": "Decimal megabyte conversion",
+            "necessity": "Dividing byte totals by 1,000,000 expresses transmission volumes in the specified billing unit."
+          }
+        ],
+        "financial": [
+          {
+            "key_fact": "Complete-packet billing basis",
+            "necessity": "The stated billing scope includes headers as well as payload, so additional header bytes increase the charge."
+          },
+          {
+            "key_fact": "Flat per-megabyte pricing",
+            "necessity": "Multiplying billed megabytes by $0.02 determines the charge without additional fees or pricing tiers."
+          },
+          {
+            "key_fact": "Incremental charge versus total charge",
+            "necessity": "The requested increase is the new charge minus the original charge, not the new total charge alone."
+          }
+        ]
+      },
+      "normalized_rank_strength": 0.8959020668698088
+    },
+    "4": {
+      "requirements": {
+        "mathematics": [
+          {
+            "key_fact": "Per-item subtraction",
+            "necessity": "Subtracting each batch's header size from packet length gives the payload size required by the billing clause."
+          },
+          {
+            "key_fact": "Count-weighted aggregation",
+            "necessity": "Multiplying each batch's per-packet payload by its packet count and summing yields total billable bytes."
+          },
+          {
+            "key_fact": "Decimal gigabyte conversion",
+            "necessity": "Dividing total bytes by one billion expresses usage in the decimal GB units specified for pricing."
+          }
+        ],
+        "financial": [
+          {
+            "key_fact": "Marginal pricing tiers",
+            "necessity": "The first billable GB costs $10, while only usage above that threshold receives the $5-per-GB rate."
+          },
+          {
+            "key_fact": "Fractional-usage proration",
+            "necessity": "Fractional GB usage must be charged proportionally rather than rounded up to a whole billing unit."
+          },
+          {
+            "key_fact": "Usage-based charge calculation",
+            "necessity": "The invoice must apply rates to the contractually billable quantity, linking payload calculations to payment rather than charging total packet traffic."
+          }
+        ],
+        "legal": [
+          {
+            "key_fact": "Express addendum precedence",
+            "necessity": "The signed addendum's explicit override makes its billing terms control over the standard whole-packet provision."
+          },
+          {
+            "key_fact": "Contractual chargeable-unit definition",
+            "necessity": "The payload-only clause defines which transmitted bytes qualify for payment and excludes headers from billable usage."
+          },
+          {
+            "key_fact": "Contractual exclusion of other charges",
+            "necessity": "The no-other-charges term limits the payable amount to the specified usage charges without additional fees."
+          }
+        ]
+      },
+      "normalized_rank_strength": 0.6043438720376612
+    }
+  }
+}

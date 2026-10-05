@@ -1,0 +1,56 @@
+STAGE TWO: EVIDENCE VERIFICATION AND FIVE-DIMENSION SCORING
+
+Use the unchanged visible_input, your own frozen own_stage1 record, and review_bundle. New material can correct your first-stage findings; preserve the original record and explain changes in stage1_revisions. You cannot see any other reviewer's judgment.
+
+Check solvability, the reference answer, and uniqueness or accepted answer range against the grading rule. Check every declared domain, including the source domain: identify key knowledge and its use location, explain what is lost without that knowledge, and assess plausible whole-task alternatives. In each domain_checks contribution/basis include this removal check compactly. Map genuine domain dependencies to specific information transfer and its effect.
+
+Match decisive claims to real evidence. source_ids must be supplied source IDs; optionally add evidence_pointers for visible text, answers, or grading rules. Use direct, derived, task_assumption, unsupported, contradicted, or unjudgeable support_type. direct, derived, task_assumption, and contradicted require at least one actual cited source/pointer and a nonempty authentic quote. unsupported and unjudgeable may have empty source_ids and quote when no evidence exists. task_assumption should point to the relevant visible input. A quote must occur in at least one cited original text after whitespace normalization. Cite the original excerpt, not a constructed or paraphrased quotation. Use separate claim entries for separate excerpts. Explain inference/applicability in brief_check. The reference explanation is an unverified generator claim, never independent confirmation of its own correctness.
+
+Apply all five rubric dimensions independently. Each scored dimension needs a short reason, locatable evidence, and any substantive issues. List missing information concretely. A known defect may justify a low score even if other checks remain uncertain. Do not infer correctness from missing files or invent missing sources. Keep provenance limitations explicit without claiming original authorities were checked.
+
+
+NECESSITY DECISION CONTRACT (mandatory):
+Record necessity_audit with exactly one status: verified_shortcut, unresolved, or not_found.
+- verified_shortcut: provide a concise, reproducible solution using only officially visible input and explicitly identified general/domain knowledge, omitting at least one declared domain's specialized contribution. Check that it satisfies the actual grading rule. For a single-choice task, it must uniquely identify the correct option; merely identifying a statement shared by all options is insufficient. Confirm it does not silently use omitted knowledge, the hidden reference answer/explanation, hidden materials, or extra assumptions. Necessity MUST be scored 0, 1, or 2 (not null). Mark each verified omitted domain redundant in domain_checks where that field exists.
+- unresolved: a concrete, material doubt about necessity or a proposed shortcut remains unverified, and no decisive valid shortcut is already established. Explain what cannot be checked and what evidence is needed. Necessity MUST be unjudgeable with a null score, not a speculative low score or a passing score. In stage two, use unknown_reason=unresolved_necessity (or another applicable allowed reason). This requires review; if still unresolved at adjudication, require human review.
+- not_found: no valid shortcut and no remaining material necessity doubt were found in the checks performed. This is not proof that no shortcut exists, and does not itself justify a passing score. Describe the checks and separately establish each domain's substantive role. Set omitted_domains=[] and uniquely_determines_answer=null.
+An explicit uncertain domain contribution or suspected necessity flag requires unresolved unless a decisive verified shortcut already establishes failure. A confirmed shortcut/redundant domain requires verified_shortcut. Established failure takes precedence over other remaining doubts; preserve those doubts in the basis/issues rather than erasing the confirmed failure.
+The solution_sketch states what knowledge is used and what is bypassed; basis explains verification or the unresolved obstacle. evidence_pointers in necessity_audit MUST cite only question, options.<label>, or visible_inputs, never hidden sources/gold. candidate_answer is the answer reached by the attempted route, or null if undetermined. Do not copy gold as if independently derived. A verified shortcut needs nonempty omitted_domains, a nonempty candidate_answer, and uniquely_determines_answer=true.
+Do not change unrelated dimension scores merely to match the necessity verdict. The program rejects contradictory outputs; it does not silently alter your judgment. These rules specify consistency, not a preferred outcome for this sample.
+
+Return exactly this top-level shape. The illustrative unjudgeable entries below show the data contract only; they are NOT default judgments. Replace every reason, status, score, and list with the actual assessment:
+{
+  "sample_id": "copy visible_input.sample_id exactly",
+  "stage": "evidence_scoring",
+  "necessity_audit": {
+    "status": "unresolved",
+    "omitted_domains": [],
+    "solution_sketch": "concise attempted route, knowledge used and potentially bypassed",
+    "candidate_answer": null,
+    "uniquely_determines_answer": null,
+    "evidence_pointers": [
+      "question"
+    ],
+    "basis": "specific verification result or material unresolved obstacle; replace this example"
+  },
+  "answer_check": {"status": "unjudgeable", "independent_answer": null, "brief_basis": "specific answer check"},
+  "domain_checks": [{"domain": "exact declared label", "contribution": "knowledge and its use location", "necessity": "uncertain", "basis": "removal consequence and alternative-route check with locations"}],
+  "dependency_edges": [{"from": "domain X", "to": "domain Y", "transferred_information": "concrete transfer", "effect": "effect on processing and final answer"}],
+  "claim_evidence": [{"claim_id": "c1", "claim": "decisive claim", "support_type": "unjudgeable", "source_ids": [], "evidence_pointers": [], "quote": "", "brief_check": "specific support or uncertainty check"}],
+  "dimensions": {
+    "cross_domain_necessity": {"status": "unjudgeable", "score": null, "reason": "specific basis", "evidence_pointers": [], "issues": [], "unknown_reason": "insufficient_visible_input"},
+    "fusion_dependency": {"status": "unjudgeable", "score": null, "reason": "specific basis", "evidence_pointers": [], "issues": [], "unknown_reason": "insufficient_visible_input"},
+    "correctness_evaluability": {"status": "unjudgeable", "score": null, "reason": "specific basis", "evidence_pointers": [], "issues": [], "unknown_reason": "missing_grading_rule"},
+    "knowledge_grounding": {"status": "unjudgeable", "score": null, "reason": "specific basis", "evidence_pointers": [], "issues": [], "unknown_reason": "missing_source"},
+    "naturalness_clarity": {"status": "unjudgeable", "score": null, "reason": "specific basis", "evidence_pointers": [], "issues": [], "unknown_reason": "insufficient_visible_input"}
+  },
+  "flags": [],
+  "stage1_revisions": [],
+  "missing_information": []
+}
+
+There must be exactly five dimensions and exactly one domain_checks item per declared domain. answer_check.status is correct, incorrect, ambiguous, or unjudgeable. independent_answer is a string or null. necessity is necessary, redundant, or uncertain. dependency_edges may be empty. issues, stage1_revisions, and missing_information contain concise strings. Every stage1_revisions string must name the changed conclusion and new evidence causing it.
+
+For status=scored, score is an integer 0 through 4 and unknown_reason is null. For status=unjudgeable, score is null and unknown_reason is missing_source, insufficient_expertise, missing_grading_rule, insufficient_visible_input, unresolved_evidence_conflict, or unresolved_necessity.
+
+Each flags entry is an object: {"type":"key_answer_error", "status":"confirmed", "description":"specific defect", "evidence_pointers":["question"]}. Allowed type values: key_answer_error, single_domain_shortcut, subset_shortcut, redundant_domain, invalid_dependency, source_contradiction. Allowed status: confirmed or suspected. Cite at least one actual pointer. Report confirmed or concretely suspected critical defects even if scores already reveal the problem. Confirmed key answer errors cannot coexist with correctness_evaluability >=3. Confirmed shortcuts/redundant domains cannot coexist with cross_domain_necessity >=3. Confirmed invalid dependencies cannot coexist with fusion_dependency >=3. Confirmed core source contradictions cannot coexist with knowledge_grounding >=3. Explicit incorrect, ambiguous, or unjudgeable answers cannot coexist with passing correctness_evaluability; explicit redundant domains cannot coexist with passing cross_domain_necessity. Do not provide any overall_pass field.

@@ -1,0 +1,24 @@
+STAGE ONE: INDEPENDENT BLIND STRUCTURE REVIEW
+
+You have only the official visible input. Reference answers, generator explanations, declared domains, construction sources, model identities, difficulty labels, and other reviews are hidden. Use only visible_input. Do not give final five-dimensional scores in this stage.
+
+Summarize the task and required output in one sentence. Independently identify substantive knowledge categories and where each matters. Ordinary reading and mechanical arithmetic do not automatically constitute separate disciplines. Record genuine transfers of information, constraints, or judgments between categories, distinguishing dependencies from independent answers placed together. Empty dependency_edges are allowed.
+
+Check plausible whole-task shortcuts: single domain, a subset of domains, answer-revealing question text, option form, or generic reasoning. For a found shortcut, give a short reproducible counterexample or solution summary. not_found means no valid route found in this check, not proof that every alternative was exhausted. You may give a candidate answer; use null if it cannot responsibly be established, without inventing conditions. List unresolved matters for stage two.
+
+Return exactly this object shape, replacing descriptive strings with your assessment:
+{
+  "sample_id": "copy visible_input.sample_id exactly",
+  "stage": "blind_structure",
+  "task_summary": "one-sentence task goal",
+  "inferred_knowledge": [{"label": "inferred category", "role": "specific substantive role", "input_pointer": "question"}],
+  "dependency_edges": [{"from": "category X", "to": "category Y", "transferred_information": "specific transferred content", "effect": "effect on subsequent processing and answer"}],
+  "shortcut_checks": [{"type": "single_domain", "status": "uncertain", "description": "short verifiable check", "input_pointers": ["question"]}],
+  "candidate_answer": null,
+  "answer_status": "uncertain",
+  "open_questions": ["specific unresolved check"]
+}
+
+inferred_knowledge, dependency_edges, shortcut_checks, and open_questions are arrays and may be empty where justified. shortcut_checks.type must be single_domain, subset, question_leakage, option_shortcut, or generic. Its status must be found, not_found, or uncertain. answer_status must be determined or uncertain; determined requires a nonempty string candidate_answer. Use only existing question, options.<label>, or visible_inputs pointers. Natural inference of a domain from the text is permitted; do not guess hidden metadata.
+
+For each concrete shortcut concern, distinguish a verified solution sketch from an unverified possibility. For multiple-choice input, check whether a partial or reduced route uniquely identifies an option under the requested answer format; a conclusion shared across all options alone is insufficient. Explain which specialized knowledge the route uses and bypasses. Keep unresolved material concerns explicit for stage two.

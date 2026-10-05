@@ -1,0 +1,162 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-05",
+  "python_version": "3.13.9",
+  "scope": "迁移后的标准库离线测试及包内数据预览/重统计；未调用真实模型API。测试在不含原始语料的独立临时副本中执行。",
+  "unit_tests": {
+    "DDE": 18,
+    "KNC": 28,
+    "KRC": 29,
+    "CDNS": 22,
+    "LLM5": 52,
+    "total": 149,
+    "passed": 149
+  },
+  "checks": [
+    {
+      "name": "DDE_tests",
+      "exit_code": 0
+    },
+    {
+      "name": "KNC_tests",
+      "exit_code": 0
+    },
+    {
+      "name": "KRC_tests",
+      "exit_code": 0
+    },
+    {
+      "name": "CDNS_tests",
+      "exit_code": 0
+    },
+    {
+      "name": "LLM5_tests",
+      "exit_code": 0
+    },
+    {
+      "name": "CDNS_bundled_preview",
+      "exit_code": 0
+    },
+    {
+      "name": "CDNS_bundled_mock_rescore",
+      "exit_code": 0
+    },
+    {
+      "name": "LLM5_bundled_rescore",
+      "exit_code": 0
+    },
+    {
+      "name": "LLM5_bundled_preview",
+      "exit_code": 0
+    },
+    {
+      "name": "DDE_default_path",
+      "exit_code": 0
+    },
+    {
+      "name": "KNC_default_path",
+      "exit_code": 0
+    },
+    {
+      "name": "KRC_default_path",
+      "exit_code": 0
+    },
+    {
+      "name": "CDNS_default_path",
+      "exit_code": 0
+    }
+  ],
+  "recompute": {
+    "DDE": "全量2100方案，6份报告逐字节一致",
+    "KNC": "21方案，9份重新生成报告逐字节一致；历史独立validation.json不是本次计算输出",
+    "KRC": "21方案指标和归一化一致；summary.manifest及run_manifest的清单位置/normalization_source不同",
+    "CDNS": "新默认输入准备成功；包内模拟预测重新评分通过",
+    "LLM5": "包内第二轮真实单样本记录重统计、规范样本预览通过"
+  },
+  "historical_outputs_unchanged": 179,
+  "python_syntax_files": 27,
+  "runtime_and_prompt_sha256": {
+    "llm_judge/LLM5_aggregate.py": "905abc21e35525a80675a5cde4320096187a2f5c8c1ead1633bd5730251998af",
+    "llm_judge/LLM5_api.py": "40a96cb289154cbe97f4ddfc25446d5f1acd1b89dda3d7a6c880c45adad472b3",
+    "llm_judge/LLM5_data.py": "ba3ca3105a8d7d0ba5c9c357b63655a1670d4be817464c3ebd4126a249ec5cdb",
+    "llm_judge/LLM5_prompts/LLM5_review.txt": "fcfc1503d07e52fa4661a57883bad4d6ca59d1447eb590c98119a3327cb8536a",
+    "llm_judge/LLM5_prompts/LLM5_rubric.md": "7e91523709a49fd7034f5dc79f1947f8aa00dfe9fe8189d236928eaf1ec0702b",
+    "llm_judge/LLM5_prompts/LLM5_stage1.txt": "cd26b109c9938c0f2b184cfab4c33cad83a51ea506f822ad3f28cc8cbfc3d626",
+    "llm_judge/LLM5_prompts/LLM5_stage2.txt": "dd1a9b60e2c2896129807007acd39d0f7f105c24a2145d3b995df605a42f70c8",
+    "llm_judge/LLM5_prompts/LLM5_system.txt": "9492737fbfcdbff42d9065d94fac776f902a9e5c13513483cf8be7a1678e528a",
+    "llm_judge/LLM5_prompts.py": "49e4b934eda0a6df5764694c09ee31e54da3b173f73676a13496b84d08cc66d4",
+    "llm_judge/LLM5_run.py": "cf8a72807b1438c1fde7f1c31ecd07ab3a24c1065d181b41bbefdbc7abc97704",
+    "llm_judge/LLM5_run_example.sh": "e9981ae2c6aa5c747fabd60b74b27edb90415b42bffb986361ad0f786dab9150",
+    "llm_judge/LLM5_schema.py": "2aa582066898e95ba699e2dd9c14634b16494d1a045877f066027d516cc03770",
+    "llm_judge/LLM5_tests/LLM5_test_necessity.py": "92609b93a683f60dc9856a325f75bf75c70c6e57656b1af8e1fb0527e5e02210",
+    "llm_judge/LLM5_tests/LLM5_test_pipeline.py": "84f5aa6cb52309145e548965f912906b99269ee33c90e01407f59ca722e8ba03",
+    "process_auditing/CDNS/CDNS_data.py": "d62e9cd6187b85cff8407159fbc19ae7dafb96eacce23a7f1bf0966b45f722ed",
+    "process_auditing/CDNS/CDNS_infer.py": "f0f0f613de89aafeea3362f7ea7573df94fabe34d703c844ca2d769d818086ca",
+    "process_auditing/CDNS/CDNS_prepare.py": "0d72229f1c783f06b287969c57cea5b731c0f06bf51f0f20a3414c823b692415",
+    "process_auditing/CDNS/CDNS_run_example.sh": "d0090fc0d315806c25b760b74a1d5c275340d4e8fb0e19eb11c62536012b105c",
+    "process_auditing/CDNS/CDNS_score.py": "f0fab7db31f2a03f53a7036bacdad609e1b78445907104fdd95e0825f8d86ccf",
+    "process_auditing/CDNS/CDNS_tests/CDNS_test_pipeline.py": "6719362216ebeb78d7f1c14fd3d0eb8c405320ec4a446d5c44bbf9c9b6433c2e",
+    "process_auditing/CDNS/CDNS_validate.py": "3b98ae1b6c37d5b56e4c02c54c1fa011a2c38082003d77aa4012c9c18bfd61b9",
+    "process_auditing/DDE/DDE_tests/test_domain_distribution_entropy.py": "982c2235c0cf54acc59ed1bece6298e0ab14f8bae8e5a62c1fa274d7a9b757ae",
+    "process_auditing/DDE/domain_distribution_entropy.py": "c95bc76d7d3805756a59691a2a93122a02ff851360c5acf3828aa591e3d5d710",
+    "process_auditing/DDE/run_dde_example.sh": "7b15ef49e7af5dfeea0232469656e926d77fe6c1a9585bf486ce6d2586a1da70",
+    "process_auditing/KNC/KNC_tests/test_knc_saved_scores.py": "dfb35a0b0c9bc0b094e7447c4efeb253051191a52b67843b5d897a60962d88a1",
+    "process_auditing/KNC/knc_saved_core.py": "68403a93bb81db9599c75508447379342eb590c0ecbf8ef8c7e4a03ce2d33bbf",
+    "process_auditing/KNC/knowledge_need_coverage.py": "63bdafbc1359560f30703fc93d5ec91b63c3a5697e376a3d853bc3c5abc4ada7",
+    "process_auditing/KNC/plot_knc_saved_scores.py": "f403e3f9ae8dc314210874921d8ae9a7240a2c5a3e93c92e40e8018525242caa",
+    "process_auditing/KNC/run_knc_example.sh": "2fd86abd87523bac8f71f849bf4456886d4c9988a1e6360c95218f84a0fc4a2a",
+    "process_auditing/KRC/KRC_core.py": "027cb845ce0aa8e9ac3bb4b7e9ede5733ac4f5b47fe79ff3a857f73499de648c",
+    "process_auditing/KRC/KRC_data.py": "0605eab0096aeddeb89ce953a8d4d71bb0d1589db1e9ae85168b7f4a6243b064",
+    "process_auditing/KRC/KRC_evaluate.py": "b7c04dd89739a4a7d2e20a4c2ecc93ad7774c50b436e9c6460f216cb712123d5",
+    "process_auditing/KRC/KRC_plot.py": "1dadb3eae282686129df14143480e68796d788e55ac96e999d8afb71e043d17f",
+    "process_auditing/KRC/KRC_run_example.sh": "621bfde14037fd22be28baeb96f7cd42c102f13e57c31d671b5aea5e6878f175",
+    "process_auditing/KRC/KRC_tests/KRC_test_metrics.py": "9b3e5b50c413f3a3510b0ca1f2fbdcc581f793f5073bd84cbae1a8e5afe9290b",
+    "process_auditing/KRC/KRC_validate.py": "28d1134010ea9a6c700e7b2a8d1f6c10a435e2a05c2689212de3be86b0aac421",
+    "process_auditing/design_docs/process_auditing_design_assets_20261005/build_audit_figures.py": "62c1cfd89e9c963e7473c63b099105599d882f455f8d633300afd853c3c78e7a"
+  },
+  "archive_checks": "最终ZIP逐文件SHA256与PACKAGE_MANIFEST核对，CRC检查和解压校验记录另存工作区方案包zip_validation.json；ZIP旁.sha256用于整体传输校验。",
+  "excluded": [
+    "__pycache__/",
+    ".git/",
+    ".pytest_cache/",
+    "*.pyc",
+    "*.pyo",
+    "*.zip",
+    ".env*",
+    "*.local.json"
+  ],
+  "external_requirements_for_full_rerun": [
+    "pipielines_v4/outputs完整数据",
+    "atomic原子语料",
+    "真实模型服务/权重及自行配置的凭据",
+    "Python环境；绘图额外依赖"
+  ],
+  "network_model_calls": 0,
+  "human_verification": "仅协议和pending_human路由，未完成实际人工裁决",
+  "directory_rename": {
+    "from": "process_auditin",
+    "to": "process_auditing",
+    "checks": [
+      {
+        "metric": "DDE",
+        "passed": 18
+      },
+      {
+        "metric": "KNC",
+        "passed": 28
+      },
+      {
+        "metric": "KRC",
+        "passed": 29
+      },
+      {
+        "metric": "CDNS",
+        "passed": 22
+      }
+    ],
+    "history_and_runtime_bytes_unchanged": true,
+    "current_reading_links": "passed",
+    "zip_rebuilt": true,
+    "model_calls": 0
+  }
+}

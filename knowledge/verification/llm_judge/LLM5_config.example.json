@@ -1,0 +1,34 @@
+{
+  "judges": {
+    "J1": {
+      "endpoint": "https://REPLACE_PROVIDER_1/chat/completions",
+      "model": "REPLACE_MODEL_1",
+      "family": "REPLACE_FAMILY_1",
+      "key_env": "LLM5_J1_KEY",
+      "temperature": 0,
+      "max_tokens": 7000,
+      "timeout": 180
+    },
+    "J2": {
+      "endpoint": "https://REPLACE_PROVIDER_2/chat/completions",
+      "model": "REPLACE_MODEL_2",
+      "family": "REPLACE_FAMILY_2",
+      "key_env": "LLM5_J2_KEY",
+      "temperature": 0,
+      "max_tokens": 7000,
+      "timeout": 180
+    },
+    "J3": {
+      "endpoint": "https://REPLACE_PROVIDER_3/chat/completions",
+      "model": "REPLACE_MODEL_3",
+      "family": "REPLACE_FAMILY_3",
+      "key_env": "LLM5_J3_KEY",
+      "temperature": 0,
+      "max_tokens": 7000,
+      "timeout": 180
+    }
+  },
+  "audit_fraction": 0.1,
+  "seed": "20261005",
+  "max_retries": 2
+}
