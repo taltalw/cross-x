@@ -6,6 +6,58 @@
 
 模型看到的 system、rubric、阶段任务和修正提示均为英文，默认要求英文评审输出；使用说明为中文。
 
+## 一键评估 pipelines v5 / v6
+
+从任意工作目录运行（Python 3.10+，仅标准库）：
+
+```bash
+J1_API_BASE_URL='Claude的API地址' \
+J1_API_KEY='Claude的API密钥' \
+J1_MODEL='claude-opus-5' \
+J2_API_BASE_URL='Gemini的API地址' \
+J2_API_KEY='Gemini的API密钥' \
+J2_MODEL='gemini-3.1-pro' \
+J3_API_BASE_URL='DeepSeek的API地址' \
+J3_API_KEY='DeepSeek的API密钥' \
+J3_MODEL='deepseek-v4-pro' \
+bash /mnt/data1/wangyatong/cross-x/knowledge/verification/llm_judge/LLM5_run_v5_v6.sh
+```
+
+在终端分别填写三个角色的服务地址、密钥和模型名。执行模式要求上面九个变量全部填写，地址和密钥可以相同，也可以各不相同。脚本不内置服务地址，也不将密钥写入配置或评审输出。各角色的 `*_API_BASE_URL` 可以是带 `/v1` 的 Base URL，也可以是完整的 `/chat/completions` 地址；脚本仅补上 `/chat/completions`，不自动添加 `/v1`。各接口需支持现有客户端的 OpenAI 兼容聊天与 JSON 输出参数。模型名按终端的 `J1_MODEL` / `J2_MODEL` / `J3_MODEL` 原样发送。
+
+| 角色 | 终端示例模型 | 工作 |
+|---|---|---|
+| J1 | `claude-opus-5` | 每题两阶段独立初审 |
+| J2 | `gemini-3.1-pro` | 每题两阶段独立初审 |
+| J3 | `deepseek-v4-pro` | 分歧、异常及一致通过样本的 10% 分层抽查；先独立两阶段，再匿名复核 |
+
+默认顺序评估 `pipielines_v5/outputs` 和 `pipielines_v6/outputs` 下的 `4_generate_fusion_question/*/test_domain_count_[234].jsonl`，读取全部非空物理行；不读取 `.audit.jsonl` 或前序阶段结果。两套输入先全部校验，再发送请求。当前文件共有 v5 2310 题、v6 2223 题，全量至少需要 18132 个初审阶段，另有复核和失败重试。建议先用小批量检查网关兼容性：
+
+```bash
+J1_API_BASE_URL='Claude的API地址' \
+J1_API_KEY='Claude的API密钥' \
+J1_MODEL='claude-opus-5' \
+J2_API_BASE_URL='Gemini的API地址' \
+J2_API_KEY='Gemini的API密钥' \
+J2_MODEL='gemini-3.1-pro' \
+J3_API_BASE_URL='DeepSeek的API地址' \
+J3_API_KEY='DeepSeek的API密钥' \
+J3_MODEL='deepseek-v4-pro' \
+bash /mnt/data1/wangyatong/cross-x/knowledge/verification/llm_judge/LLM5_run_v5_v6.sh --limit 1
+```
+
+`--limit 1` 为每个版本各取第一题，仍使用三模型正式协议，J3 按复核规则选样。无需服务地址或密钥的全量离线预览（未指定的模型名仅在预览中使用上表示例）：
+
+```bash
+bash /mnt/data1/wangyatong/cross-x/knowledge/verification/llm_judge/LLM5_run_v5_v6.sh --dry-run
+```
+
+常用参数：`--versions v5` 只评估 v5；`--domains computer_science mathematics` 筛选源领域；`--domain-counts 3 4` 筛选融合领域数；`--limit N` 限制**每个版本总题数**；`--output-dir 新目录` 指定输出；`--v5-root` / `--v6-root` 指定各版本的 outputs 目录（也可设置 `V5_ROOT` / `V6_ROOT`）；`--atomic-root` 指定原子资料目录。解释器可通过 `LLM5_PYTHON` 或 `PYTHON_BIN` 指定。
+
+每次创建新的 `LLM5_outputs/LLM5_v5_v6_时间戳/`，包括不含密钥的 `LLM5_config.json`、总运行清单 `LLM5_batch_manifest.json`，以及分别独立的 `v5/`、`v6/` 运行目录。执行时，各版本的报告位于 `v5/LLM5_statistics/LLM5_report.md` 和 `v6/LLM5_statistics/LLM5_report.md`；详细调用产物持续写入各自 `LLM5_calls/`。离线预览只输出规范样本和 Prompt，不生成评分报告。
+
+脚本拒绝覆盖非空输出目录；任一版本执行不完整时返回非零退出码并停止后续版本。当前不支持断点续跑，重新执行会创建新批次。J1/J2/J3 默认声明家族为 anthropic/google/deepseek；若更换模型家族，可分别设置 `J1_FAMILY` / `J2_FAMILY` / `J3_FAMILY`，正式模式要求三个不同家族。需要额外的受支持参数时，可使用 `--config 本地配置.json` 提供现有三模型配置结构，此时配置文件优先；密钥仍只通过配置中的 `key_env` 环境变量读取。
+
 设计依据：[五维评审与 Prompt 设计](LLM5_五维评审与Prompt设计_20261005.md)。本轮 DeepSeek 单题真实测试已完成，结果见 [单样本测试报告](LLM5_单样本API测试报告_20261005.md)。该次运行的最终统计位于 `LLM5_outputs/LLM5_deepseek_smoke1/LLM5_statistics_verified`，已离线修正流程测试与合成数据的元数据混淆，未改变模型回答或追加API调用。
 
 ## 代码与英文 Prompt

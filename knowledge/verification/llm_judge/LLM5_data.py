@@ -92,7 +92,7 @@ class AtomicResolver:
                 {'status': 'embedded_only_atomic_unresolved', 'content_sha256': digest(material)})
 
 
-def normalize(row, path, line, resolver):
+def normalize(row, path, line, resolver, *, input_sha256=None):
     """适配真实阶段4，正式输入固定为原始题目与选项。
 
     Args:
@@ -100,6 +100,7 @@ def normalize(row, path, line, resolver):
         path: 来源 JSONL。
         line: 物理行号。
         resolver: 原子来源精确匹配器。
+        input_sha256: 批量读取时复用同一文件摘要；省略时现场计算。
     """
     question, options, answer = (row.get(k) for k in ('question', 'options', 'answer'))
     if not isinstance(question, str) or not question.strip():
@@ -148,7 +149,8 @@ def normalize(row, path, line, resolver):
                           'sources': sources},
         'metadata': {'source_domain': source, 'k': len(domains), 'difficulty': row.get('difficulty', 'unknown'),
                      'generator_model_alias': row.get('model'), 'generator_family': 'unknown',
-                     'input_file': str(path.resolve()), 'input_line': line, 'input_sha256': file_hash(path),
+                     'input_file': str(path.resolve()), 'input_line': line,
+                     'input_sha256': input_sha256 if input_sha256 is not None else file_hash(path),
                      'material_selection': 'source_sample+used_samples', 'missing_material_domains': missing,
                      'provenance': provenance, 'visibility': 'question_options_only'},
     }
