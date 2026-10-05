@@ -8,7 +8,7 @@
 
 ## 一键评估 pipelines v5 / v6
 
-从任意工作目录运行（Python 3.10+，仅标准库）：
+以下命令在 `cross-x` 项目根目录运行（Python 3.10+，仅标准库）：
 
 ```bash
 J1_API_BASE_URL='Claude的API地址' \
@@ -20,7 +20,7 @@ J2_MODEL='gemini-3.1-pro' \
 J3_API_BASE_URL='DeepSeek的API地址' \
 J3_API_KEY='DeepSeek的API密钥' \
 J3_MODEL='deepseek-v4-pro' \
-bash /mnt/data1/wangyatong/cross-x/knowledge/verification/llm_judge/LLM5_run_v5_v6.sh
+bash knowledge/verification/llm_judge/LLM5_run_v5_v6.sh
 ```
 
 在终端分别填写三个角色的服务地址、密钥和模型名。执行模式要求上面九个变量全部填写，地址和密钥可以相同，也可以各不相同。脚本不内置服务地址，也不将密钥写入配置或评审输出。各角色的 `*_API_BASE_URL` 可以是带 `/v1` 的 Base URL，也可以是完整的 `/chat/completions` 地址；脚本仅补上 `/chat/completions`，不自动添加 `/v1`。各接口需支持现有客户端的 OpenAI 兼容聊天与 JSON 输出参数。模型名按终端的 `J1_MODEL` / `J2_MODEL` / `J3_MODEL` 原样发送。
@@ -43,13 +43,13 @@ J2_MODEL='gemini-3.1-pro' \
 J3_API_BASE_URL='DeepSeek的API地址' \
 J3_API_KEY='DeepSeek的API密钥' \
 J3_MODEL='deepseek-v4-pro' \
-bash /mnt/data1/wangyatong/cross-x/knowledge/verification/llm_judge/LLM5_run_v5_v6.sh --limit 1
+bash knowledge/verification/llm_judge/LLM5_run_v5_v6.sh --limit 1
 ```
 
 `--limit 1` 为每个版本各取第一题，仍使用三模型正式协议，J3 按复核规则选样。无需服务地址或密钥的全量离线预览（未指定的模型名仅在预览中使用上表示例）：
 
 ```bash
-bash /mnt/data1/wangyatong/cross-x/knowledge/verification/llm_judge/LLM5_run_v5_v6.sh --dry-run
+bash knowledge/verification/llm_judge/LLM5_run_v5_v6.sh --dry-run
 ```
 
 常用参数：`--versions v5` 只评估 v5；`--domains computer_science mathematics` 筛选源领域；`--domain-counts 3 4` 筛选融合领域数；`--limit N` 限制**每个版本总题数**；`--output-dir 新目录` 指定输出；`--v5-root` / `--v6-root` 指定各版本的 outputs 目录（也可设置 `V5_ROOT` / `V6_ROOT`）；`--atomic-root` 指定原子资料目录。解释器可通过 `LLM5_PYTHON` 或 `PYTHON_BIN` 指定。
@@ -57,6 +57,33 @@ bash /mnt/data1/wangyatong/cross-x/knowledge/verification/llm_judge/LLM5_run_v5_
 每次创建新的 `LLM5_outputs/LLM5_v5_v6_时间戳/`，包括不含密钥的 `LLM5_config.json`、总运行清单 `LLM5_batch_manifest.json`，以及分别独立的 `v5/`、`v6/` 运行目录。执行时，各版本的报告位于 `v5/LLM5_statistics/LLM5_report.md` 和 `v6/LLM5_statistics/LLM5_report.md`；详细调用产物持续写入各自 `LLM5_calls/`。离线预览只输出规范样本和 Prompt，不生成评分报告。
 
 脚本拒绝覆盖非空输出目录；任一版本执行不完整时返回非零退出码并停止后续版本。当前不支持断点续跑，重新执行会创建新批次。J1/J2/J3 默认声明家族为 anthropic/google/deepseek；若更换模型家族，可分别设置 `J1_FAMILY` / `J2_FAMILY` / `J3_FAMILY`，正式模式要求三个不同家族。需要额外的受支持参数时，可使用 `--config 本地配置.json` 提供现有三模型配置结构，此时配置文件优先；密钥仍只通过配置中的 `key_env` 环境变量读取。
+
+### 在另一台服务器运行
+
+脚本内部通过脚本自身的位置定位文件，没有写死本机的 `/mnt/data1/wangyatong` 或其他用户目录。迁移时保留下列结构，项目可以放在新服务器上的任意位置：
+
+```text
+cross-x/
+└── knowledge/
+    ├── verification/
+    │   └── llm_judge/
+    │       ├── LLM5_run_v5_v6.sh
+    │       ├── LLM5_*.py
+    │       └── LLM5_prompts/
+    ├── pipielines_v5/outputs/4_generate_fusion_question/
+    ├── pipielines_v6/outputs/4_generate_fusion_question/
+    └── atomic/
+```
+
+至少复制 `llm_judge` 的全部 Python 文件、启动脚本和 `LLM5_prompts`，以及两个版本阶段4的题目结果。`atomic` 用于本地原子来源精确匹配，建议一起复制；缺失时使用题目内嵌材料并标记来源未定位。旧 `LLM5_outputs`、pipeline 前序阶段输出及生成环境无需复制。
+
+新服务器需要 Bash、Python 3.10+，执行用户对输出位置有写权限，并能访问所配置的三个 OpenAI 兼容 API。先在新服务器的 `cross-x` 根目录执行：
+
+```bash
+bash knowledge/verification/llm_judge/LLM5_run_v5_v6.sh --dry-run --limit 1
+```
+
+预览成功后，使用上方的九个环境变量命令进行真实试跑。若不保留默认目录结构，可以在命令末尾加 `--v5-root 新位置/v5/outputs --v6-root 新位置/v6/outputs --atomic-root 新位置/atomic`；默认输出写到当前脚本所在目录的 `LLM5_outputs`，也可用 `--output-dir 新输出目录` 指定。运行清单中的绝对路径记录的是执行时服务器上的实际来源位置，不是写死的程序配置。
 
 设计依据：[五维评审与 Prompt 设计](LLM5_五维评审与Prompt设计_20261005.md)。本轮 DeepSeek 单题真实测试已完成，结果见 [单样本测试报告](LLM5_单样本API测试报告_20261005.md)。该次运行的最终统计位于 `LLM5_outputs/LLM5_deepseek_smoke1/LLM5_statistics_verified`，已离线修正流程测试与合成数据的元数据混淆，未改变模型回答或追加API调用。
 
@@ -96,7 +123,8 @@ atomic来源匹配使用完整prompt/completion的摘要；能定位时记录文
 ## 仅准备输入（不调用API）
 
 ```bash
-cd "/home/zhangpengyue/benchmark/cross-x/knowledge/verification/llm_judge"
+# 从 cross-x 项目根目录进入评审目录。
+cd knowledge/verification/llm_judge
 bash "LLM5_run_example.sh" prepare --output-dir "LLM5_outputs/LLM5_preview_again"
 ```
 

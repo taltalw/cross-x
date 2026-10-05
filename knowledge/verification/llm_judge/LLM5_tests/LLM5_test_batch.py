@@ -3,7 +3,10 @@
 import contextlib
 import io
 import json
+import os
+import shutil
 import socket
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -105,6 +108,35 @@ class BatchTests(unittest.TestCase):
             with contextlib.redirect_stderr(io.StringIO()):
                 self.invoke('--dry-run')
         self.assertEqual(exc.exception.code, 2)
+
+    def test_launcher_runs_after_relocation_with_default_data_paths(self):
+        project = self.root / 'relocated project with spaces'
+        knowledge = project / 'knowledge'
+        judge_dir = knowledge / 'verification/llm_judge'
+        judge_dir.mkdir(parents=True)
+        original = Path(batch.__file__).resolve().parent
+        for path in original.glob('LLM5_*.py'):
+            shutil.copy2(path, judge_dir / path.name)
+        shutil.copy2(original / 'LLM5_run_v5_v6.sh', judge_dir / 'LLM5_run_v5_v6.sh')
+        shutil.copytree(original / 'LLM5_prompts', judge_dir / 'LLM5_prompts')
+        for version in ('v5', 'v6'):
+            shutil.copytree(self.root / version, knowledge / f'pipielines_{version}/outputs')
+        result = subprocess.run([
+            'bash', str(judge_dir / 'LLM5_run_v5_v6.sh'), '--dry-run', '--limit', '1',
+            '--domains', 'chemistry', '--domain-counts', '2',
+        ], cwd=self.root, env={'PATH': os.defpath, 'LLM5_PYTHON': sys.executable},
+            capture_output=True, text=True, timeout=30)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        outputs = list((judge_dir / 'LLM5_outputs').iterdir())
+        self.assertEqual(len(outputs), 1)
+        summary = json.loads((outputs[0] / 'LLM5_batch_manifest.json').read_text())
+        self.assertEqual(summary['status'], 'prepared')
+        for version in ('v5', 'v6'):
+            self.assertEqual(summary['datasets'][version]['sample_count'], 1)
+            source = Path(summary['datasets'][version]['input_files'][0]['path'])
+            self.assertTrue(source.is_relative_to(knowledge / f'pipielines_{version}/outputs'))
+            manifest = json.loads((outputs[0] / version / 'LLM5_run_manifest.json').read_text())
+            self.assertEqual(manifest['http_post_attempts'], 0)
 
     def test_missing_key_rejected_before_creating_output(self):
         for role in ('J1', 'J2', 'J3'):
