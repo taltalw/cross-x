@@ -38,6 +38,13 @@ def make_config(dry_run=False):
             'family': os.environ.get(f'{role}_FAMILY', default_family),
             'key_env': f'{role}_API_KEY', 'temperature': 0, 'max_tokens': 7000, 'timeout': 180,
         }
+        # omit 表示不发送该参数；不是要求模型关闭思考，也不自动回退强度。
+        default_effort = 'xhigh' if 'gpt' in judges[role]['model'].lower() else 'max'
+        effort = os.environ.get(f'{role}_REASONING_EFFORT', default_effort).strip().lower()
+        judges[role]['reasoning_effort'] = None if effort == 'omit' else effort
+        if f'{role}_THINKING' in os.environ:
+            thinking = os.environ[f'{role}_THINKING'].strip().lower()
+            judges[role]['thinking'] = None if thinking == 'omit' else thinking
     return checked_config({
         'judges': judges,
         'audit_fraction': 0.1, 'seed': '20261005', 'max_retries': 2,

@@ -92,6 +92,9 @@ def complete(config, messages, api_key):
                'response_format': {'type': 'json_object'}}
     if config.get('thinking') is not None:
         payload['thinking'] = {'type': config['thinking']}
+    default_effort = 'xhigh' if 'gpt' in str(config.get('model', '')).lower() else 'max'
+    if config.get('reasoning_effort', default_effort) is not None:
+        payload['reasoning_effort'] = config.get('reasoning_effort', default_effort)
     if config.get('seed') is not None:
         payload['seed'] = config['seed']
     body = request_json(config['endpoint'], api_key, payload, config.get('timeout', 180))

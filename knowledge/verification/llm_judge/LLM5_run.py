@@ -23,7 +23,7 @@ def smoke_config():
     """单样本同模型三角色测试配置，不能用于独立质量验证。"""
     judge = {'endpoint': 'https://api.deepseek.com/chat/completions', 'model': 'auto',
              'family': 'deepseek', 'key_env': 'DEEPSEEK_API_KEY', 'temperature': 0,
-             'max_tokens': 7000, 'timeout': 180, 'thinking': 'disabled'}
+             'max_tokens': 7000, 'timeout': 180, 'thinking': 'enabled', 'reasoning_effort': 'max'}
     return {'judges': {role: dict(judge) for role in ('J1', 'J2', 'J3')},
             'audit_fraction': 0.1, 'seed': '20261005', 'max_retries': 2}
 
@@ -35,7 +35,8 @@ def checked_config(raw, smoke):
     judges = raw.get('judges')
     if not isinstance(judges, dict) or set(judges) != {'J1', 'J2', 'J3'}:
         raise ValueError('需要配置 J1/J2/J3')
-    allowed = {'endpoint', 'model', 'family', 'key_env', 'temperature', 'max_tokens', 'timeout', 'thinking', 'seed'}
+    allowed = {'endpoint', 'model', 'family', 'key_env', 'temperature', 'max_tokens',
+               'timeout', 'thinking', 'reasoning_effort', 'seed'}
     config = copy.deepcopy(raw)
     for role, judge in config['judges'].items():
         if not isinstance(judge, dict) or set(judge) - allowed:
@@ -51,14 +52,20 @@ def checked_config(raw, smoke):
         judge.setdefault('temperature', 0)
         judge.setdefault('max_tokens', 7000)
         judge.setdefault('timeout', 180)
+        default_effort = 'xhigh' if 'gpt' in judge['model'].strip().lower() else 'max'
+        judge.setdefault('reasoning_effort', default_effort)
+        if judge['family'].strip().lower() == 'deepseek':
+            judge.setdefault('thinking', 'enabled')
         if type(judge['max_tokens']) is not int or not 1 <= judge['max_tokens'] <= 32768:
             raise ValueError('max_tokens 必须在1..32768')
         for field in ('temperature', 'timeout'):
             value = judge[field]
             if type(value) not in (int, float) or not math.isfinite(value) or value < 0 or (field == 'timeout' and value == 0):
                 raise ValueError(f'{field} 数值非法')
-        if judge.get('thinking') not in (None, 'enabled', 'disabled'):
-            raise ValueError('thinking 需要 enabled/disabled')
+        if judge.get('thinking') not in (None, 'enabled', 'disabled', 'adaptive'):
+            raise ValueError('thinking 需要 enabled/disabled/adaptive 或 null（不发送）')
+        if judge.get('reasoning_effort') not in (None, 'none', 'minimal', 'low', 'medium', 'high', 'xhigh', 'max'):
+            raise ValueError('reasoning_effort 需要 none/minimal/low/medium/high/xhigh/max 或 null（不发送）')
         if judge.get('seed') is not None and type(judge['seed']) is not int:
             raise ValueError('seed 必须是整数')
     families = {j['family'].strip().lower() for j in config['judges'].values()}

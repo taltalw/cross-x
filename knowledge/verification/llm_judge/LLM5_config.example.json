@@ -6,6 +6,7 @@
       "family": "REPLACE_FAMILY_1",
       "key_env": "LLM5_J1_KEY",
       "temperature": 0,
+      "reasoning_effort": "max",
       "max_tokens": 7000,
       "timeout": 180
     },
@@ -15,6 +16,7 @@
       "family": "REPLACE_FAMILY_2",
       "key_env": "LLM5_J2_KEY",
       "temperature": 0,
+      "reasoning_effort": "max",
       "max_tokens": 7000,
       "timeout": 180
     },
@@ -24,6 +26,7 @@
       "family": "REPLACE_FAMILY_3",
       "key_env": "LLM5_J3_KEY",
       "temperature": 0,
+      "reasoning_effort": "max",
       "max_tokens": 7000,
       "timeout": 180
     }

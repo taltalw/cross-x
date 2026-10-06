@@ -15,6 +15,8 @@ from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import LLM5_batch as batch
+import LLM5_api as api
+from LLM5_run import checked_config, smoke_config
 from LLM5_data import AtomicResolver, file_hash, normalize, read_jsonl, write_jsonl
 
 
@@ -75,6 +77,88 @@ class BatchTests(unittest.TestCase):
                 with patch.dict(batch.os.environ, {**self.env, name: '   '}):
                     with self.assertRaisesRegex(ValueError, name):
                         batch.make_config()
+
+    def test_high_effort_and_deepseek_thinking_reach_api_payload(self):
+        response = {'choices': [{'finish_reason': 'stop', 'message': {
+            'content': '{}', 'reasoning_content': 'internal reasoning must not be saved'}}],
+            'usage': {'completion_tokens': 50}}
+        config = batch.make_config(dry_run=True)
+        for role, judge in config['judges'].items():
+            self.assertEqual(judge['reasoning_effort'], 'max')
+            with patch.object(api, 'request_json', return_value=response) as request:
+                content, metadata = api.complete(judge, [], 'synthetic-key')
+            payload = request.call_args.args[2]
+            self.assertEqual(payload['reasoning_effort'], 'max')
+            if role == 'J3':
+                self.assertEqual(payload['thinking'], {'type': 'enabled'})
+            else:
+                self.assertNotIn('thinking', payload)
+            self.assertEqual(content, '{}')
+            self.assertNotIn('internal reasoning', json.dumps(metadata))
+
+    def test_terminal_effort_and_thinking_overrides(self):
+        with patch.dict(batch.os.environ, {
+                'J1_REASONING_EFFORT': 'medium', 'J1_THINKING': 'adaptive',
+                'J2_REASONING_EFFORT': 'omit', 'J3_THINKING': 'omit'}):
+            config = batch.make_config(dry_run=True)
+        response = {'choices': [{'finish_reason': 'stop', 'message': {'content': '{}'}}]}
+        for role, judge in config['judges'].items():
+            with patch.object(api, 'request_json', return_value=response) as request:
+                api.complete(judge, [], 'synthetic-key')
+            payload = request.call_args.args[2]
+            if role == 'J1':
+                self.assertEqual(payload['reasoning_effort'], 'medium')
+                self.assertEqual(payload['thinking'], {'type': 'adaptive'})
+            elif role == 'J2':
+                self.assertNotIn('reasoning_effort', payload)
+            else:
+                self.assertEqual(payload['reasoning_effort'], 'max')
+                self.assertNotIn('thinking', payload)
+
+    def test_invalid_effort_or_thinking_rejected_before_network(self):
+        for name, value in (('J1_REASONING_EFFORT', 'typo'), ('J3_THINKING', 'high')):
+            with patch.dict(batch.os.environ, {name: value}):
+                with self.assertRaises(ValueError):
+                    batch.make_config(dry_run=True)
+        config = smoke_config()
+        for judge in config['judges'].values():
+            judge.pop('reasoning_effort')
+            judge.pop('thinking')
+        checked = checked_config(config, smoke=True)
+        self.assertTrue(all(j['reasoning_effort'] == 'max' and j['thinking'] == 'enabled'
+                            for j in checked['judges'].values()))
+
+    def test_gpt_model_defaults_to_xhigh(self):
+        with patch.dict(batch.os.environ, {
+                'J1_MODEL': 'gpt-5.6-reasoning', 'J2_MODEL': 'gpt-custom',
+                'J3_MODEL': 'custom-gpt-compatible'}):
+            config = batch.make_config(dry_run=True)
+        self.assertTrue(all(judge['reasoning_effort'] == 'xhigh'
+                            for judge in config['judges'].values()))
+        raw = smoke_config()
+        for judge in raw['judges'].values():
+            judge['model'] = 'gpt-5.6'
+        checked = checked_config(raw, smoke=True)
+        self.assertTrue(all(judge['reasoning_effort'] == 'max' for judge in checked['judges'].values()))
+        raw['judges']['J1'].pop('reasoning_effort')
+        checked = checked_config(raw, smoke=True)
+        self.assertEqual(checked['judges']['J1']['reasoning_effort'], 'xhigh')
+
+    def test_api_direct_config_also_uses_model_default(self):
+        response = {'choices': [{'finish_reason': 'stop', 'message': {'content': '{}'}}]}
+        for model, effort in (('gpt-5.6', 'xhigh'), ('claude-opus-5', 'max')):
+            with patch.object(api, 'request_json', return_value=response) as request:
+                api.complete({'model': model, 'endpoint': 'https://example.test/chat/completions'},
+                             [], 'synthetic-key')
+            self.assertEqual(request.call_args.args[2]['reasoning_effort'], effort)
+
+    def test_parameter_rejection_does_not_silently_reduce_effort(self):
+        config = batch.make_config(dry_run=True)['judges']['J3']
+        with patch.object(api, 'request_json', side_effect=api.APIError('http_error', 400)) as request:
+            with self.assertRaises(api.APIError):
+                api.complete(config, [], 'synthetic-key')
+        self.assertEqual(request.call_count, 1)
+        self.assertEqual(request.call_args.args[2]['reasoning_effort'], 'max')
 
     def test_selection_skips_audit_and_preserves_lines(self):
         samples, sources = batch.collect_samples(self.root / 'v5', self.root / 'atomic', counts=[2])

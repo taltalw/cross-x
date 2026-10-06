@@ -25,6 +25,10 @@ bash knowledge/verification/llm_judge/LLM5_run_v5_v6.sh
 
 在终端分别填写三个角色的服务地址、密钥和模型名。执行模式要求上面九个变量全部填写，地址和密钥可以相同，也可以各不相同。脚本不内置服务地址，也不将密钥写入配置或评审输出。各角色的 `*_API_BASE_URL` 可以是带 `/v1` 的 Base URL，也可以是完整的 `/chat/completions` 地址；脚本仅补上 `/chat/completions`，不自动添加 `/v1`。各接口需支持现有客户端的 OpenAI 兼容聊天与 JSON 输出参数。模型名按终端的 `J1_MODEL` / `J2_MODEL` / `J3_MODEL` 原样发送。
 
+推理强度默认按模型名选择：模型名包含 `gpt` 时发送 `reasoning_effort="xhigh"`，其他模型发送 `reasoning_effort="max"`，包括初审、独立复核、整合及重试。声明为 deepseek 家族时还默认发送 `thinking={"type":"enabled"}`。Gemini 的兼容接口将 `reasoning_effort` 映射到 thinking level；DeepSeek 使用 thinking 开关及 reasoning effort，参考 [Gemini 文档](https://ai.google.dev/gemini-api/docs/openai)、[DeepSeek 文档](https://api-docs.deepseek.com/guides/thinking_mode/)。Claude 的实际强度取决于所用网关是否映射该参数；[Claude 官方兼容层](https://platform.claude.com/docs/en/cli-sdks-libraries/libraries/openai-sdk)会忽略 `reasoning_effort`，不能仅凭请求参数宣称 max 已生效。
+
+各角色可通过终端变量覆盖，例如 `J1_REASONING_EFFORT=xhigh`、`J2_REASONING_EFFORT=max`、`J3_REASONING_EFFORT=max`；不填写时按上述模型名规则自动选择。`J3_THINKING=enabled` 开启、`disabled` 关闭，支持该格式的网关可用 `J1_THINKING=adaptive`。接口不支持某参数时，可显式设置对应的 `*_REASONING_EFFORT=omit` 或 `*_THINKING=omit` 不发送该字段；脚本不会因 HTTP 报错自动降级。高级 JSON 配置中用 `reasoning_effort: null` / `thinking: null` 达到相同效果。配置和调用记录保留实际请求参数，不保存内部推理正文。
+
 | 角色 | 终端示例模型 | 工作 |
 |---|---|---|
 | J1 | `claude-opus-5` | 每题两阶段独立初审 |
@@ -152,7 +156,7 @@ bash "LLM5_run_example.sh" smoke --output-dir "LLM5_outputs/LLM5_smoke_new"
 
 默认通过DeepSeek官方 `/models` 发现当前可用模型，优先Flash，再回退兼容列表中的其他模型。请求模型与服务返回model都记录。通常共1次模型列表请求、7个评审阶段：J1两次、J2两次、J3独立两次加整合一次；错误时每阶段最多额外重试2次，因此API请求数可能大于7。
 
-官方接口参考：[首次调用](https://api-docs.deepseek.com/)、[Chat Completions](https://api-docs.deepseek.com/api/create-chat-completion/)。当前使用JSON响应格式、temperature=0、max_tokens=7000、thinking=disabled、非流式；统计保留返回usage，未自行估算账单费用。
+官方接口参考：[首次调用](https://api-docs.deepseek.com/)、[Chat Completions](https://api-docs.deepseek.com/api/create-chat-completion/)。当前默认使用JSON响应格式、temperature=0、max_tokens=7000、thinking=enabled（DeepSeek）、GPT 模型 `reasoning_effort=xhigh`、其他模型 `reasoning_effort=max`、非流式；旧单样本测试使用的 thinking=disabled 以当时的运行清单为准。统计保留返回usage，未自行估算账单费用。
 
 密钥只进入运行进程和官方请求的Authorization头，不存储到输出。拒绝携带凭据的URL及HTTP重定向；HTTP错误只记录类别和状态码，不记录服务错误正文；响应中的密钥样式文本会脱敏。不把API返回的内部reasoning_content写入报告。
 
